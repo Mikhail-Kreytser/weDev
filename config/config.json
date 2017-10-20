@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "ctp_user",
+    "password": "ctp_user",
+    "database": "ctpblog_development",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "ctp-blog",
+  "version": "0.0.1",
+  "description": "A simple blog.",
+  "scripts": {
+    "start": "nodemon -L app.js",
+    "test": "mocha --recursive tests/"
+  },
+  "author": "Donato & Edgardo",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "1.18.2",
+    "connect-flash": "0.1.1",
+    "cookie-parser": "1.4.3",
+    "express": "4.16.1",
+    "express-handlebars": "3.0.0",
+    "express-session": "1.15.6",
+    "method-override": "2.3.10",
+    "minimatch": "3.0.4",
+    "passport": "0.4.0",
+    "passport-local": "1.0.0",
+    "pg": "7.3.0",
+    "pg-hstore": "2.3.2",
+    "sequelize": "4.13.3",
+    "sequelize-cli": "3.0.0",
+    "speakingurl": "14.0.1"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "3.0.2",
+    "nodemon": "1.12.1"
+  }
+}
