@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "ctp_user",
-    "password": "ctp_user",
-    "database": "ctpblog_development",
+    "username": "weDev_user",
+    "password": "weDev_user",
+    "database": "weDev_development",
     "host": "localhost",
     "dialect": "postgres"
   }
