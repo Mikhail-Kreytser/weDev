@@ -1,13 +1,13 @@
 {
-  "name": "ctp-blog",
+  "name": "weDev",
   "version": "0.0.1",
-  "description": "A simple blog.",
+  "description": "an online Turk system.",
   "scripts": {
     "start": "nodemon -L app.js",
     "test": "mocha --recursive tests/"
   },
-  "author": "Donato & Edgardo",
-  "license": "ISC",
+  "author": "Mikhail Kreytser, Michelle Uy, Sebastian Henriquez, Brandon Dinh-Le",
+  "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.18.2",
