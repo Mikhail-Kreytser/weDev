@@ -7,22 +7,22 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', this.index);
-    router.get('/new', Redirect.ifNotLoggedIn('/login'), this.new);
-    router.post('/', Redirect.ifNotLoggedIn('/login'), this.create);
+    router.get('/', Redirect.ifNotLoggedInNoSetUp('/login'), this.index);
+    router.get('/new', Redirect.ifNotLoggedInNoSetUp('/login'), this.new);
+    router.post('/', Redirect.ifNotLoggedInNoSetUp('/login'), this.create);
     router.get('/:username/:slug', this.show);
     router.get('/:username/:slug/edit',
-                Redirect.ifNotLoggedIn('/login'),
+                Redirect.ifNotLoggedInNoSetUp('/login'),
                 Redirect.ifNotAuthorized('/posts'),
                 this.edit
               );
     router.put('/:username/:slug',
-                Redirect.ifNotLoggedIn('/login'),
+                Redirect.ifNotLoggedInNoSetUp('/login'),
                 Redirect.ifNotAuthorized('/posts'),
                 this.update
               );
     router.delete('/:username/:slug',
-                   Redirect.ifNotLoggedIn('/login'),
+                   Redirect.ifNotLoggedInNoSetUp('/login'),
                    Redirect.ifNotAuthorized('/posts'),
                    this.delete
                   );

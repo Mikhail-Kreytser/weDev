@@ -15,15 +15,25 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       {{#each allUsers}}
-        <div class="post-preview">
+        <div class="post-preview col-xs-12">
           <a href="/users/{{this.username}}">
             <h2 class="post-title">
-              {{this.username}}
+              <div class="col-xs-4">
+                {{this.username}}
+              </div>
             </h2>
           </a>
-          <p class="post-meta">{{this.firstName}} {{this.lastName}}</p>
+            <p1 class="col-xs-5">{{this.accountType}}</p1>
+          
+          <p class="post-meta col-xs-5">{{this.firstName}} {{this.lastName}}</p>
+          {{#if this.approved}}
+            <h1 style="color:green;">Approved<h1>
+          {{ else }}
+            <h1 style="color:#8B0000;">Pending<h1>
+          {{/if}}
         </div>
-        <hr>
+        <br>
+        
       {{/each}}
       <ul class="pager">
         <li class="next">

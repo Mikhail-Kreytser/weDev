@@ -1,0 +1,45 @@
+<header class="intro-header" style="background-image: url('/img/contact-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Set Up</h1>
+          <hr class="small">
+          <span class="subheading">Join our blog!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+          {{#if error}}
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <div class="alert alert-danger"><center>ERROR</center></div>
+          </div>
+          {{/if}}
+          
+  <div class="row">
+
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <form name="set-up" action="/set-up" method="post">
+        
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Bio</label>
+            <input type="text" class="form-control" placeholder="Bio" name="bio" required data-validation-required-message="Please fill in your bio.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+          <div class="form-group col-xs-12">
+              <button type="submit" class="btn btn-default">Done</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
