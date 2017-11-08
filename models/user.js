@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         notEmpty: true,
-        isEmail: true,
+        isEmail: true, 
       },
     },
     password_hash: {
@@ -66,11 +66,6 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
     models.User.hasMany(models.Post);
   }
-
-  User.associate = (models) => {
-    models.User.belongsTo(models.Profile);
-  }
-
 
   User.beforeCreate((user) =>
     new sequelize.Promise((resolve) => {
