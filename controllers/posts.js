@@ -7,25 +7,13 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifNotLoggedInNoSetUp('/login'), this.index);
-    router.get('/new', Redirect.ifNotLoggedInNoSetUp('/login'), this.new);
-    router.post('/', Redirect.ifNotLoggedInNoSetUp('/login'), this.create);
+    router.get('/',     Redirect.ifNotLoggedIn(), this.index);
+    router.get('/new',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.new);
+    router.post('/',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.create);
     router.get('/:username/:slug', this.show);
-    router.get('/:username/:slug/edit',
-                Redirect.ifNotLoggedInNoSetUp('/login'),
-                Redirect.ifNotAuthorized('/posts'),
-                this.edit
-              );
-    router.put('/:username/:slug',
-                Redirect.ifNotLoggedInNoSetUp('/login'),
-                Redirect.ifNotAuthorized('/posts'),
-                this.update
-              );
-    router.delete('/:username/:slug',
-                   Redirect.ifNotLoggedInNoSetUp('/login'),
-                   Redirect.ifNotAuthorized('/posts'),
-                   this.delete
-                  );
+    router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
+    router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
+    router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
 
     return router;
   },
@@ -40,33 +28,19 @@ module.exports = {
     res.render('posts/new');
   },
   create(req, res) {
-    // using the association
     req.user.createPost({
       slug: getSlug(req.body.title.toLowerCase()),
       title: req.body.title.toLowerCase(),
       body: req.body.body,
+      completionDeadline: req.body.completionDeadline,
+      bidingDeadline: req.body.bidingDeadline,
     }).then((post) => {
       res.redirect(`/posts/${req.user.username}/${post.slug}`);
     }).catch(() => {
       res.render('posts/new');
     });
-
-    // Without the sequelize association
-    /*
-    models.Post.create({
-      userId: req.user.id,
-      slug: getSlug(req.body.title.toLowerCase()),
-      title: req.body.title.toLowerCase(),
-      body: req.body.body,
-    }).then((post) => {
-      res.redirect(`/posts/${req.user.username}/${post.slug}`);
-    }).catch(() => {
-      res.render('posts/new');
-    });
-    */
   },
   show(req, res) {
-    // using the association
     models.Post.findOne({
       where: {
         slug: req.params.slug,
@@ -80,22 +54,6 @@ module.exports = {
     }).then((post) => {
       (post ? res.render('posts/single', { post, user: post.user }) : res.redirect('/posts'))
     });
-
-    // without the sequelize association (explicit queries)
-    // models.User.findOne({
-    //   where: {
-    //     username: req.params.username,
-    //   }
-    // }).then((user) => {
-    //   models.Post.findOne({
-    //     where: {
-    //       userId: user.id,
-    //       slug: req.params.slug,
-    //     }
-    //   }).then((post) =>
-    //     (post ? res.render('posts/single', { post, user }) : res.redirect('/posts'))
-    //   );
-    // });
   },
   edit(req, res) {
     models.Post.findOne({
@@ -117,6 +75,8 @@ module.exports = {
       title: req.body.title.toLowerCase(),
       slug: getSlug(req.body.title.toLowerCase()),
       body: req.body.body,
+      completionDeadline: req.body.completionDeadline,
+      bidingDeadline: req.body.bidingDeadline,
     },
     {
       where: {

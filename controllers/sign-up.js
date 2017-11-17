@@ -17,20 +17,39 @@ module.exports = {
   },
   submit(req, res) {
     models.User.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
       accountType: req.body.accountType,
       admin: false,
       approved: false,
+      accountStatus: "Pending",
     }).then((user) => {
       req.login(user, () =>
         res.redirect('/set-up')
       );
     }).catch(() => {
-      res.render('sign-up',{ error: true});
+        models.User.findOne({
+          where: {
+            username: req.body.username,
+          }}).then((usernameCheck) =>{
+
+          if(usernameCheck != null)
+            var usernameIsTaken = true;
+          
+          models.User.findOne({
+            where: {
+                email: req.body.email,
+            }}).then((emailCheck) =>{
+
+          if(emailCheck != null)
+            var emailIsTaken = true;
+
+          var otherError  = !(usernameIsTaken || emailIsTaken);
+          res.render('sign-up',{error: otherError, usernameTaken: usernameIsTaken, emailTaken: emailIsTaken});
+
+        });
+      });
     });
   },
 };

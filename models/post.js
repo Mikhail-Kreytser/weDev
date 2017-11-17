@@ -23,6 +23,24 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    bidingDeadline: {
+      type: DataTypes.DATE,
+      allowNull:false,
+      validate: {
+        isDate: true,
+        //isAfter
+        notEmpty: true,
+      },
+    },
+    completionDeadline: {
+      type: DataTypes.DATE,
+      allowNull:false,
+      validate: {
+        //isAfter
+        isDate: true,
+        notEmpty: true,
+      },
+    },
   });
 
   Post.associate = (models) => {
