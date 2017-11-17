@@ -19,6 +19,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('./public'));
+app.use('/profile_pics', express.static('./public/profile_img'));
 
 app.engine('handlebars', exphbs({
   layoutsDir: './views/layouts',

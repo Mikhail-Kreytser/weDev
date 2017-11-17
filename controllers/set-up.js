@@ -1,13 +1,17 @@
 const express = require('express');
-const models = require('../models');
 const Redirect = require('../middlewares/redirect');
+const multer = require('multer');
+
+const upload = multer({
+  dest: './public/profile_img/',
+});
 
 module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifNotLoggedIn('/sign-up'), Redirect.ifSetUpComplete(), this.index);
-    router.post('/', Redirect.ifNotLoggedIn('/sign-up'), Redirect.ifSetUpComplete(), this.create);
+    router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifSetUpComplete(), this.index);
+    router.post('/', upload.single('profileImage'), this.create);
     return router;
   },
   index(req, res) {
@@ -15,7 +19,10 @@ module.exports = {
   },
   create(req, res) {
     req.user.createProfile({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       bio: req.body.bio,
+      profileImage: (req.file) ? req.file.filename : 'default',
     }).then((user) => {
         res.redirect('/profile');
     }).catch(() => {
