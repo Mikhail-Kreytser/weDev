@@ -8,12 +8,16 @@ module.exports = {
     const router = express.Router();
 
     router.get('/',     Redirect.ifNotLoggedIn(), this.index);
-    router.get('/new',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.new);
-    router.post('/',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.create);
-    router.get('/:username/:slug', this.show);
+    router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.newPost);
+    router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.createPost);
+    router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
+    router.get('/:username/:slug/new-bid',  Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'),
+                                            Redirect.ifBidOver('/posts/'), this.newBid);
+    router.post('/new-bid', Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'), this.createBid);
+
 
     return router;
   },
@@ -24,10 +28,16 @@ module.exports = {
       res.render('posts', { allPosts });
     });
   },
-  new(req, res) {
-    res.render('posts/new');
+
+  newPost(req, res) {
+    res.render('posts/new-post');
   },
-  create(req, res) {
+
+  newBid(req, res) {
+    res.render('posts/new-bid',{poster: req.params.username,slug: req.params.slug});
+  },
+
+  createPost(req, res) {
     req.user.createPost({
       slug: getSlug(req.body.title.toLowerCase()),
       title: req.body.title.toLowerCase(),
@@ -37,10 +47,28 @@ module.exports = {
     }).then((post) => {
       res.redirect(`/posts/${req.user.username}/${post.slug}`);
     }).catch(() => {
-      res.render('posts/new');
+      res.render('posts/new-post');
     });
   },
-  show(req, res) {
+
+  createBid(req, res) {
+    models.Post.findOne({
+      where:{
+        slug:req.body.slug,
+      },
+    }).then((post)=>{
+      req.user.createBid({
+        price: req.body.price,
+        postId: post.id,
+      }).then((bid) => {
+        res.redirect(`/posts/${req.body.username}/${req.body.slug}`);
+      });
+    }).catch(() => {
+        res.render(`/posts/${req.body.username}/${req.body.slug}/new-bid`);
+    });
+  },
+
+  showPost(req, res) {
     models.Post.findOne({
       where: {
         slug: req.params.slug,
@@ -52,9 +80,19 @@ module.exports = {
         },
       }],
     }).then((post) => {
-      (post ? res.render('posts/single', { post, user: post.user }) : res.redirect('/posts'))
+      models.Bid.findOne({
+        where:{
+          postId: post.id,
+        },
+        attributes:[
+          [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
+          ],
+      }).then((bid) => {
+        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'))
+      })
     });
   },
+
   edit(req, res) {
     models.Post.findOne({
       where: {
@@ -70,6 +108,7 @@ module.exports = {
       (post ? res.render('posts/edit', { post }) : res.redirect('/posts'))
     );
   },
+
   update(req, res) {
     models.Post.update({
       title: req.body.title.toLowerCase(),
@@ -94,6 +133,7 @@ module.exports = {
       res.redirect(`/posts/${req.user.username}/${post.slug}`);
     });
   },
+
   delete(req, res) {
     models.Post.destroy({
       where: {

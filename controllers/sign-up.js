@@ -47,14 +47,13 @@ module.exports = {
 
           var otherError  = !(usernameIsTaken || emailIsTaken);
           res.render('sign-up',{error: otherError, usernameTaken: usernameIsTaken, emailTaken: emailIsTaken});
-
         });
       });
     });
   },
 };
-/*
 
+/*
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Picture</label>
