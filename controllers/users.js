@@ -60,4 +60,22 @@ module.exports = {
       res.redirect(`/users`);///${req.user.username}/`);
     });
   },
+
+  // EXPEREMENTAL 
+
+  delete(req, res) {
+    models.User.destroy({
+      where: {
+        username: req.params.username,
+      },
+      include: [{
+        model: models.User,
+        where: {
+          username: req.params.username,
+        },
+      }],
+    }).then(() => {
+      res.redirect('/posts');
+    });
+  },
 };

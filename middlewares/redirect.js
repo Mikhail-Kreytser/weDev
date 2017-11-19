@@ -1,3 +1,4 @@
+const models = require('../models');
 const redirect = {};
 
 redirect.ifLoggedIn = (route) =>
@@ -36,12 +37,22 @@ redirect.ifNotAuthorized = (route) =>
   (req, res, next) => (req.user.username !== req.params.username ? res.redirect(route) : next());
 
 redirect.ifNotCustomer = (route = '/profile') =>
-  (req, res, next) => (req.user.accountType == "Customer" ? next() :res.redirect(route));
+  (req, res, next) => (req.user.accountType == "Customer" ? next() : res.redirect(route));
 
 redirect.ifNotDeveloper = (route = '/profile') =>
-  (req, res, next) => (req.user.accountType == "Developer" ? next() :res.redirect(route));
+  (req, res, next) => (req.user.accountType == "Developer" ? next() : res.redirect(route));
 
 redirect.ifNotAdmin = (route = '/profile') =>
   (req, res, next) => (req.user.admin ?  next() :res.redirect(route) );
 
+redirect.ifBidOver = ( route = '/posts') =>
+  (req, res, next) => (
+    models.Post.findOne({
+      where:{
+        slug:req.params.slug,
+      },
+    }).then((post)=>{
+      ((new Date(post.bidingDeadline).getTime() < new Date().getTime()) ? res.redirect(route) : next());
+    })
+  );
 module.exports = redirect;
