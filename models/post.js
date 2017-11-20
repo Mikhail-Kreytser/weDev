@@ -47,6 +47,6 @@ module.exports = (sequelize, DataTypes) => {
     models.Post.belongsTo(models.User);
     models.Post.hasMany(models.Bid);
   }
-    
+     
   return Post;
 };

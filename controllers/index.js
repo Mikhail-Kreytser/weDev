@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const models = require('../models');
 
 const router = express.Router();
 const basename = path.basename(module.filename);
@@ -14,7 +15,18 @@ fs
   });
 
 router.get('/', (req, res) => {
+ /* models.User.findAll({
+  	limit: 3,
+  	where:{
+  		accountType: "Developer",
+  	},
+  	include: [{
+  		model: models.Profile,
+    }],
+    }).then((allUsers) => {
+      res.render('homepage', { allUsers });
+    });
+    */
   res.render('login');
-});
-
+})
 module.exports = router;

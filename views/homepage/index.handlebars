@@ -1,33 +1,69 @@
-<header class="intro-header" style="background-image: url('img/home-bg.jpg')">
-  <div class="container">
+    <div id="test1" class="col s12 center-align"></br></br><i class="material-icons large">data_usage</i>
+      <p>This is WeDev. </br></br>weDev is where clients and developers come to connect.
+    </br>weDev an internet marketplace comes to make system solutions better and efficient.
+    </br>Join millions of business clients and software developers now.</br>
+    <div class="btn waves-effect waves-lighten red darken-3">Get Started Here.</div></br></br></p>
+    <h5>Browse<i class="material-icons">whatshot</i></h5></br></br>
+    <form>
+      <div class="input-field">
+        <input id="search" type="search">
+        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
+
+    <h5>TOP DEVELOPERS<i class="material-icons">verified_user</i>:</h5>
     <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="site-heading">
-          <h1>weDev</h1>
-          <hr class="small">
-          <span class="subheading">CTP</span>
+      {{#each allUsers}}
+        <div class="col s4">
+          <p>{{this.username}}</p>
+          <img src="/profile_pics/{{this.profile.profileImage}}" class="img-rounded" alt="" style="width:75px">
+          <p>{{this.profile.firstName}}</p>
+        </div>
+      {{/each}}
+    <h5>TOP CLIENTS<i class="material-icons">wc</i>:</h5>
+    <div class="row">
+        <div class="col s4">
+          <p>Client 1</p>
+          <i class="material-icons large">supervisor_account</i>
+          <p>Google</p>
+        </div>
+        <div class="col s4">
+          <p>Client 2</p>
+          <i class="material-icons large">supervisor_account</i>
+          <p>Facebook</p>
+        </div>
+        <div class="col s4">
+          <p>Client 3</p>
+          <i class="material-icons large">supervisor_account</i>
+          <p>Spotify</p>
         </div>
       </div>
-    </div>
-  </div>
-</header>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <div class="post-preview">
-        <a href="post.html">
-          <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-          <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-        </a>
-          <p class="post-meta">Posted by <a href="#">CTP</a> on August 17, 2016</p>
-      </div>
-        <hr>
-        <ul class="pager">
-            <li class="next">
-                <a href="#">Older Posts &rarr;</a>
-            </li>
-        </ul>
-    </div>
+
+
   </div>
-</div>
+
+
+    <div id="test2" class="col s12 center-align"><h4>About</h4><p><strong>As a developer,</strong> you can browse through listings posted by renowned business clients to build and implement required systems on a bidding timeline, earn quick money freelancing, at the right comfort of your own home. Payments are safe, secure and guaranteed automatic once files have been submitted.
+
+    </br></br><strong>As a client,</strong> connect and collaborate with the most professional software developers and figure out which is right for your system demands which you can post in our system to receive major exposure to your work. Have your work done for you.
+
+  </br></br><strong>Not sure yet?</strong> As a <strong>visitor,</strong> you can use a temporary username and password to browse through system demands, developer profiles, as well as business client profiles.
+
+    </p></div>
+    <div id="test3" class="col s12 center-align"><h4>Sign Up</h4><p>Sumus tam adultis. Non est enim tibi nescio fingunt. Confusio esse cupio. Scio te debeo meae. At etiam, ut caveant ab his eu. In tuo positum, idem fecissem. Constitutione, quam molesta est mihi tres menses nescio quid de contractu fines nostros. Scis quare hoc facere. Lorem satis quaesitum. 
+
+    Loquélæ. Brevis oratio. Hodie particeps tua perdideris. Quid sui nominis - Emilio? Emilio gradiens ad carcerem. Tulitque omnem pecuniam tuam in DEA tuus Lab. Vos got nihil. Quadratum unum. Et ego agnosco rem, nisi te scire elit. Cogito ... maybe vos possem socium ascendit. 
+
+    Paenitet me quod tu me rogas? Oh, sic, qui stultus plastic continentis rogavi te ut emas. Vides non manducare acidum hydrofluoric per plastic. Erit autem dissolvere metalli petram, vitrum, tellus. Ita quod illic '. Quam de aliquo cum aliqua interdum, maybe? Aliquid viride, huh? Quam vos sunt etiam vivere? 
+
+    Quinquaginta septem est - pars tua, triginta quinque millia. Est autem extra plus quindecim, tota tua est, quom meruisset. Fac nos fecit. SIC. Puto quia una res potest - venimus in cognitionem. Vide pretium in manibus. Sed finge iustum faciens quod qualibet septimana. SIC. Duis duas libras triginta quinque milia pondo.</p></div>
+    <div id="test4" class="col s12 center-align"><h4>Login</h4><p>Sumus tam adultis. Non est enim tibi nescio fingunt. Confusio esse cupio. Scio te debeo meae. At etiam, ut caveant ab his eu. In tuo positum, idem fecissem. Constitutione, quam molesta est mihi tres menses nescio quid de contractu fines nostros. Scis quare hoc facere. Lorem satis quaesitum. 
+
+    Loquélæ. Brevis oratio. Hodie particeps tua perdideris. Quid sui nominis - Emilio? Emilio gradiens ad carcerem. Tulitque omnem pecuniam tuam in DEA tuus Lab. Vos got nihil. Quadratum unum. Et ego agnosco rem, nisi te scire elit. Cogito ... maybe vos possem socium ascendit. 
+
+    Paenitet me quod tu me rogas? Oh, sic, qui stultus plastic continentis rogavi te ut emas. Vides non manducare acidum hydrofluoric per plastic. Erit autem dissolvere metalli petram, vitrum, tellus. Ita quod illic '. Quam de aliquo cum aliqua interdum, maybe? Aliquid viride, huh? Quam vos sunt etiam vivere? 
+
+    Quinquaginta septem est - pars tua, triginta quinque millia. Est autem extra plus quindecim, tota tua est, quom meruisset. Fac nos fecit. SIC. Puto quia una res potest - venimus in cognitionem. Vide pretium in manibus. Sed finge iustum faciens quod qualibet septimana. SIC. Duis duas libras triginta quinque milia pondo.
+    </p></div>

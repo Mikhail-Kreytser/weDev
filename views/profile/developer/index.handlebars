@@ -5,7 +5,7 @@
         <div class="page-heading">
           <h1>{{user.username}}</h1>
           <hr class="small">
-          <span class="subheading">{{user.firstName}} {{user.lastName}}</span>
+          <span class="subheading">{{user.accountType}}</span>
         </div>
       </div>
     </div>
@@ -21,11 +21,17 @@
       <p>
         {{profile.bio}}
       </p>
-      {{#if developer}}
-        <div class="create-post">
-          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
-        </div>
-      {{/if}}
+      {{#each allPosts}}
+       <div class="post-preview">
+              
+                  <h2 class="post-title">
+                      {{this.title}}
+                  </h2>
+              </a>
+              <p class="post-meta">Current bid: {{this.bid.price}}</p>
+          </div>
+          <hr>
+      {{/each}}
     </div>
   </div>
 </div>

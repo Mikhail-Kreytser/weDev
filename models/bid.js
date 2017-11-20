@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     models.Bid.belongsTo(models.Post);
     models.Bid.belongsTo(models.User);
   };
-    
+     
   return Bid;
 
 };
