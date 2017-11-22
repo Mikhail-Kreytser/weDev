@@ -18,11 +18,14 @@
       <img src="/profile_pics/{{profile.profileImage}}" class="img-rounded" alt="" style="width:200px">
     </div>
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <p>Random Profile Info..
-
-      {{userProfile.bio}}
-
+      <p>
+        {{profile.bio}}
       </p>
+      {{#if developer}}
+        <div class="create-post">
+          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

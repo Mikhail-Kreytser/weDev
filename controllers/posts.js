@@ -25,6 +25,8 @@ module.exports = {
     models.Post.findAll({
       include: [{model: models.User}]
     }).then((allPosts) => {
+
+      console.log(allPosts);
       res.render('posts', { allPosts });
     });
   },

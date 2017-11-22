@@ -29,6 +29,20 @@
             <p class="help-block text-danger"></p>
           </div>
         </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-6 floating-label-form-group controls">
+            <label>Biding Deadline</label>
+            <input type="datetime-local" class="form-control" name="bidingDeadline" value="{{post.bidingDeadline}}" required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-6 floating-label-form-group controls">
+            <label>Completion Deadline</label>
+            <input type="datetime-local" class="form-control" name="completionDeadline" value="{{post.completionDeadline}} required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
         <br>
         <div class="row">
           <div class="form-group col-xs-6 text-right">
