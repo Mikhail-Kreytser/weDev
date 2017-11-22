@@ -16,17 +16,32 @@ fs
 
 router.get('/', (req, res) => {
     models.User.findAll({
-  	limit: 3,
-  	where:{
-  		accountType: "Developer",
-  	},
-  	include: [{
-  		model: models.Profile,
-    }],
-    }).then((allUsers) => {
-      res.render('homepage', { allUsers });
+      limit: 3,
+  	  where:{
+  		  accountType: "Developer",
+  	  },
+  	  include: [{
+  		  model: models.Profile,
+      }],
+    }).then((topDevelopers) => {
+      models.User.findAll({
+      limit: 3,
+      where:{
+        accountType: "Customer",
+      },
+      include: [{
+        model: models.Profile,
+      }],
+    }).then((topCustomers) => {
+      models.User.findAndCountAll({
+      }).then((totalUsers) => {
+        res.render('homepage', {topDevelopers, topCustomers, totalUsers});   
+      });
     });
-    
+  });
 });
 
 module.exports = router;
+
+
+   
