@@ -14,7 +14,7 @@
 
     <h5>TOP DEVELOPERS<i class="material-icons">verified_user</i>:</h5>
     <div class="row">
-      {{#each allUsers}}
+      {{#each topDevelopers}}
         <div class="col s4">
           <p>{{this.username}}</p>
           <img src="/profile_pics/{{this.profile.profileImage}}" class="img-rounded" alt="" style="width:75px">
@@ -23,21 +23,13 @@
       {{/each}}
     <h5>TOP CLIENTS<i class="material-icons">wc</i>:</h5>
     <div class="row">
+       {{#each topCustomers}}
         <div class="col s4">
-          <p>Client 1</p>
-          <i class="material-icons large">supervisor_account</i>
-          <p>Google</p>
+          <p>{{this.username}}</p>
+          <img src="/profile_pics/{{this.profile.profileImage}}" class="img-rounded" alt="" style="width:75px">
+          <p>{{this.profile.firstName}}</p>
         </div>
-        <div class="col s4">
-          <p>Client 2</p>
-          <i class="material-icons large">supervisor_account</i>
-          <p>Facebook</p>
-        </div>
-        <div class="col s4">
-          <p>Client 3</p>
-          <i class="material-icons large">supervisor_account</i>
-          <p>Spotify</p>
-        </div>
+      {{/each}}
       </div>
   </div>
 
@@ -58,7 +50,7 @@ var myChart = new Chart(ctx, {
         labels: ["Total Users", "Renowned Clients", "Professional Developers", "Most Projects", "Top Earning Developer"],
         datasets: [{
             label: 'weDev',
-            data: [1000, 400, 600, 50, 12345],
+            data: [{{totalUsers.count}}, 4, 6, 5, 10],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
