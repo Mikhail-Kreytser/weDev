@@ -43,7 +43,7 @@ redirect.ifNotDeveloper = (route = '/profile') =>
   (req, res, next) => (req.user.accountType == "Developer" ? next() : res.redirect(route));
 
 redirect.ifNotAdmin = (route = '/profile') =>
-  (req, res, next) => (req.user.admin ?  next() :res.redirect(route) );
+  (req, res, next) => (req.user.accountType == "Admin" ?  next() :res.redirect(route) );
 
 redirect.ifBidOver = ( route = '/posts') =>
   (req, res, next) => (
