@@ -21,10 +21,10 @@ module.exports = {
     req.user.createProfile({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      bio: req.body.bio,
+      bio: (req.body.bio) ? req.body.bio : 'customer',
       profileImage: (req.file) ? req.file.filename : 'default',
-      companyInfo: req.body.companyInfo,
-      companyWebsite: req.body.companyWebsite,
+      companyInfo: (req.body.companyInfo) ? req.body.companyInfo : 'developer',
+      companyWebsite: (req.body.companyWebsite) ? req.body.companyWebsite : 'http://developer.com',
       rating: '3.5',
     }).then((user) => {
         res.redirect('/profile');
