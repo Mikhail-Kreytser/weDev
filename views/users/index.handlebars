@@ -19,7 +19,7 @@
           <a href="/users/{{this.username}}">
             <h2 class="post-title">
               <div class="col-xs-4">
-                {{this.username}}
+                <h4>{{this.username}}</h4>
               </div>
             </h2>
           </a>
@@ -27,9 +27,9 @@
           
           <p class="post-meta col-xs-5">{{this.firstName}} {{this.lastName}}</p>
           {{#if this.approved}}
-            <h1 style="color:green;">Approved<h1>
+            <span><h4 style="color:green;">Approved<h4></span>
           {{ else }}
-            <h1 style="color:#8B0000;">Pending<h1>
+            <span><h4 style="color:#8B0000;">Pending<h4></span>
           {{/if}}
         </div>
         <br>
