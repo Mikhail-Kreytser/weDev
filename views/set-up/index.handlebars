@@ -1,11 +1,11 @@
-<header class="intro-header" style="background-image: url('/img/contact-bg.jpg')">
+<header class="intro-header">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h1>Set Up</h1>
+          <h3>Set Up Your Profile</h3>
           <hr class="small">
-          <span class="subheading">Join our Turk System!</span>
+          <span class="subheading">Public Profile</span>
         </div>
       </div>
     </div>
@@ -52,13 +52,33 @@
             <br>
           </div>
         </div>
+
+        {{#if customer}}
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Bio</label>
+            <label>Company Website</label>
+            <input type="text" class="form-control" placeholder="Company Website" name="companyWebsite" required data-validation-required-message="Please fill in company website">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Company Information</label>
+            <input type="text" class="form-control" placeholder="Company Information" name="companyInfo" required data-validation-required-message="Please fill in your company information.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        {{else}} 
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Biography</label>
             <input type="text" class="form-control" placeholder="Bio" name="bio" required data-validation-required-message="Please fill in your bio.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
+        {{/if}}
 
         <br>
         <div class="row">
