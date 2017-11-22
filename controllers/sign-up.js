@@ -24,6 +24,7 @@ module.exports = {
       admin: false,
       approved: false,
       accountStatus: "Pending",
+      rating: "3,5",
     }).then((user) => {
       req.login(user, () =>
         res.redirect('/set-up')

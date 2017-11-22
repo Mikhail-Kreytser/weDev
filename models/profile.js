@@ -16,16 +16,29 @@ module.exports = (sequelize, DataTypes) => {
     },
     bio: {
       type: DataTypes.STRING,
-      allowNull: false,
+    },
+    companyWebsite: {      
+      type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        isUrl: true,
       },
+    },
+    companyInfo: {
+      type: DataTypes.STRING,
     },
     profileImage: {
       type :DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
+      },
+    },
+    rating:{
+      type :DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        max: 5,
+        min: 0,
       },
     },
   });
