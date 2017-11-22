@@ -25,7 +25,7 @@ module.exports = {
       profileImage: (req.file) ? req.file.filename : 'default',
       companyInfo: (req.body.companyInfo) ? req.body.companyInfo : 'developer',
       companyWebsite: (req.body.companyWebsite) ? req.body.companyWebsite : 'http://developer.com',
-      rating: '3.5',
+      rating: 3.5,
     }).then((user) => {
         res.redirect('/profile');
     }).catch(() => {
