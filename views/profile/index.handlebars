@@ -1,9 +1,9 @@
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+<header class="intro-header">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h1>{{user.username}}</h1>
+          <h3>{{user.username}}</h3>
           <hr class="small">
           <span class="subheading">{{user.firstName}} {{user.lastName}}</span>
         </div>
@@ -12,20 +12,17 @@
   </div>
 </header>
 
-<div class="container">
+<div class="container center-align">
   <div class="row">
   <div class="col-lg-1 col-lg-offset-2 col-md-10 col-md-offset-1">
       <img src="/profile_pics/{{profile.profileImage}}" class="img-rounded" alt="" style="width:200px">
     </div>
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <p>
-        {{profile.bio}}
+      <p>Biography:
+
+      {{userProfile.bio}}
+
       </p>
-      {{#if developer}}
-        <div class="create-post">
-          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
-        </div>
-      {{/if}}
     </div>
   </div>
 </div>
