@@ -26,6 +26,8 @@
 <body>
       <ul id="dropdown1" class="dropdown-content">
       <li><a href="/profile">Profile</a></li>
+      <li><a href="#!">My Work/Bids</a></li>
+      <li><a href="#!">Messages</a></li>
       <li><a href="#!">Settings</a></li>
       <li class="divider"></li>
       <li id="logout"><a href="#">Sign Out</a></li>
@@ -43,10 +45,8 @@
           {{/if}}
 
           {{#if cur_user}}
+            <li><a href="/posts">Browse</a></li>
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{cur_user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
-
-{{!--             <li id="profile"><a href="/profile">Profile</a></li> --}}
-{{!--             <li id="logout"><a href="#">Sign out</a></li> --}}
           {{else}}  
             <li><a href="/sign-up">Sign Up</a></li>
             <li><a href="/login">Login</a></li>
@@ -68,6 +68,9 @@
   </nav>
 
   {{{ body }}}
+
+  <header></header>
+  <main></main>
 
 
         <footer class="page-footer blue darken-2">
