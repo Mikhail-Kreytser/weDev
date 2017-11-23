@@ -2,6 +2,7 @@ const express = require('express');
 const models = require('../models');
 const passport = require('../middlewares/authentication');
 const Redirect = require('../middlewares/redirect');
+const Op = models.Sequelize.Op;
 
 module.exports = {
   registerRouter() {
@@ -16,8 +17,30 @@ module.exports = {
 
   index(req, res) {
     models.User.findAll({
-    }).then((allUsers) => {
-      res.render('users', { allUsers });
+      where: {
+        accountStatus: "Approved",
+      },
+    }).then((allApprovedUsers) => {
+      models.User.findAll({
+        where: {
+          accountStatus: "Pending",
+        },
+      }).then((allPendingUsers) => {
+        models.User.findAll({
+          where: {
+            accountStatus: {
+              [Op.and]:{
+                [Op.ne]:"Pending",
+                [Op.and]:{
+                  [Op.ne]:"Approved"
+                },
+              },  
+            },
+          },
+        }).then((allBlockedUsers) => {
+          res.render('users', { allApprovedUsers, allPendingUsers, allBlockedUsers });
+        });
+      });
     });
   },
 
