@@ -14,27 +14,54 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      {{#each allUsers}}
-        <div class="post-preview col-xs-12">
+
+      <h1>Pending Users:</h1>
+      {{#each allPendingUsers}}
+        <div class="post-preview">
           <a href="/users/{{this.username}}">
             <h2 class="post-title">
-              <div class="col-xs-4">
-                <h4>{{this.username}}</h4>
-              </div>
+              <h4 class="col s4">{{this.username}}</h4>
+              <h4 class="col s4" style="color:black;">{{this.accountType}}</h4>
+              <h4 class="col s4" style="color:#FF8C00;">Pending<h4>
             </h2>
           </a>
-            <p1 class="col-xs-5">{{this.accountType}}</p1>
-          
-          <p class="post-meta col-xs-5">{{this.firstName}} {{this.lastName}}</p>
-          {{#if this.approved}}
-            <span><h4 style="color:green;">Approved<h4></span>
-          {{ else }}
-            <span><h4 style="color:#8B0000;">Pending<h4></span>
-          {{/if}}
         </div>
         <br>
         
       {{/each}}
+
+      <hr>
+
+      <h1>Approved Users:</h1>
+      {{#each allApprovedUsers}}
+        <div class="post-preview">
+          <a href="/users/{{this.username}}">
+            <h2 class="post-title">
+              <h4 class="col s4">{{this.username}}</h4>
+              <h4 class="col s4" style="color:black;">{{this.accountType}}</h4>
+              <h4 class="col s4" style="color:green;">Approved<h4>
+            </h2>
+          </a>
+        </div>
+        <br>        
+      {{/each}}
+      <hr>
+
+      <h1>Blocked Users:</h1>
+      {{#each allBlockedUsers}}
+        <div class="post-preview">
+          <a href="/users/{{this.username}}">
+            <h2 class="post-title">
+              <h4 class="col s4">{{this.username}}</h4>
+              <h4 class="col s4" style="color:black;">{{this.accountType}}</h4>
+              <h4 class="col s4" style="color:#8B0000;">Blocked<h4>
+            </h2>
+          </a>
+        </div>
+        <br>
+        
+      {{/each}}
+
       <ul class="pager">
         <li class="next">
             <a href="#">Next &rarr;</a>
