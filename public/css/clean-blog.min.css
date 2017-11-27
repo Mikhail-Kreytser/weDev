@@ -52,7 +52,7 @@ header {
 }
 
 #about-section {
-	padding-top: 50px;
+	padding-top: 100px;
 	margin: 200px 200px;
 	padding-bottom: 100px;
 }
@@ -97,3 +97,10 @@ header {
   background-color: #eee;
 }
 
+.intro-header {
+  padding-top: 75px;
+}
+
+.topUsers{
+  padding-top: 200px;
+}

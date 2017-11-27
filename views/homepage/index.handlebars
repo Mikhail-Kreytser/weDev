@@ -21,34 +21,34 @@
                   <div class="row">
                       <div class="row">
                         <div class="input-field col s12">
-                          <input id="username" type="text" class="validate">
-                          <label for="username">Username</label>
+                          <input id="username" type="text" class="validate" required="" aria-required="true">
+                          <label for="username" data-error="wrong" data-success="right">Username</label>
                         </div>
                   <div class="row">
                       <p>
-                        <input name="accountType" type="radio" id="Customer" value="Customer" required />
-                        <label for="Customer">Customer</label>
+                        <input name="accountType" type="radio" id="Customer" value="Customer" required="" />
+                        <label for="Customer" data-error="wrong" data-success="right">Customer</label>
                         <input name="accountType" type="radio" id="Developer" value="Developer" />
-                        <label for="Developer">Developer</label>
+                        <label for="Developer" data-error="wrong" data-success="right">Developer</label>
                       </p>
                   </div>
                 </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input id="email" type="email" class="validate">
-                          <label for="email">Email</label>
+                          <input id="email" type="email" class="validate" required="" aria-required="true">
+                          <label for="email" data-error="wrong" data-success="right">Email</label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input id="password" type="password" class="validate">
-                          <label for="password">Password</label>
+                          <input id="password" type="password" class="validate" required="" aria-required="true">
+                          <label for="password" data-error="wrong" data-success="right">Password</label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input id="cpassword" type="password" class="validate">
-                          <label for="cpassword">Confirm Password</label>
+                          <input id="password" type="password" class="validate" required="" aria-required="true">
+                          <label for="password" data-error="wrong" data-success="right">Confirm Password</label>
                         </div>
                       </div>
                   </div>
@@ -58,7 +58,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" form="sign-up" class="btn btn-flat modal-action modal-close">Register</button>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
       </div>
     </form>
           
-
+<div class="topUsers">
     <h5>TOP DEVELOPERS<i class="material-icons">verified_user</i>:</h5>
     <div class="row">
       {{#each topDevelopers}}
@@ -94,6 +94,7 @@
       {{/each}}
       </div>
   </div>
+</div>
 
     <div id="about-section" class="col s6"><h4>About</h4><p><strong>As a developer,</strong> you can browse through listings posted by renowned business clients to build and implement required systems on a bidding timeline, earn quick money freelancing, at the right comfort of your own home. Payments are safe, secure and guaranteed automatic once files have been submitted.
 
