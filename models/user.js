@@ -59,6 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     models.User.hasMany(models.Post);
     models.User.hasMany(models.Bid);
     models.User.hasOne(models.Profile);
+    models.User.hasOne(models.Wallet);
   }
 
   User.beforeCreate((user) =>

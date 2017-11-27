@@ -16,7 +16,7 @@ module.exports = {
   },
   login(req, res) {
     passport.authenticate('local', {
-      successRedirect: '/profile',
+      successRedirect: '/deposit',
       failureRedirect: '/login',
       failureFlash: true,
       successFlash: true,

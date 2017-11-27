@@ -1,0 +1,33 @@
+<header>
+  <h1>Add Money</h1>
+  <hr class="small">
+  <span class="subheading"><i id="header-logo" class="material-icons">data_usage</i></span>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      {{#if error}}
+        <div class="alert alert-danger">{{this.error}}</div>
+      {{/if}}
+      
+      <h1>Total ammount in your wallet: {{balance}}</h1>
+ 
+      <form name="deposit" action="/deposit/add?_method=PUT" method="POST">
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Deposit</label>
+            <input type="text" name="amountDeposited" class="form-control" value="200" required data-validation-required-message="Please enter the amount.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-xs-12">
+              <button type="submit" class="btn">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

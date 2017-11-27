@@ -27,7 +27,7 @@ module.exports = {
       rating: "3,5",
     }).then((user) => {
       req.login(user, () =>
-        res.redirect('/set-up')
+        res.redirect('/deposit')
       );
     }).catch(() => {
         models.User.findOne({

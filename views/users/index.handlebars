@@ -26,7 +26,8 @@
           <a href="/users/{{this.username}}">
               <h7 class="col s4">{{this.username}}</h7>
               <h7 class="col s4" style="color:black;">{{this.accountType}}</h7>
-              <h7 class="col s4" style="color:#FF8C00;">Pending<h7>
+              <span class="new badge deep-orange lighten-1" data-badge-caption="&nbsp;Pending &nbsp"></span>
+              <span class="new badge black" data-badge-caption="&nbsp;{{this.wallet.amountDeposited}} &nbsp"></span>
           </a>
         </li>
       {{/each}}
@@ -35,7 +36,7 @@
           <a href="/users/{{this.username}}">
               <h7 class="col s4">{{this.username}}</h7>
               <h7 class="col s4" style="color:black;">{{this.accountType}}</h7>
-              <h7 class="col s4" style="color:green;">Approved<h7>
+               <span class="new badge green" data-badge-caption="Approved"></span>
              </a>
         </li>
       {{/each}}
@@ -44,7 +45,7 @@
           <a href="/users/{{this.username}}">
               <h7 class="col s4">{{this.username}}</h7>
               <h7 class="col s4" style="color:black;">{{this.accountType}}</h7>
-              <h7 class="col s4" style="color:#8B0000;">Blocked<h7>
+               <span class="new badge red accent-4" data-badge-caption="&nbsp;Blocked  &nbsp"></span>
           </a>
         </li>
       {{/each}}
