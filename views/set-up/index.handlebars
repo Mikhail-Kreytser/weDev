@@ -15,9 +15,12 @@
 <div class="container">
 
           {{#if error}}
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <div class="alert alert-danger"><center>ERROR</center></div>
-          </div>
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <i class="mdi-alert-error"></i>
+                <p><center>ERROR</center></p>
+              </div>
+            </div>
           {{/if}}
           
   <div class="row">
