@@ -17,20 +17,27 @@
 
 
           {{#if error}}
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <div class="alert alert-danger"><center>ERROR</center></div>
-          </div>
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <i class="mdi-alert-error"></i>
+                <p><center>ERROR</center></p>
+              </div>
+            </div>
           {{/if}}
           {{#if usernameTaken}}
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <div class="alert alert-danger"><center>Username is taken</center></div>
-          </div>
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <p><center>Username is taken</center></p>
+              </div>
+            </div>
           {{/if}}
 
           {{#if emailTaken}}
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <div class="alert alert-danger"><center>Email is taken</center></div>
-          </div>
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <p><center>Email is taken</center></p>
+              </div>
+            </div>
           {{/if}}
           
   <div class="row">

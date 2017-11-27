@@ -47,7 +47,7 @@ module.exports = {
       completionDeadline: req.body.completionDeadline,
       bidingDeadline: req.body.bidingDeadline,
     }).then((post) => {
-      res.redirect(`/posts/${req.user.username}/${post.slug}`);
+      res.redirect(`/posts/${req.user.username}/${post.slug}/`);
     }).catch(() => {
       res.render('posts/new-post');
     });
@@ -63,7 +63,7 @@ module.exports = {
         price: req.body.price,
         postId: post.id,
       }).then((bid) => {
-        res.redirect(`/posts/${req.body.username}/${req.body.slug}`);
+        res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
       });
     }).catch(() => {
         res.render(`/posts/${req.body.username}/${req.body.slug}/new-bid`);
@@ -88,10 +88,10 @@ module.exports = {
         },
         attributes:[
           [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
-          ],
+        ],
       }).then((bid) => {
-        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'))
-      })
+        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'));
+      });
     });
   },
 
@@ -132,7 +132,7 @@ module.exports = {
       returning: true,
     }).then(([numRows, rows]) => {
       const post = rows[0];
-      res.redirect(`/posts/${req.user.username}/${post.slug}`);
+      res.redirect(`/posts/${req.user.username}/${post.slug}/`);
     });
   },
 

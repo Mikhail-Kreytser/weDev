@@ -41,6 +41,13 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    tag: {
+      type: DataTypes.STRING,
+      allowNull: true,
+        validate: {
+          //notEmpty: true,
+        },
+    },
   });
 
   Post.associate = (models) => {

@@ -70,22 +70,25 @@
         <i class="material-icons">close</i>
       </div>
     </form>
+          
 
     <h5>TOP DEVELOPERS<i class="material-icons">verified_user</i>:</h5>
     <div class="row">
       {{#each topDevelopers}}
         <div class="col s4">
           <p>{{this.username}}</p>
-          <img src="/profile_pics/{{this.profile.profileImage}}" class="img-rounded" alt="" style="width:75px">
+          <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
           <p>{{this.profile.firstName}}</p>
         </div>
       {{/each}}
+    </div>
+
     <h5>TOP CLIENTS<i class="material-icons">wc</i>:</h5>
     <div class="row">
        {{#each topCustomers}}
         <div class="col s4">
           <p>{{this.username}}</p>
-          <img src="/profile_pics/{{this.profile.profileImage}}" class="img-rounded" alt="" style="width:75px">
+          <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
           <p>{{this.profile.firstName}}</p>
         </div>
       {{/each}}
@@ -109,7 +112,7 @@ var myChart = new Chart(ctx, {
         labels: ["Total Users", "Renowned Clients", "Professional Developers", "Most Projects", "Top Earning Developer"],
         datasets: [{
             label: 'weDev',
-            data: [{{totalUsers.count}}, 4, 6, 5, 10],
+            data: [{{totalUsers}}, {{renownedCustomers}}, {{professionalDevelopers}}, 5, 10],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -142,6 +145,13 @@ var myChart = new Chart(ctx, {
       easing: 'easeInOutBounce'
     }
 });
+
+  $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+
+
 </script>
   </div>
 

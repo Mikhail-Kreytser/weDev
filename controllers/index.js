@@ -5,6 +5,7 @@ const path = require('path');
 
 const router = express.Router();
 const basename = path.basename(module.filename);
+const Op = models.Sequelize.Op;
 
 fs
   .readdirSync(__dirname)
@@ -22,7 +23,15 @@ router.get('/', (req, res) => {
   	  },
   	  include: [{
   		  model: models.Profile,
+        where:{
+          rating:{
+            [Op.ne]:null
+          },
+        },
       }],
+      order: [
+        [models.Profile, 'rating', 'DESC' ],
+      ], 
     }).then((topDevelopers) => {
       models.User.findAll({
       limit: 3,
@@ -31,11 +40,47 @@ router.get('/', (req, res) => {
       },
       include: [{
         model: models.Profile,
+        where:{
+          rating:{
+            [Op.ne]:null
+          },
+        },
       }],
+      order: [
+        [models.Profile, 'rating', 'DESC' ],
+      ], 
     }).then((topCustomers) => {
       models.User.findAndCountAll({
       }).then((totalUsers) => {
-        res.render('homepage', {topDevelopers, topCustomers, totalUsers});   
+        models.User.findAndCountAll({
+          where:{
+            accountType: "Customer",
+          },
+          include: [{
+            model: models.Profile,
+            where:{
+              rating:{
+                [Op.gte]: 4.5,
+              },
+            },
+          }],
+        }).then((renownedCustomers) =>{
+          models.User.findAndCountAll({
+          where:{
+            accountType: "Developer",
+          },
+          include: [{
+            model: models.Profile,
+            where:{
+              rating:{
+                [Op.gte]: 4.5,
+              },
+            },
+          }],
+        }).then((professionalDevelopers) =>{
+            res.render('homepage', {topDevelopers, topCustomers, totalUsers:totalUsers.count, renownedCustomers:renownedCustomers.count, professionalDevelopers:professionalDevelopers.count}); 
+          });
+        });  
       });
     });
   });

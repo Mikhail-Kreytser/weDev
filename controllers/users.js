@@ -25,6 +25,9 @@ module.exports = {
         where: {
           accountStatus: "Pending",
         },
+        include: [{
+          model: models.Wallet,
+        }],
       }).then((allPendingUsers) => {
         models.User.findAll({
           where: {
