@@ -28,12 +28,12 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <body>
       <ul id="dropdown1" class="dropdown-content">
-      <li><a href="/profile">Profile</a></li>
-      <li><a href="#!">My Work/Bids</a></li>
-      <li><a href="#!">Messages</a></li>
-      <li><a href="#!">Settings</a></li>
+      <li><a href="/profile"><i class="material-icons">face</i>Profile</a></li>
+      <li><a href="#!"><i class="material-icons">work</i>My Bids</a></li>
+      <li><a href="#!"><i class="material-icons">mail_outline</i>Messages</a></li>
+      <li><a href="#!"><i class="material-icons">settings</i>Settings</a></li>
       <li class="divider"></li>
-      <li id="logout"><a href="#">Sign Out</a></li>
+      <li id="logout"><a href="#"><i class="material-icons">exit_to_app</i>Sign Out</a></li>
     </ul>
   <nav class="nav-extended target">
       <div class="nav-wrapper blue darken-3">
@@ -53,7 +53,7 @@
 
           {{#if cur_user}}
             <li><a href="/posts">Browse</a></li>
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{cur_user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-button" href="#!" data-beloworigin="true" data-alignment="right" data-constrainwidth="false" data-activates="dropdown1">{{cur_user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
           {{else}}  
             <li><a href="/sign-up">Sign Up</a></li>
             <li><a href="/login">Login</a></li>
