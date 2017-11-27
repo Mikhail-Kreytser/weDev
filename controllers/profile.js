@@ -8,6 +8,7 @@ module.exports = {
 
     router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNoSetUp(), this.index);
     router.put('/', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
+    router.get('/:username',  this.show);
 
     return router;
   },
@@ -43,4 +44,7 @@ module.exports = {
     });
   },
 
+  show(req,res){
+
+  },
 };

@@ -7,36 +7,36 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-/*    creditCardNumber: {
-      type: DataTypes.INTEGER,
+    creditCardNumber: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
-        isCreditCard: true,
+        //isCreditCard: true,
       },
     },
     cvv: {
       type: DataTypes.INTEGER,
       validate:{
-        max: 9999,
-        min: 100,
+       // max: 9999,
+       // min: 100,
       },
     },
     expirationDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATEONLY, 
       allowNull:false,
       validate: {
-        isDate: true,
+       // isDate: true,
         notEmpty: true,
       },
     },
     zipCode: {
       type: DataTypes.INTEGER,
       validate:{
-        max: 99999,
-        min: 10000,
+       // max: 99999,
+      //  min: 10000,
       },
-    },*/
+    },
   });
 
   Wallet.associate = (models) => {
