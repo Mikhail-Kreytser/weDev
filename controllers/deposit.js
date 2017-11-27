@@ -22,10 +22,19 @@ module.exports = {
   create(req, res) {
     req.user.createWallet({
       amountDeposited: req.body.amountDeposited,
+      creditCardNumber: req.body.creditCardNumber,
+      expirationDate: req.body.expirationDate,
+      cvv: req.body.cvv,
+      zipCode: req.body.zipCode,
     }).then((wallet) => {
         res.redirect('/approval-status');
     }).catch(() => {
-      res.render('deposit',{ error: true});
+      console.log(req.body.amountDeposited);
+      console.log(req.body.creditCardNumber);
+      console.log(req.body.expirationDate);
+      console.log(req.body.cvv);
+      console.log( req.body.zipCode);
+      res.render('deposit/initial',{ error: true});
     });
   },
 

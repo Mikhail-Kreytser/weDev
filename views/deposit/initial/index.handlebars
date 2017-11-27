@@ -13,7 +13,7 @@
       
       <h1>A minimum of $200 must be deposited in order to join weDev</h1>
  
-      <form name="deposit" action="/deposit" method="post">
+      <form name="deposit" action="/deposit/" method="post">
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Deposit</label>
@@ -21,7 +21,34 @@
             <p class="help-block text-danger"></p>
           </div>
         </div>
-
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Credit Card Number</label>
+            <input type="text" name="creditCardNumber"  class="form-control" value="1234123412341234" required data-validation-required-message="Please enter the credit card number.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>expirationDate</label>
+            <input type="date" name="expirationDate" class="form-control"  required data-validation-required-message="Please enter the amount.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>cvv</label>
+            <input type="text" name="cvv" class="form-control" value="200" required data-validation-required-message="Please enter the amount.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Zip Code</label>
+            <input type="text" name="zipCode" class="form-control" value="12345" required data-validation-required-message="Please enter the amount.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
         <div class="row">
           <div class="form-group col-xs-12">
               <button type="submit" class="btn">Login</button>
