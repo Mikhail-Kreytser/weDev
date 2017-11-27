@@ -43,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     tag: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
         validate: {
-          notEmpty: true,
+          //notEmpty: true,
         },
     },
   });

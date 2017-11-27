@@ -27,17 +27,17 @@ redirect.ifSetUpComplete = (route = '/profile') =>
     })
   };
 
-redirect.ifNoWalletCreated = (route = 'deposit') =>
+redirect.ifNoWalletCreated = (route = '/deposit') =>
   (req, res, next) => {
     req.user.getWallet().then((wallet) =>{
       if(wallet == null)
-        res.redirect(route);
+        (req.user.accountStatus == "Approved" ? res.redirect(route) : req.user.accountStatus == "Pending" ? res.redirect(route) : next());
       else
         next();
     })
   };
 
-redirect.ifWalletCreated = (route = 'approval-status') =>
+redirect.ifWalletCreated = (route = '/approval-status') =>
   (req, res, next) => {
     req.user.getWallet().then((wallet) =>{
       if(wallet == null)
