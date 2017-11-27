@@ -20,15 +20,14 @@
         </div>
         {{/if}}
         {{#each allPosts}}
-          <div class="post-preview">
+          <div class="hoverable post-preview">
               <a href="/posts/{{this.user.username}}/{{this.slug}}">
-                  <h2 class="post-title">
+                  <h5 class="post-title indigo-text">
                       {{this.title}}
-                  </h2>
+                  </h5>
               </a>
               <p class="post-meta">Posted by <a href="/users/{{this.user.username}}">{{this.user.username}}</a></p>
           </div>
-          <hr>
         {{/each}}
         <ul class="pager">
           <li class="next">
