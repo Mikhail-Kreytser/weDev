@@ -11,6 +11,9 @@
 
       <link rel="stylesheet" type="text/css" href="style.css">
 
+      <!--set Browser favicon-->
+      <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG"></link>
+
       <!--Chart.js CDN-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
@@ -32,7 +35,7 @@
       <li class="divider"></li>
       <li id="logout"><a href="#">Sign Out</a></li>
     </ul>
-  <nav class="nav-extended">
+  <nav class="nav-extended target">
       <div class="nav-wrapper blue darken-3">
         <a href="/" class="brand-logo"><i id="header-logo" class="material-icons">data_usage</i>weDev</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -98,16 +101,28 @@
             </div>
           </div>
         </footer>
+{{!--   // <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+  // <script src="/js/jqBootstrapValidation.js"></script>
+  // <script src="/js/contact_me.js"></script>
+  // <script src="/js/clean-blog.min.js"></script> --}}
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <!--jQuery easing plugin-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('.target').pushpin();
+        });
+      </script>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script src="/js/jqBootstrapValidation.js"></script>
-  <script src="/js/contact_me.js"></script>
-  <script src="/js/clean-blog.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+  </script>
 
   {{#if cur_user}}
   <script>
@@ -120,6 +135,8 @@
     })();
   </script>
   {{/if}}
+
+
 </body>
 
 </html>
