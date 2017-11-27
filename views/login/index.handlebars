@@ -8,7 +8,12 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       {{#each error}}
-        <div class="alert alert-danger">{{this}}</div>
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <i class="mdi-alert-error"></i>
+                <p><center>{{this}}</center></p>
+              </div>
+            </div>
       {{/each}}
       <form name="login" action="/login" method="post">
         <div class="row control-group">
@@ -26,6 +31,7 @@
           </div>
         </div>
         <br>
+
         <div class="row">
           <div class="form-group col-xs-12">
               <button type="submit" class="btn">Login</button>

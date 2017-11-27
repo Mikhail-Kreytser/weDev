@@ -59,3 +59,6 @@ typings/
 
 #imgs
 public/profile_img
+
+#API key
+config/apiKey

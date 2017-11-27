@@ -82,13 +82,14 @@ module.exports = {
         },
       }],
     }).then((post) => {
+      console.log(req.params.slug);
       models.Bid.findOne({
         where:{
           postId: post.id,
         },
         attributes:[
           [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
-          ],
+        ],
       }).then((bid) => {
         (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'))
       })
