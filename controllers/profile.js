@@ -6,25 +6,35 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNoSetUp(), this.index);
-    router.put('/', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
+    router.get('/',     Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNoSetUp(), this.index);
+    router.get('/edit', Redirect.ifNotLoggedIn(), this.edit);
+    router.put('/edit', Redirect.ifNotLoggedIn(), this.update);
     router.get('/:username',  this.show);
 
     return router;
   },
-  index(req, res) {req.user.getProfile()
-    .then((p) => {
-      res.render('profile', { user: req.user, profile: p, success: req.flash('success') });
+  index(req, res) {
+    req.user.getProfile()
+    .then((profile) => {
+      res.render('profile', {user: req.user, profile: profile, owner: true });
     });
   },
 
+  edit(req, res) {
+    req.user.getProfile()
+    .then((profile) =>
+      (profile ? res.render('profile/edit', {user: req.user, profile }) : res.redirect('/profile'))
+    );
+  },
+
   update(req, res) {
-    models.profile.update(
+    console.log(req.body.firstName);  
+    models.Profile.update(
     {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      bio: req.body.bio,
-      profileImage: (req.file) ? req.file.filename : 'default',
+      bio: (req.body.bio) ? req.body.bio : 'customer',
+      profileImage: (req.file == undefined) ?  req.body.oldImage : req.file.filename,
+      companyInfo: (req.body.companyInfo) ? req.body.companyInfo : 'developer',
+      companyWebsite: (req.body.companyWebsite) ? req.body.companyWebsite : 'http://developer.com',
     },
     {
       where: {
@@ -45,6 +55,20 @@ module.exports = {
   },
 
   show(req,res){
-
+    models.User.findOne({
+      where: {
+        username: req.params.username,
+      },
+      include: [{
+        model: models.Profile,
+      }],
+    }).then((user) =>{
+      if (user.accountType == "Admin" || user.accountStatus != "Approved")
+        res.redirect('/');
+      else
+        res.render('profile', {username: user.username, accountType: user.accountType, profile: user.profile});
+    }).catch(() =>{
+      res.redirect('/login');
+    });
   },
 };

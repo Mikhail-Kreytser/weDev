@@ -1,0 +1,70 @@
+<header class="intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h3>{{user.username}}</h3>
+          <hr class="small">
+          <span class="subheading">{{profile.firstName}} {{profile.lastName}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container center-align">
+  <div class="row">
+  <div class="col-lg-1 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <form name="edit-profile" action="/profile/edit?_method=PUT" method="post" enctype="multipart/form-data">
+      <img src="/profile_pics/{{profile.profileImage}}" class="img-rounded" alt="" style="width:200px">
+      <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+          <label >Upload a Profile Picture:</label>
+          <input type="file" name="profileImage" id="profileImage"/>
+          <input type="hidden" name="oldImage"  id="oldImage" value="{{profile.profileImage}}">
+          <span class="hint">Supported files: jpg, jpeg, png.</span>
+          <hr class="divider">
+          <br>
+        </div>
+      </div>
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      
+          <input type="hidden" name="firstName" value="{{profile.firstName}}">
+          <input type="hidden" name="lastName" value="{{profile.lastName}}">
+      {{#if developer}}
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Biography</label>
+            <input type="text" class="form-control" placeholder="{{profile.bio}}" value="{{profile.bio}}" name="bio" required data-validation-required-message="Please fill in your bio.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+      {{/if}}
+      {{#if customer}}
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Company Website</label>
+            <input type="url" class="form-control" placeholder="{{profile.companyWebsite}}" value="{{profile.companyWebsite}}" name="companyWebsite" required data-validation-required-message="Please fill in company website">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Company Information</label>
+            <input type="text" class="form-control" placeholder="{{profile.companyInfo}}" value="{{profile.companyInfo}}" name="companyInfo" required data-validation-required-message="Please fill in your company information.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+      {{/if}}
+
+        <br>
+        <div class="row">
+          <div class="form-group col-xs-12">
+              <button type="submit" class="btn btn-default">Done</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

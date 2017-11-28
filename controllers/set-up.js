@@ -12,7 +12,7 @@ module.exports = {
 
     router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifSetUpComplete(), this.index);
     router.post('/', upload.single('profileImage'), this.create);
-    return router;
+    return router; 
   },
   index(req, res) {
     res.render('set-up');
