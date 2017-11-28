@@ -17,7 +17,7 @@
         <h4>Sign Up</h4>
           <div class="row">
               <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <form name="sign-up" action="/sign-up" method="post" class="col s12">
+                <form id="signUp" name="sign-up" action="/sign-up" method="post" class="col s12">
                   <div class="row">
                       <div class="row">
                         <div class="input-field col s12">
@@ -41,14 +41,8 @@
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input id="password" type="password" class="validate" required="" aria-required="true">
+                          <input id="password" type="password" value="password" required="">
                           <label for="password" data-error="wrong" data-success="right">Password</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input id="password" type="password" class="validate" required="" aria-required="true">
-                          <label for="password" data-error="wrong" data-success="right">Confirm Password</label>
                         </div>
                       </div>
                   </div>
@@ -58,7 +52,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="submit" form="sign-up" class="btn btn-flat modal-action modal-close">Register</button>
+        <button  type="submit" form="signUp" class="btn btn-flat modal-action modal-close">Register</button>
         </div>
       </div>
 
@@ -152,6 +146,16 @@ var myChart = new Chart(ctx, {
     $('.modal-trigger').leanModal();
   });
 
+  var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirmPassword').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+};
 
 </script>
   </div>
