@@ -10,11 +10,20 @@
     </div>
   </div>
 </header>
+{{#if higherBid}}
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <i class="mdi-alert-error"></i>
+                <p><center>Your new Bid is higher then your old one</center></p>
+              </div>
+            </div>
+      {{/if}}
 
 <div class="container">
   <div class="row">
+
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <form name="create-post" action="/posts/new-bid" method="post">
+      <form name="create-post" action="/posts/{{poster}}/{{slug}}/new-bid" method="post">
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Title</label>

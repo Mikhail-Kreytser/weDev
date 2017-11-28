@@ -12,11 +12,12 @@ module.exports = {
     router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.createPost);
     router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
+    router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
     router.get('/:username/:slug/new-bid',  Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'),
                                             Redirect.ifBidOver('/posts/'), this.newBid);
-    router.post('/new-bid', Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'), this.createBid);
+    router.post('/:username/:slug/new-bid', Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'), this.createBid);
 
 
     return router;
@@ -25,8 +26,6 @@ module.exports = {
     models.Post.findAll({
       include: [{model: models.User}]
     }).then((allPosts) => {
-
-      console.log(allPosts);
       res.render('posts', { allPosts });
     });
   },
@@ -59,18 +58,70 @@ module.exports = {
         slug:req.body.slug,
       },
     }).then((post)=>{
-      req.user.createBid({
-        price: req.body.price,
-        postId: post.id,
+      models.Bid.findOne({
+        where:{
+          userId: req.user.id,
+          postId: post.id,
+        },
       }).then((bid) => {
-        res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
+        if(bid){
+          if(bid.price < req.body.price)
+            res.render('posts/new-bid',{poster: req.body.username, slug: post.slug, higherBid: true});
+          else{  
+            models.Bid.update({
+              price: req.body.price,
+            },
+            {
+            where: {
+              userId: req.user.id,
+              postId: post.id,
+            },
+            returning: true,
+            }).then(() => {
+              res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
+            });
+          }
+        }
+        else{
+          req.user.createBid({
+            price: req.body.price,
+            postId: post.id,
+          }).then((bid) => {
+            res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
+          });
+        }
       });
     }).catch(() => {
-        res.render(`/posts/${req.body.username}/${req.body.slug}/new-bid`);
+        res.redirect(`/posts/${req.body.username}/${req.body.slug}/new-bid`);
     });
   },
 
   showPost(req, res) {
+    models.Post.findOne({
+      where: {
+        slug: req.params.slug,
+      },
+      include: [{
+        model: models.User,
+        where: {
+          username: req.params.username,
+        },
+      }],
+    }).then((post) => {
+      models.Bid.findOne({
+        where:{
+          postId: post.id,
+        },
+        attributes:[
+          [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
+        ],
+      }).then((bid) => {
+        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'));
+      });
+    });
+  },
+
+  review(req, res) {
     models.Post.findOne({
       where: {
         slug: req.params.slug,
