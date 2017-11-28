@@ -4,7 +4,6 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
           <h4>Create A New Post</h4>
-          <hr class="small">
         </div>
       </div>
     </div>
@@ -31,6 +30,10 @@
           </div>
         </div>
         <div class="row control-group">
+          <label>Tags</label>
+          <div class="chips chips-placeholder"></div>
+        </div>
+        <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Biding Deadline</label>
             <input type="datetime-local" class="form-control" name="bidingDeadline"  required data-validation-required-message="Please enter a date and time.">
@@ -47,10 +50,47 @@
         <br>
         <div class="row">
           <div class="form-group col-xs-12">
-              <button type="submit" class="btn btn-default">Send</button>
+              <button type="submit" class="btn btn-default">Create</button>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $('.chips').material_chip();
+  $('.chips-initial').material_chip({
+    data: [{
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').material_chip({
+    placeholder: 'Enter tag',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('.chips-autocomplete').material_chip({
+    autocompleteOptions: {
+      data: {
+        'Apple': null,
+        'Microsoft': null,
+        'Google': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
+  $('.chips').on('chip.add', function(e, chip){
+      // alert("You Have added chip");
+     });
+});
+  
+</script>
+
