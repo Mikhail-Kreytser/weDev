@@ -26,18 +26,17 @@
       {{/if}}
       {{#if owner}}
         <div class="update-post">
-          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+          <a id="btn" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
         </div>
 
-        <div class="update-post">
-          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner">Choose Winner</a>
-        </div>
       {{/if}}
     </div> 
   </div>
 </div>
 
 <script>
+    
+
   var countDownDate = new Date("{{post.bidingDeadline}}").getTime();
   var x = setInterval(function() {
     var now = new Date().getTime();
@@ -51,6 +50,8 @@
     if (distance < 0) {
         clearInterval(x);
         document.getElementById("countDown").innerHTML = "EXPIRED";
+        document.getElementById("btn").href="/posts/{{user.username}}/{{post.slug}}/reviewWinner";
+        document.getElementById("btn").innerHTML = "Choose Winner";
     }
   }, 1000);
 </script>

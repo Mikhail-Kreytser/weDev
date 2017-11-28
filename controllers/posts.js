@@ -133,15 +133,16 @@ module.exports = {
         },
       }],
     }).then((post) => {
-      models.Bid.findOne({
+      models.Bid.findAll({
         where:{
           postId: post.id,
         },
-        attributes:[
-          [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
-        ],
-      }).then((bid) => {
-        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'));
+        //order: models.sequelize.fn('max', models.sequelize.col('price')),
+        include: [{
+        model: models.User,
+        }],
+      }).then((bids) => {
+        (post ? res.render('posts/review', { post, user: post.user, bids: (bids) ? bids : "No Bids" }) : res.redirect('/posts'));
       });
     });
   },
