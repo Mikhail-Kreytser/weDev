@@ -70,9 +70,11 @@
     <div class="row">
       {{#each topDevelopers}}
         <div class="col s4">
-          <p>{{this.username}}</p>
-          <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
-          <p>{{this.profile.firstName}}</p>
+          <a href="/profile/{{this.username}}">
+            <p><font color="black">{{this.username}}</p></font>
+            <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
+            <p><font color="black">{{this.profile.firstName}}</font></p>
+          </a>
         </div>
       {{/each}}
     </div>
@@ -81,9 +83,11 @@
     <div class="row">
        {{#each topCustomers}}
         <div class="col s4">
-          <p>{{this.username}}</p>
-          <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
-          <p>{{this.profile.firstName}}</p>
+          <a href="/profile/{{this.username}}">
+            <p><font color="black">{{this.username}}</p></font>
+            <img src="/profile_pics/{{this.profile.profileImage}}" class="circle responsive-img z-depth-5 hoverable" alt="" style="width:100px">
+            <p><font color="black">{{this.profile.firstName}}</font></p>
+          </a>
         </div>
       {{/each}}
       </div>

@@ -14,6 +14,7 @@ module.exports = {
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
     router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
+    router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
     router.get('/:username/:slug/new-bid',  Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'),
@@ -50,6 +51,48 @@ module.exports = {
       res.redirect(`/posts/${req.user.username}/${post.slug}/`);
     }).catch(() => {
       res.render('posts/new-post');
+    });
+  },
+
+  order(req, res){
+    models.Post.findOne({
+      where:{
+        id: req.body.postId,
+      },
+    }).then((post) => {
+      models.WorkOrder.create({
+        comment: req.body.comment,
+        confirmed: req.body.confirmed,
+        userId: req.body.userId,
+        postId: post.id,
+      }).then((workOrder) => {
+        if(workOrder.confirmed){
+          models.User.findOne({
+            where:{
+              id:req.body.userId,
+            },
+            include:[{
+              model: models.Wallet,
+            }],
+          }).then((developer) => {
+            models.User.findOne({
+              where:{
+                id:post.userId,
+              },
+              include:[{
+                model: models.Wallet,
+              }],
+            }).then((customer) => {
+              console.log("created workOrder, got dev and cus objects... need to transfer money...");
+              res.redirect('/posts');
+            });
+          });
+        }
+        else{
+          console.log("created workOrder, but it needs approval");
+          res.redirect('/posts');
+        }
+      });
     });
   },
 
@@ -183,7 +226,7 @@ module.exports = {
             var isCheapestBid = false;
             if(cheapestBid.price == winnersBid.price)
               isCheapestBid = true;
-            (post ? res.render('posts/review/winner', { post, user: post.user, winnersBid, isCheapestBid}) : res.redirect('/posts'));
+            (post ? res.render('posts/review/winner', { post, user: post.user, winningUser, winnersBid, isCheapestBid}) : res.redirect('/posts'));
           });
         });
       });

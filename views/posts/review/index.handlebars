@@ -22,9 +22,8 @@
       
 
       <ul id="myUL">  
-      {{cur_user.username}}
       {{#each bids}}
-        <li>here      {{cur_user.username}}
+        <li>
           <input type="button" name="theButton" value="Detail" onclick="myButton('{{this.user.username}}');">
               <h7 class="col s4">{{this.user.username}}</h7>
               <span class="new badge red" data-badge-caption="&nbsp;{{this.price}} &nbsp"></span>
