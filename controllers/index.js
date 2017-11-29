@@ -20,6 +20,14 @@ router.get('/', (req, res) => {
       limit: 3,
   	  where:{
   		  accountType: "Developer",
+        accountStatus: {
+          [Op.or]:{
+            [Op.eq]:"Pending",
+            [Op.or]:{
+              [Op.eq]:"Approved"
+            },
+          },  
+        },
   	  },
   	  include: [{
   		  model: models.Profile,
@@ -37,6 +45,14 @@ router.get('/', (req, res) => {
       limit: 3,
       where:{
         accountType: "Customer",
+        accountStatus: {
+          [Op.or]:{
+            [Op.eq]:"Pending",
+            [Op.or]:{
+              [Op.eq]:"Approved"
+            },
+          },  
+        },
       },
       include: [{
         model: models.Profile,
@@ -51,6 +67,16 @@ router.get('/', (req, res) => {
       ], 
     }).then((topCustomers) => {
       models.User.findAndCountAll({
+        where:{
+          accountStatus: {
+            [Op.or]:{
+              [Op.eq]:"Pending",
+              [Op.or]:{
+                [Op.eq]:"Approved"
+              },
+            },  
+          },
+        },
       }).then((totalUsers) => {
         models.User.findAndCountAll({
           where:{
