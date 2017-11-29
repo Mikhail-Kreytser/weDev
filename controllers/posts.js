@@ -7,12 +7,13 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/',     Redirect.ifNotLoggedIn(), this.index);
+    router.get('/', this.index);
     router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.newPost);
     router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.createPost);
     router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
+    router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
     router.get('/:username/:slug/new-bid',  Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'),
@@ -143,6 +144,48 @@ module.exports = {
         }],
       }).then((bids) => {
         (post ? res.render('posts/review', { post, user: post.user, bids: (bids) ? bids : "No Bids" }) : res.redirect('/posts'));
+      });
+    });
+  },
+
+  pick(req,res){
+    console.log(req.params.winnersName);
+    models.Post.findOne({
+      where: {
+        slug: req.params.slug,
+      },
+      include: [{
+        model: models.User,
+        where: {
+          username: req.params.username,
+        },
+      }],
+    }).then((post) => {
+      models.Bid.findOne({
+        where:{
+          postId: post.id,
+        },
+        attributes:[
+          [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
+        ],
+      }).then((cheapestBid) => {
+        models.User.findOne({
+          where:{
+            username: req.params.winnersName,
+          },
+        }).then((winningUser) =>{
+          models.Bid.findOne({
+            where:{
+              userId: winningUser.id,
+              postId: post.id,
+            },
+          }).then((winnersBid) =>{
+            var isCheapestBid = false;
+            if(cheapestBid.price == winnersBid.price)
+              isCheapestBid = true;
+            (post ? res.render('posts/review/winner', { post, user: post.user, winnersBid, isCheapestBid}) : res.redirect('/posts'));
+          });
+        });
       });
     });
   },

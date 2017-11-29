@@ -1,0 +1,63 @@
+<header class="intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h4>{{post.title}}</h4>
+          <hr class="small">
+          <span class="subheading">By: {{user.username}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <p>Current Bid: {{currentBid}}</p>
+      <p class="col-xs-3">Time left to bid:</p>
+      <p id="countDown" class="col-xs-9" ></p>
+      <p>{{post.body}}</p>
+      {{#if isCheapestBid}}
+        <h1>IT IS THE CHEAPEST ok</h1>
+      {{else}}
+        <h1>NOT THE CHEAPEST ok</h1>
+      {{/if}}
+
+      {{#if developer}}
+        <div class="create-post">
+          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
+        </div>
+      {{/if}}
+      {{#if owner}}
+        <div class="update-post">
+          <a id="btn" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+        </div>
+
+      {{/if}}
+    </div> 
+  </div>
+</div>
+
+<script>
+    
+
+  var countDownDate = new Date("{{post.bidingDeadline}}").getTime();
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countDown").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countDown").innerHTML = "EXPIRED";
+        document.getElementById("btn").href="/posts/{{user.username}}/{{post.slug}}/reviewWinner";
+        document.getElementById("btn").innerHTML = "Choose Winner";
+    }
+  }, 50);
+</script>
