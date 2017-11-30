@@ -60,41 +60,84 @@ module.exports = {
         id: req.body.postId,
       },
     }).then((post) => {
-      models.WorkOrder.create({
-        comment: req.body.comment,
-        confirmed: req.body.confirmed,
-        userId: req.body.userId,
-        postId: post.id,
-      }).then((workOrder) => {
-        if(workOrder.confirmed){
-          models.User.findOne({
+      models.User.findOne({
+        where:{
+          id:post.userId,
+        },
+        include:[{
+          model: models.Wallet,
+        }],
+      }).then((customer) => {
+        models.User.findOne({
+          where:{
+            id:req.body.userId,
+          },
+          include:[{
+            model: models.Wallet,
+          }],
+        }).then((developer) => {
+          models.Bid.findOne({
             where:{
-              id:req.body.userId,
+              postId: post.id,
+              userId: developer.id,
             },
-            include:[{
-              model: models.Wallet,
-            }],
-          }).then((developer) => {
-            models.User.findOne({
-              where:{
-                id:post.userId,
-              },
-              include:[{
-                model: models.Wallet,
-              }],
-            }).then((customer) => {
-              console.log("created workOrder, got dev and cus objects... need to transfer money...");
-              res.redirect('/posts');
+          }).then((winningBid) => {
+            if(customer.wallet.amountDeposited < winningBid.price){
+              console.log("not enough money");
+            }
+            else{
+              models.WorkOrder.create({
+                comment: req.body.comment,
+                confirmed: req.body.confirmed,
+                userId: req.body.userId,
+                postId: post.id,
+              }).then((workOrder) => {
+                if(workOrder.confirmed){
+                  var half = winningBid.price/2 ;
+                  models.Wallet.update({
+                      amountDeposited: (customer.wallet.amountDeposited - half),
+                      creditCardNumber: customer.wallet.creditCardNumber,
+                      cvv: customer.wallet.cvv,
+                      expirationDate: customer.wallet.expirationDate,
+                      zipCode: customer.wallet.zipCode,
+                    },
+                    {
+                    where: {
+                      userId: customer.id,
+                    },
+                    returning: true,
+                  }).then(([numRows, rows]) => {
+                    models.Wallet.update({
+                      amountDeposited: (developer.wallet.amountDeposited + half),
+                      creditCardNumber: developer.wallet.creditCardNumber,
+                      cvv: developer.wallet.cvv,
+                      expirationDate: developer.wallet.expirationDate,
+                      zipCode: developer.wallet.zipCode,
+                    },
+                    {
+                    where: {
+                      userId: developer.id,
+                    },
+                    returning: true,
+                  }).then(([numRows, rows]) => {
+                    console.log("created workOrder, money transfered");
+                    res.redirect('/posts');
+                  });
+                });
+              }
+              else{
+                console.log("created workOrder, but it needs approval");
+                res.redirect('/posts');
+              }
             });
-          });
-        }
-        else{
-          console.log("created workOrder, but it needs approval");
-          res.redirect('/posts');
-        }
+          }
+        });
       });
     });
+    });
   },
+
+      
 
   createBid(req, res) {
     models.Post.findOne({
