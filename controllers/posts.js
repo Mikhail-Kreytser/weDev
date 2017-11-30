@@ -14,6 +14,7 @@ module.exports = {
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
     router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
+    router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
     router.get('/:username/:slug/new-bid',  Redirect.ifNotLoggedIn(), Redirect.ifNotDeveloper('/posts'),
@@ -52,6 +53,91 @@ module.exports = {
       res.render('posts/new-post');
     });
   },
+
+  order(req, res){
+    models.Post.findOne({
+      where:{
+        id: req.body.postId,
+      },
+    }).then((post) => {
+      models.User.findOne({
+        where:{
+          id:post.userId,
+        },
+        include:[{
+          model: models.Wallet,
+        }],
+      }).then((customer) => {
+        models.User.findOne({
+          where:{
+            id:req.body.userId,
+          },
+          include:[{
+            model: models.Wallet,
+          }],
+        }).then((developer) => {
+          models.Bid.findOne({
+            where:{
+              postId: post.id,
+              userId: developer.id,
+            },
+          }).then((winningBid) => {
+            if(customer.wallet.amountDeposited < winningBid.price){
+              console.log("not enough money");
+            }
+            else{
+              models.WorkOrder.create({
+                comment: req.body.comment,
+                confirmed: req.body.confirmed,
+                userId: req.body.userId,
+                postId: post.id,
+              }).then((workOrder) => {
+                if(workOrder.confirmed){
+                  var half = winningBid.price/2 ;
+                  models.Wallet.update({
+                      amountDeposited: (customer.wallet.amountDeposited - half),
+                      creditCardNumber: customer.wallet.creditCardNumber,
+                      cvv: customer.wallet.cvv,
+                      expirationDate: customer.wallet.expirationDate,
+                      zipCode: customer.wallet.zipCode,
+                    },
+                    {
+                    where: {
+                      userId: customer.id,
+                    },
+                    returning: true,
+                  }).then(([numRows, rows]) => {
+                    models.Wallet.update({
+                      amountDeposited: (developer.wallet.amountDeposited + half),
+                      creditCardNumber: developer.wallet.creditCardNumber,
+                      cvv: developer.wallet.cvv,
+                      expirationDate: developer.wallet.expirationDate,
+                      zipCode: developer.wallet.zipCode,
+                    },
+                    {
+                    where: {
+                      userId: developer.id,
+                    },
+                    returning: true,
+                  }).then(([numRows, rows]) => {
+                    console.log("created workOrder, money transfered");
+                    res.redirect('/posts');
+                  });
+                });
+              }
+              else{
+                console.log("created workOrder, but it needs approval");
+                res.redirect('/posts');
+              }
+            });
+          }
+        });
+      });
+    });
+    });
+  },
+
+      
 
   createBid(req, res) {
     models.Post.findOne({
@@ -183,7 +269,7 @@ module.exports = {
             var isCheapestBid = false;
             if(cheapestBid.price == winnersBid.price)
               isCheapestBid = true;
-            (post ? res.render('posts/review/winner', { post, user: post.user, winnersBid, isCheapestBid}) : res.redirect('/posts'));
+            (post ? res.render('posts/review/winner', { post, user: post.user, winningUser, winnersBid, isCheapestBid}) : res.redirect('/posts'));
           });
         });
       });
