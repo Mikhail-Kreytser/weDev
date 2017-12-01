@@ -42,11 +42,19 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     tag: {
-      type: DataTypes.ARRAY(DataTypes.TEXT) ,
+      type: DataTypes.STRING,
       allowNull: true,
         validate: {
           //notEmpty: true,
         },
+    },
+    closed:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      validate: {
+        notEmpty: true,
+      },
     },
   });
 

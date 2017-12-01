@@ -91,6 +91,7 @@ module.exports = {
                 confirmed: req.body.confirmed,
                 userId: req.body.userId,
                 postId: post.id,
+                price: winningBid.price,
               }).then((workOrder) => {
                 if(workOrder.confirmed){
                   var half = winningBid.price/2 ;

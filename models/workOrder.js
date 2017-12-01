@@ -10,6 +10,30 @@ module.exports = (sequelize, DataTypes) => {
     confirmed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false, 
+      validate: {
+        notEmpty: true,
+      },
+    },
+    price: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    complete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    closed:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
       validate: {
         notEmpty: true,
       },

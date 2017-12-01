@@ -1,0 +1,61 @@
+<head runat="server">
+    <title></title>
+    <script type="text/javascript" language="JavaScript">
+
+        var secs;
+        var timerID = null;
+        var timerRunning = false;
+        var delay = 50;
+
+        function InitializeTimer(seconds) {
+            // Set the length of the timer, in seconds
+            secs = seconds;
+            StopTheClock();
+            StartTheTimer();
+        }
+
+        function StopTheClock() {
+            if (timerRunning)
+                clearTimeout(timerID);
+            timerRunning = false;
+        }
+
+        function StartTheTimer() {
+            if (secs == 0) {
+                StopTheClock();
+                // Here's where you put something useful that's
+                // supposed to happen after the allotted time.
+                // For example, you could display a message:
+                window.location.href = window.location.href;
+            }
+            else {
+                self.status = 'Remaining: ' + secs;
+                document.getElementById("lbltime").innerText = secs + " ";
+                secs = secs - 1;
+                timerRunning = true;
+                timerID = self.setTimeout("StartTheTimer()", delay);
+            }
+        }
+    </script>
+</head>
+
+
+
+
+<header class="intro-header">
+  <h3>Running Live Database</h3>
+  <span class="subheading"><i id="header-logo" class="material-icons">data_usage</i></span>
+</header>
+
+<body onload="InitializeTimer(100)">
+    <form id="form1" runat="server">
+    <div>
+        <font>This page will be refreshed after
+            <asp:Label ID="lbltime" runat="server" Style="font-weight: bold;"></asp:Label></font>
+  
+    </div>
+    </form>
+    <div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+</body>
