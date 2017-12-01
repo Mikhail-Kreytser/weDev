@@ -121,8 +121,14 @@ module.exports = {
                     },
                     returning: true,
                   }).then(([numRows, rows]) => {
-                    console.log("created workOrder, money transfered");
-                    res.redirect('/posts');
+                    models.SystemMessage.create({
+                      userId: developer.id,
+                        comment: "Congratulations! You have been chosen to develop: " + post.title,
+                        seen: false, 
+                    }).then((systemMessage) => {
+                      console.log("created workOrder, money transfered");
+                      res.redirect('/posts');
+                    });
                   });
                 });
               }
