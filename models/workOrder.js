@@ -7,6 +7,13 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    price: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     confirmed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -15,14 +22,15 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    price: {
-      type: DataTypes.DOUBLE,
+    complete: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
       validate: {
         notEmpty: true,
       },
     },
-    complete: {
+    reviewPending: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
@@ -38,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+
   });
 
   WorkOrder.associate = (models) => {
