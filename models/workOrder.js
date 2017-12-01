@@ -46,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-
   });
 
   WorkOrder.associate = (models) => {

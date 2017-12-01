@@ -49,10 +49,6 @@ module.exports = {
 			    	}).then((admin) => {
 			    		models.Wallet.update({
 		                    amountDeposited: (customer.wallet.amountDeposited - 10),
-		                    creditCardNumber: customer.wallet.creditCardNumber,
-		                    cvv: customer.wallet.cvv,
-		                    expirationDate: customer.wallet.expirationDate,
-		                    zipCode: customer.wallet.zipCode,
 		                },
 		                {
 		                	where: {
@@ -62,10 +58,6 @@ module.exports = {
 		                }).then(() => {
 		                    models.Wallet.update({
 		                      	amountDeposited: (admin.wallet.amountDeposited + 10),
-		                      	creditCardNumber: admin.wallet.creditCardNumber,
-		                      	cvv: admin.wallet.cvv,
-		                      	expirationDate: admin.wallet.expirationDate,
-		                      	zipCode: admin.wallet.zipCode,
 		                    },
 		                    {
 		                    	where: {
@@ -118,19 +110,12 @@ module.exports = {
   	}).then((posts) => {
   		var totalPosts = posts.length;
   		for( i =0; i < totalPosts; i++){
-  			var reviewPendingWO = posts[i].workOrder.reviewPending;
-            var confirmedWO = posts[i].workOrder.confirmed;
-  			var commentWO 	= posts[i].workOrder.comment;
             var userIdWO 	= posts[i].workOrder.userId;
-            var postIdWO 	= posts[i].workOrder.postid;
             var priceWO 	= posts[i].workOrder.price;
             var idWO 		= posts[i].workOrder.id;
   			var slugP = posts[i].slug;
   			var titleP = posts[i].title;
   			var userIdP = posts[i].userId;
-  			var bodyP = posts[i].body;
-  			var completionDeadlineP = posts[i].completionDeadline;
-  			var bidingDeadlineP = posts[i].bidingDeadline;
 
   			models.User.findOne({
 			    where:{
@@ -153,10 +138,6 @@ module.exports = {
 					half += penalty;
 	                models.Wallet.update({
 	                    amountDeposited: (customer.wallet.amountDeposited + half),
-	                    creditCardNumber: customer.wallet.creditCardNumber,
-	                    cvv: customer.wallet.cvv,
-	                    expirationDate: customer.wallet.expirationDate,
-	                    zipCode: customer.wallet.zipCode,
 	                },
 	                {
 	                	where: {
@@ -167,10 +148,6 @@ module.exports = {
 	                	console.log("added money to cus");
 	                    models.Wallet.update({
 	                    	amountDeposited: (developer.wallet.amountDeposited - half),
-	                      	creditCardNumber: developer.wallet.creditCardNumber,
-	                      	cvv: developer.wallet.cvv,
-	                      	expirationDate: developer.wallet.expirationDate,
-	                      	zipCode: developer.wallet.zipCode,
 	                    },
 	                    {
 	                    	where: {
@@ -180,11 +157,6 @@ module.exports = {
 	                  	}).then(() => {
 	                	console.log("took away money to dev");
 	                  		models.Post.update({
-							    title: titleP,
-							    slug: slugP,
-							    body: bodyP,
-							    completionDeadline: completionDeadlineP,
-							    bidingDeadline: bidingDeadlineP,
 							    closed: true,
 							},
 							{
@@ -200,12 +172,6 @@ module.exports = {
 							    returning: true,
 							}).then(() => {
 								models.WorkOrder.update({
-									reviewPending: reviewPendingWo,
-					                confirmed: confirmedWO,
-									comment: commentWO,
-					                userId: userIdWO,
-					                postId: postIdWO,
-					                price: priceWO,
 					                closed: true,
 					            },
 					            {
@@ -255,20 +221,9 @@ module.exports = {
   	}).then((posts) => {
   		var totalPosts = posts.length;
   		for( i =0; i < totalPosts; i++){
-  			var reviewPending = posts[i].workOrder.reviewPending;
-            var confirmedWO   = posts[i].workOrder.confirmed;
-  			var commentWO 	  = posts[i].workOrder.comment;
-            var userIdWO 	  = posts[i].workOrder.userId;
-            var postIdWO 	  = posts[i].workOrder.postid;
-            var priceWO 	  = posts[i].workOrder.price;
-            var idWO 		  = posts[i].workOrder.id;
-  			var completionDeadlineP = posts[i].completionDeadline;
-  			var bidingDeadlineP 	= posts[i].bidingDeadline;
-  			var userIdP 			= posts[i].userId;
-  			var closedP				= posts[i].closed;
-  			var titleP 				= posts[i].title;
-  			var slugP 				= posts[i].slug;
-  			var bodyP 				= posts[i].body;
+            var priceWO 	= posts[i].workOrder.price;
+            var idWO 		= posts[i].workOrder.id;
+  			var titleP 		= posts[i].title;
 
   			models.User.findOne({
 			    where:{
@@ -289,10 +244,6 @@ module.exports = {
 					var half = priceWO/2;
 		    		models.Wallet.update({
 	                    amountDeposited: (customer.wallet.amountDeposited - half),
-	                    creditCardNumber: customer.wallet.creditCardNumber,
-	                    cvv: customer.wallet.cvv,
-	                    expirationDate: customer.wallet.expirationDate,
-	                    zipCode: customer.wallet.zipCode,
 	                },
 	                {
 	                	where: {
@@ -302,10 +253,6 @@ module.exports = {
 	                }).then(() => {
 	                    models.Wallet.update({
 	                      	amountDeposited: (admin.wallet.amountDeposited + half),
-	                      	creditCardNumber: admin.wallet.creditCardNumber,
-	                      	cvv: admin.wallet.cvv,
-	                      	expirationDate: admin.wallet.expirationDate,
-	                      	zipCode: admin.wallet.zipCode,
 	                    },
 	                    {
 	                    	where: {
@@ -313,50 +260,24 @@ module.exports = {
 	                    	},
 	                    	returning: true,
 	                  	}).then(() => {
-	                  		models.Post.update({
-							    completionDeadline: completionDeadlineP,
-							    bidingDeadline: bidingDeadlineP,
-							    closed: closedP,
-							    title: titleP,
-							    slug: slugP,
-							    body: bodyP,
-							},
-							{
-							    where: {
-								    slug: slugP,
-							    },
-							    include: [{
-							        model: models.User,
-							        where: {
-							    	    id: userIdP,
-							        },
-							    }],
-							    returning: true,
-							}).then(() => {
-								models.WorkOrder.update({
-					                confirmed: confirmedWO,
-									reviewPending: true,
-									comment: commentWO,
-					                userId: userIdWO,
-					                postId: postIdWO,
-					                price: priceWO,
-					                closed: false,
-					            },
-					            {
-					            	where: {
-					            		id: idWO,
-					            	},
-					            	returning: true,
-								}).then(() =>{
-									models.SystemMessage.create({
-								    	userId: customer.id,
-									  	comment: "The developer has finished the project: "+ titleP +". Please review his work and rate it.",
-									   	seen: false, 
-									}).then((systemMessage) => {
-									  	console.log("add rating");
-									});
+							models.WorkOrder.update({
+								reviewPending: true,
+				                closed: false,
+				            },
+				            {
+				            	where: {
+				            		id: idWO,
+				            	},
+				            	returning: true,
+							}).then(() =>{
+								models.SystemMessage.create({
+							    	userId: customer.id,
+								  	comment: "The developer has finished the project: "+ titleP +". Please review his work and rate it.",
+								   	seen: false, 
+								}).then((systemMessage) => {
+								  	console.log("add rating");
 								});
-	                  		});
+							});
 	                  	});
 	                });
 			    });
