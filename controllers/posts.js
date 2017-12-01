@@ -14,6 +14,8 @@ module.exports = {
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
     router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
+    router.get('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReview);
+    router.post('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReview);
     router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
@@ -210,7 +212,21 @@ module.exports = {
           [models.sequelize.fn('min', models.sequelize.col('price')),'price'],
         ],
       }).then((bid) => {
-        (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet" }) : res.redirect('/posts'));
+        models.WorkOrder.findAll({
+          where: {
+            postId: post.id,
+          },
+        }).then((workOrder) => {
+          var workOrderCreated = false;
+          var reviewPending = false;
+          if (workOrder.length > 0){
+            workOrderCreated = true;
+            reviewPending = workOrder[0].reviewPending;
+            closed = workOrder[0].closed
+          }
+
+          (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet", reviewPending , workOrderCreated, closed }) : res.redirect('/posts'));
+        });
       });
     });
   },
@@ -241,8 +257,115 @@ module.exports = {
     });
   },
 
+  createReview(req,res) {
+    models.Post.findOne({
+      where: {
+        slug: req.params.slug,
+      },
+      include: [{
+        model: models.User,
+        where: {
+          username: req.params.username,
+        },
+      }],
+    }).then((post) => {
+      models.WorkOrder.findOne({
+        where:{
+          postId: post.id,
+        },
+      }).then((workOrder) => {
+        if (workOrder.complete && workOrder.reviewPending && !workOrder.closed)
+          models.User.findOne({
+            where: {
+              id: workOrder.userId,
+            },
+            include: [{
+              model: models.Profile,
+            }]
+          }).then((userBeingReviewed) => {
+            res.render('posts/review/create-review', {poster: req.params.username, slug: req.params.slug, post, workOrder, userBeingReviewed});
+          });
+      });
+    });
+  },
+
+  postReview(req, res) {
+    models.User.findOne({
+      where:{
+        username: req.params.winnersName,
+      },
+      include:[{
+        model: models.Wallet,
+      }],  
+    }).then((developer) => {
+      models.Review.create({
+        comment: req.body.comment,
+        rating: req.body.rating,
+        ownerId: req.user.id,
+        recipientId: developer.id,
+      }).then((review)=> {
+        if(review.rating >= 3){
+          models.Post.findOne({
+            where: {
+              slug: req.params.slug,
+            },
+          }).then((post)=>{
+            models.WorkOrder.findOne({
+              where: {
+                postId:post.id,
+                userId:developer.id,
+              },
+            }).then((workOrder)=>{
+              console.log(workOrder);
+              console.log(workOrder.price);
+              var half = workOrder.price/2;
+              var fee = workOrder.price * 0.05;
+              models.Wallet.update({
+                amountDeposited: (developer.wallet.amountDeposited + (half - fee)),
+              },
+              {
+                where: {
+                    userId: developer.id,
+                  },
+                returning: true,
+              }).then(() => {
+                models.User.findOne({
+                  where:{
+                    username: "Admin",
+                  },
+                  include:[{
+                    model: models.Wallet,
+                  }],  
+                }).then((admin) => {
+                  models.Wallet.update({
+                    amountDeposited: (admin.wallet.amountDeposited - (half - fee)),
+                  },
+                  {
+                    where: {
+                      userId: admin.id,
+                    },
+                    returning: true,
+                  }).then(() => {
+                    workOrder.update({
+                      closed: true,
+                    }).then(() => {
+                      post.update({
+                        closed: true,
+                      }).then(() => {
+                        res.redirect('/');
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        }
+      });
+    });
+  },
+
   pick(req,res){
-    console.log(req.params.winnersName);
     models.Post.findOne({
       where: {
         slug: req.params.slug,

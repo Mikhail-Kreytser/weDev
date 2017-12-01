@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Revew = sequelize.define('revew', {
+  const Review = sequelize.define('review', {
     comment: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
+
+  Review.associate = (models) => {
+    models.Review.belongsTo(models.User,{as: 'owner'});
+    models.Review.belongsTo(models.User,{as: 'recipient'});
+  };
      
-  return Revew;
+  return Review;
 
 };

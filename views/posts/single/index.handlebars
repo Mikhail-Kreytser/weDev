@@ -24,11 +24,25 @@
           <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
         </div>
       {{/if}}
-      {{#if owner}}
-        <div class="update-post">
-          <a id="btn" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
-        </div>
 
+      {{#if owner}}
+        {{#if workOrderCreated}}
+            {{#if closed}}
+              <h1>The project has been completed</h1>
+            {{else}}
+              {{#if reviewPending}}
+                <div class="review-developer">
+                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{user.username}}/review">Review Developer </a>
+                </div>
+              {{else}}
+                <h1>Please wait for the Developer to finish the project</h1>
+              {{/if}}
+            {{/if}}
+        {{else}}
+          <div class="update-post">
+            <a id="btn" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+          </div>
+        {{/if}}
       {{/if}}
     </div> 
   </div>
