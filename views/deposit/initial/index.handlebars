@@ -11,49 +11,28 @@
       {{/if}}
       
       <h5 class="center-align red-text">A minimum of $200 must be deposited in order to join weDev</h5>
- 
-      <form name="deposit" action="/deposit/" method="post">
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Deposit</label>
-            <input type="text" name="amountDeposited" class="form-control" value="200" required data-validation-required-message="Please enter the amount.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Credit Card Number</label>
-            <input type="text" name="creditCardNumber"  class="form-control" value="1234123412341234" required data-validation-required-message="Please enter the credit card number.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>expirationDate</label>
-            <input type="date" name="expirationDate" class="form-control"  required data-validation-required-message="Please enter the amount.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>cvv</label>
-            <input type="text" name="cvv" class="form-control" value="200" required data-validation-required-message="Please enter the amount.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Zip Code</label>
-            <input type="text" name="zipCode" class="form-control" value="12345" required data-validation-required-message="Please enter the amount.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-xs-12">
+      <form class="checkout" name="deposit" action="/deposit/" method="post">
+    <div class="checkout-header">
+      <h1 class="checkout-title">
+        Deposit Initial Funds
+        <span class="checkout-price">$200</span>
+      </h1>
+    </div>
+    <p>
+      <input type="text" name="amountDeposited" class="checkout-input checkout-name" placeholder="200" autofocus required>
+      <input type="date" name="expirationDate" class="checkout-input checkout-exp" required data-validation-required-message="Please enter expiration date.">
+      <input type="text" name="zipCode" class="checkout-input checkout-exp" maxlength="5" placeholder="Zip Code" required data-validation-required-message="Please enter zip code.">
+    </p>
+    <p>
+      <input type="text" name="creditCardNumber" class="checkout-input checkout-card" maxlength="16" placeholder="4111 1111 1111 1111" data-validation-required-message="Please enter the credit card number." required>
+      <input type="text" name="cvv" class="checkout-input checkout-cvc" maxlength="3" data-validation-required-message="Please enter the amount." placeholder="CVV" required>
+    </p>
+    <p>
+      <div class="form-group col-xs-12">
               <button type="submit" class="btn">Login</button>
           </div>
-        </div>
-      </form>
+    </p>
+  </form>
     </div>
   </div>
 </div>

@@ -19,6 +19,8 @@
       <p class="col-xs-3">Time left to bid:</p>
       <p id="countDown" class="col-xs-9" ></p>
       <p>{{post.body}}</p>
+      <br>
+      <p>Tags: <span id="postTags"></span></p>
       {{#if developer}}
         <div class="create-post">
           <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
