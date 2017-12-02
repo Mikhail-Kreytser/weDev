@@ -1,5 +1,5 @@
 <header class="intro-header">
-  <h3>Login</h3>
+  <h3>Sign Up</h3>
   <span class="subheading"><i id="header-logo" class="material-icons">data_usage</i></span>
 </header>
 
@@ -15,11 +15,11 @@
     <div class="checkout-header">
       <h1 class="checkout-title">
         Deposit Initial Funds
-        <span class="checkout-price">$200</span>
+        <span id="checkout" style="font-size: 11px" class="checkout-price" >$200</span>
       </h1>
     </div>
     <p>
-      <input type="text" name="amountDeposited" class="checkout-input checkout-name" placeholder="200" autofocus required>
+      <input type="number" onkeyup="money()" name="amountDeposited" class="checkout-input checkout-name" placeholder="200" id="deposit" min="200" step="1.0" autofocus required>
       <input type="date" name="expirationDate" class="checkout-input checkout-exp" required data-validation-required-message="Please enter expiration date.">
       <input type="text" name="zipCode" class="checkout-input checkout-exp" maxlength="5" placeholder="Zip Code" required data-validation-required-message="Please enter zip code.">
     </p>
@@ -29,10 +29,26 @@
     </p>
     <p>
       <div class="form-group col-xs-12">
-              <button type="submit" class="btn">Login</button>
+              <button type="submit" class="btn">Finish Deposit</button>
           </div>
     </p>
   </form>
     </div>
   </div>
 </div>
+
+<script>
+  function money(){
+    var curValue = document.getElementById("deposit").value;
+    if(curValue < 200)
+      document.getElementById("checkout").innerHTML = "$200"
+    else if(curValue < 1000)
+      document.getElementById("checkout").innerHTML = "$" + curValue;
+    else if(curValue < 1000000)
+      if(curValue%1000 == 0 || curValue/1000 > 99)
+        document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(0) +"K";
+      else
+        document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(1) +"K";
+
+  }
+</script>
