@@ -16,7 +16,11 @@ module.exports = {
   index(req, res) {
     req.user.getProfile()
     .then((profile) => {
-      res.render('profile', {user: req.user, profile: profile, owner: true });
+      var rating = profile.rating;
+      if(profile.rating == 0)
+        rating = "No reviews"
+
+          res.render('profile', {user: req.user, profile: profile, owner: true, rating:rating});
     });
   },
 
@@ -65,8 +69,12 @@ module.exports = {
     }).then((user) =>{
       if (user.accountType == "Admin" || user.accountStatus != "Approved")
         res.redirect('/');
-      else
-        res.render('profile', {username: user.username, accountType: user.accountType, profile: user.profile});
+      else{
+        var rating = user.profile.rating;
+        if(profile.rating == 0)
+          rating = "No reviews"
+        res.render('profile', {username: user.username, accountType: user.accountType, profile: user.profile, rating:rating});
+      } 
     }).catch(() =>{
       res.redirect('/login');
     });

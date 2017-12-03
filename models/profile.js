@@ -33,13 +33,15 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    rating:{
-      type :DataTypes.DOUBLE,
+    rating: {
+      type: DataTypes.DOUBLE,
       allowNull: false,
+      defaultValue: 0,
       validate: {
         max: 5,
         min: 0,
       },
+
     },
   });
 

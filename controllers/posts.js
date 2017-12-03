@@ -329,8 +329,6 @@ module.exports = {
                 userId:developer.id,
               },
             }).then((workOrder)=>{
-              console.log(workOrder);
-              console.log(workOrder.price);
               var half = workOrder.price/2;
               var fee = workOrder.price * 0.05;
               models.Wallet.update({
@@ -437,9 +435,11 @@ module.exports = {
           username: req.params.username,
         },
       }],
-    }).then((post) =>
-      (post ? res.render('posts/edit', { post }) : res.redirect('/posts'))
-    );
+    }).then((post) => {
+      var completionDeadline = post.completionDeadline.toISOString().substring(0, 16);
+      var bidingDeadline = post.bidingDeadline.toISOString().substring(0, 16);
+      (post ? res.render('posts/edit', { post, completionDeadline, bidingDeadline }) : res.redirect('/posts'))
+    });
   },
 
   update(req, res) {
@@ -448,7 +448,6 @@ module.exports = {
       slug: getSlug(req.body.title.toLowerCase()),
       body: req.body.body,
       completionDeadline: req.body.completionDeadline,
-      bidingDeadline: req.body.bidingDeadline,
     },
     {
       where: {

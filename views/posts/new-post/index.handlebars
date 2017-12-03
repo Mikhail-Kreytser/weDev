@@ -1,4 +1,4 @@
-<header class="intro-header">
+ <header class="intro-header">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -36,14 +36,14 @@
         <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Biding Deadline</label>
-            <input type="datetime-local" class="form-control" name="bidingDeadline"  required data-validation-required-message="Please enter a date and time.">
+            <input type="datetime-local" class="form-control" id="datefield" name="bidingDeadline"  required data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
         <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Completion Deadline</label>
-            <input type="datetime-local" class="form-control" name="completionDeadline" required data-validation-required-message="Please enter a date and time.">
+            <input type="datetime-local" class="form-control" id="datefield"name="completionDeadline" required data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
@@ -92,6 +92,20 @@ $(document).ready(function(){
      });
    $('.chips-initial').material_chip('data');
 });
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+   if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+
+  today = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("datefield").setAttribute("min", today);
   
 </script>
 
