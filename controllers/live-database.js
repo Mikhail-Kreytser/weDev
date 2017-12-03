@@ -145,7 +145,6 @@ module.exports = {
 	                    },
 	                    returning: true,
 	                }).then(() => {
-	                	console.log("added money to cus");
 	                    models.Wallet.update({
 	                    	amountDeposited: (developer.wallet.amountDeposited - half),
 	                    },
@@ -155,7 +154,6 @@ module.exports = {
 	                    	},
 	                    	returning: true,
 	                  	}).then(() => {
-	                	console.log("took away money to dev");
 	                  		models.Post.update({
 							    closed: true,
 							},
@@ -192,7 +190,14 @@ module.exports = {
 									  			 	 "You have been charged the initial payment as well as a penalty of $" + penalty,
 									   		seen: false,  
 									    }).then((systemMessage) => {
-									    	console.log("add rating");
+									    	models.Review.create({
+										        comment: "Project "+titleP+" was not completed",
+										        rating: 1,
+										        ownerId: customer.id,
+										    	recipientId: developer.id,
+										    }).then((review)=> {
+
+									    	});
 										});
 									});
 								});

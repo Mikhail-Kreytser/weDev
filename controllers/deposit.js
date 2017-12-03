@@ -29,11 +29,6 @@ module.exports = {
     }).then((wallet) => {
         res.redirect('/approval-status');
     }).catch(() => {
-      console.log(req.body.amountDeposited);
-      console.log(req.body.creditCardNumber);
-      console.log(req.body.expirationDate);
-      console.log(req.body.cvv);
-      console.log( req.body.zipCode);
       res.render('deposit/initial',{ error: true});
     });
   },
@@ -50,6 +45,7 @@ module.exports = {
  //   .then((wallet) => {
 
                         console.log("HERE");
+                        console.log("add more money ");
    /*   console.log(req.body.amountDeposited);
       models.wallet.update({
         amountDeposited: req.body.amountDeposited,//wallet.amountDeposited + 

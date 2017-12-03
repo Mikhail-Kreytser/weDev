@@ -16,30 +16,146 @@ fs
   });
 
 router.get('/', (req, res) => {
-    models.User.findAll({
-      limit: 3,
-  	  where:{
-  		  accountType: "Developer",
-        accountStatus: {
-          [Op.or]:{
-            [Op.eq]:"Pending",
-            [Op.or]:{
-              [Op.eq]:"Approved"
-            },
-          },  
+  if(req.user){
+    models.SystemMessage.findAndCountAll({
+      where:{
+        userId: req.user.id,
+        comment: {
+          [Op.like]: 'This is your first warning.%',
         },
-  	  },
-  	  include: [{
-  		  model: models.Profile,
+      },
+    }).then((firstWarning) =>{
+      var warningDate = new Date();
+      warningDate.setFullYear(1997);
+      if(firstWarning.count >= 1 && firstWarning.rows[0].comment.indexOf("poor performance") !== -1)
+        var warningDate = firstWarning.rows[0].createdAt;
+      models.Review.findAndCountAll({
         where:{
-          rating:{
-            [Op.ne]:null
+          recipientId: req.user.id,
+          rating: {
+            [Op.lte]: 2,
+          },
+          createdAt: {
+            [Op.gte]: warningDate,
           },
         },
-      }],
-      order: [
-        [models.Profile, 'rating', 'DESC' ],
-      ], 
+      }).then((recipientOfBadReviews) => {
+        if(recipientOfBadReviews.count >= 5 && firstWarning.count >= 1){
+          models.SystemMessage.create({
+            userId: req.user.id,
+            comment: "This is your second warning. This is regarding poor performance. You already recived another warning message. " +
+                     "Your account is being terminated. You can message the administrator to reevaluate the account. Otherwise, you can " +
+                     "register again after one year.",
+            seen: false, 
+          }).then((systemMessage) => {
+            var date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            models.User.update({
+              accountStatus: "Account terminated: Too many warning messages. You can register again after, " + date,
+            },
+            {
+              where: {
+                id: req.user.id,
+              },
+              returning: true,
+            })
+          });
+        }
+        else if(recipientOfBadReviews.count >= 5 && firstWarning.count < 1){
+          models.SystemMessage.create({
+            userId: req.user.id,
+            comment: "This is your first warning. This is regarding poor performance. If you recive another warning message, " +
+                     "Your account will be terminated. You can message the administrator to reevaluate the account.",
+            seen: false, 
+          }).then((systemMessage) => {
+          });
+        }
+      });
+      warningDate = new Date();
+      warningDate.setFullYear(1997);
+      if(firstWarning.count >= 1 && firstWarning.rows[0].comment.indexOf("irresponsible evaluations") !== -1)
+        var warningDate = firstWarning.rows[0].createdAt;
+      models.Review.findAndCountAll({
+        where:{
+          ownerId: req.user.id,
+          rating: {
+            [Op.lt]: 2,
+          },
+          createdAt: {
+            [Op.gte]: warningDate,
+          },
+        },
+      }).then((givingBadReviews) =>{
+        models.Review.findAndCountAll({
+          where:{
+          ownerId: req.user.id,
+          rating: {
+            [Op.gt]: 4,
+          },
+          createdAt: {
+            [Op.gte]: warningDate,
+          },
+        },
+        }).then((givingGoodReviews) =>{
+          if((givingBadReviews.count >= 8 || givingGoodReviews.count >= 8) && firstWarning.count >= 1){
+            models.SystemMessage.create({
+              userId: req.user.id,
+              comment: "This is your second warning. This is regarding irresponsible evaluations. You already recived another warning message. " +
+                       "Your account is being terminated. You can message the administrator to reevaluate the account. Otherwise, you can " +
+                       "register again after one year.",
+              seen: false, 
+            }).then((systemMessage) => {
+              var date = new Date();
+              date.setFullYear(date.getFullYear() + 1);
+              models.User.update({
+                accountStatus: "Account terminated: Too many warning messages. You can register again after, " + date,
+              },
+              {
+                where: {
+                  id: req.user.id,
+                },
+                returning: true,
+              })
+            });
+          }
+          else if((givingBadReviews.count >= 8 || givingGoodReviews.count >= 8)  && firstWarning.count < 1){
+            models.SystemMessage.create({
+              userId: req.user.id,
+              comment: "This is your first warning. This is regarding irresponsible evaluations. If you recive another warning message, " +
+                       "Your account will be terminated. You can message the administrator to reevaluate the account.",
+              seen: false, 
+            }).then((systemMessage) => {
+            });
+          }
+        });
+      });
+    });
+  }
+
+  models.User.findAll({
+    limit: 3,
+  	where:{
+  	  accountType: "Developer",
+      accountStatus: {
+        [Op.or]:{
+          [Op.eq]:"Pending",
+          [Op.or]:{
+            [Op.eq]:"Approved"
+          },
+        },  
+      },
+  	},
+  	include: [{
+		  model: models.Profile,
+      where:{
+        rating:{
+          [Op.ne]:null
+        },
+      },
+    }],
+    order: [
+      [models.Profile, 'rating', 'DESC' ],
+    ], 
     }).then((topDevelopers) => {
       models.User.findAll({
       limit: 3,
@@ -110,9 +226,7 @@ router.get('/', (req, res) => {
       });
     });
   });
+  
 });
 
 module.exports = router;
-
-
-   
