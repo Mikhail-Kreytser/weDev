@@ -37,7 +37,7 @@ function checkEmail(){
           {{#if usernameTaken}}
             <div id="card-alert" class="card red lighten-5">
               <div class="card-content red-text">
-                <p><center>Username is taken</center></p>
+                <p><center>Username is taken. Please try again</center></p>
               </div>
             </div>
           {{/if}}
@@ -45,7 +45,7 @@ function checkEmail(){
           {{#if emailTaken}}
             <div id="card-alert" class="card red lighten-5">
               <div class="card-content red-text">
-                <p><center>Email is taken</center></p>
+                <p><center>Email is taken. Please try again.</center></p>
               </div>
             </div>
           {{/if}}
@@ -56,50 +56,60 @@ function checkEmail(){
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <form name="sign-up" action="/sign-up" method="post">
 
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Username</label>
-            <input type="text" class="form-control" name="username" required data-validation-required-message="Please enter your username.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
 
-
-        <div class="row control-group">        
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-                <p>
-                  <input name="accountType" type="radio" id="Customer" value="Customer" required />
-                  <label for="Customer">Customer</label>
-                  <input name="accountType" type="radio" id="Developer" value="Developer" />
-                  <label for="Developer">Developer</label>
-                </p>
-          </div>
-        </div>
-
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Email Address</label>
-            <input type="email" id="email"  onkeyup="checkEmail()" class="form-control" name="email" required data-validation-required-message="Please enter your email address.">
-            <p class="help-block text-danger"></p>
-            <h1 id="emailHelp"></h1>
-          </div>
-        </div>
-
-
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Password</label>
-            <input type="password" id="password" class="form-control" name="password" required data-validation-required-message="Please enter your password.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        
-        <br>
-        <div class="row">
-          <div class="form-group col-xs-12">
-              <button type="submit" class="btn">Register</button>
-          </div>
-        </div>
+        <ul class="stepper horizontal">
+         <li class="step active">
+            <div class="step-title waves-effect">Username</div>
+            <div class="step-content">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <input id="username" name="username" type="text" class="validate" autofocus required>
+                     <label for="username">Username</label>
+                  </div>
+                  <div class="row">        
+                    <p class="center-align">
+                      <input name="accountType" type="radio" id="Customer" value="Customer" class="required"/>
+                      <label for="Customer">Customer</label>
+                      <input name="accountType" type="radio" id="Developer" value="Developer"/>
+                      <label for="Developer">Developer</label>
+                    </p>
+                  </div>
+               </div>
+               <div class="step-actions">
+                  <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
+               </div>
+            </div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect">Password</div>
+            <div class="step-content">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <input id="password" name="password" type="password" class="validate" required>
+                     <label for="password">Your password</label>
+                  </div>
+               </div>
+               <div class="step-actions">
+                  <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
+                  <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+               </div>
+            </div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect">E-mail</div>
+            <div class="step-content">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <input id="email" name="email" type="email" class="validate" required>
+                     <label for="email">Your password</label>
+                  </div>
+               </div>
+               <div class="step-actions">
+                  <button class="waves-effect waves-dark btn" type="submit">Register</button>
+               </div>
+            </div>
+         </li>
+        </ul>
       </form>
     </div>
   </div>
