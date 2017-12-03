@@ -9,6 +9,9 @@
       <!--Import materialize.css-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
+      <!--Import Materialize-Stepper CSS (after importing materialize.css) -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.css">
+
       <!--set Browser favicon-->
       <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG"></link>
 
@@ -73,9 +76,13 @@
   </nav>
 
   {{{ body }}}
+  
 
   <header></header>
   <main></main>
+  
+
+
 
 <div class="footer-wrapper">
         <footer class="page-footer blue darken-2">
@@ -114,6 +121,10 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <!-- jQueryValidation Plugin -->
+      <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+      <!--Import Materialize-Stepper JavaScript (after the jquery.validate.js and materialize.js) -->
+      <script src="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.min.js"></script>
 
 
       <script type="text/javascript">
@@ -127,6 +138,26 @@
       $('.modal').modal();
     });
   </script>
+
+  <script type="text/javascript">
+  $(function(){
+     $('.stepper').activateStepper();
+  });
+  </script>
+
+  <script type="text/javascript">
+$(function(){
+   $('.stepper').activateStepper({
+      linearStepsNavigation: true, //allow navigation by clicking on the next and previous steps on linear steppers
+      autoFocusInput: true, //since 2.1.1, stepper can auto focus on first input of each step
+      autoFormCreation: true, //control the auto generation of a form around the stepper (in case you want to disable it)
+      showFeedbackLoader: true //set if a loading screen will appear while feedbacks functions are running,
+      parallel: false // By default we don't assume the stepper is parallel, this is set to true when stepper has .parallel class
+   });
+});
+
+
+</script>
 
   {{#if cur_user}}
   <script>
