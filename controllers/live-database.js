@@ -19,6 +19,30 @@ module.exports = {
   },
 
   index(req, res) {
+  	models.Review.findAll({
+        attributes: [[models.sequelize.fn('AVG', models.sequelize.col('rating')), 'avgRating']],
+      	include: [{model: models.User, as :'recipient'}],  
+        group: ["recipient.id"],
+        })
+    .then((review) => {
+    	for(var i = 0; i < review.length; i++){
+    		models.Profile.update({
+    			rating: review[i].getDataValue('avgRating').toFixed(1)
+    		},
+            {
+            	where: {
+              		userId: review[i].getDataValue('recipient').id,
+            	},
+            	returning: true,
+            }).then(()=>{
+
+            });
+        }
+    });
+
+
+
+
   	models.Post.findAll({
   		where:{
   			bidingDeadline: {

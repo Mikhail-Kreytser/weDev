@@ -22,7 +22,6 @@ module.exports = {
       password: req.body.password,
       accountType: req.body.accountType,
       accountStatus: "Pending",
-      rating: "3,5",
     }).then((user) => {
       req.login(user, () =>
         res.redirect('/deposit')
@@ -43,7 +42,6 @@ module.exports = {
 
           if(emailCheck != null)
             var emailIsTaken = true;
-
           var otherError  = !(usernameIsTaken || emailIsTaken);
           res.render('sign-up',{error: otherError, usernameTaken: usernameIsTaken, emailTaken: emailIsTaken});
         });

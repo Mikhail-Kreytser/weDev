@@ -32,14 +32,14 @@
         <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Bidding Deadline</label>
-            <input type="datetime-local" class="form-control" name="bidingDeadline" value="{{post.bidingDeadline}}" required data-validation-required-message="Please enter a date and time.">
+            <input type="datetime-local" disabled="true" class="form-control" name="bidingDeadline" value="{{bidingDeadline}}" min ="{{bidingDeadline}}" required data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
         <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Completion Deadline</label>
-            <input type="datetime-local" class="form-control" name="completionDeadline" value="{{post.completionDeadline}}" required data-validation-required-message="Please enter a date and time.">
+            <input type="datetime-local" class="form-control" name="completionDeadline" value="{{completionDeadline}}" min="{{completionDeadline}}" required data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
@@ -48,6 +48,7 @@
           <div class="form-group col-xs-6 text-right">
               <button type="submit" class="btn btn-default">Edit</button>
           </div>
+          <br>
       </form>
       <form name="delete-post" method="POST" action="/posts/{{post.user.username}}/{{post.slug}}?_method=DELETE">
           <div class="form-group col-xs-6 text-left">
