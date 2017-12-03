@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         max: 5,
-        min: 0,
+        min: 1,
       },
     },
   });

@@ -21,8 +21,6 @@ module.exports = {
       email: req.body.email,
       password: req.body.password,
       accountType: req.body.accountType,
-      admin: false,
-      approved: false,
       accountStatus: "Pending",
       rating: "3,5",
     }).then((user) => {

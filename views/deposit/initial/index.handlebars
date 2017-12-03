@@ -20,11 +20,11 @@
     </div>
     <p>
       <input type="number" onkeyup="money()" name="amountDeposited" class="checkout-input checkout-name" placeholder="200" id="deposit" min="200" step="1.0" autofocus required>
-      <input type="date" name="expirationDate" class="checkout-input checkout-exp" required data-validation-required-message="Please enter expiration date.">
+      <input type="date" id="datefield" name="expirationDate" class="checkout-input checkout-exp" required data-validation-required-message="Please enter expiration date.">
       <input type="text" name="zipCode" class="checkout-input checkout-exp" maxlength="5" placeholder="Zip Code" required data-validation-required-message="Please enter zip code.">
     </p>
     <p>
-      <input type="text" name="creditCardNumber" class="checkout-input checkout-card" maxlength="16" placeholder="4111 1111 1111 1111" data-validation-required-message="Please enter the credit card number." required>
+      <input type="text" onkeydown="creditCard()" name="creditCardNumber" id ="creditCard" class="checkout-input checkout-card" maxlength="16" placeholder="4111 1111 1111 1111" data-validation-required-message="Please enter the credit card number." required>
       <input type="text" name="cvv" class="checkout-input checkout-cvc" maxlength="3" data-validation-required-message="Please enter the amount." placeholder="CVV" required>
     </p>
     <p>
@@ -49,6 +49,19 @@
         document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(0) +"K";
       else
         document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(1) +"K";
-
   }
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+   if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+
+  today = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("datefield").setAttribute("min", today);
 </script>

@@ -15,22 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    admin:{
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    approved:{
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
     accountStatus:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true,

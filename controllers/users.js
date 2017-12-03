@@ -66,8 +66,6 @@ module.exports = {
   update(req, res) {
     models.User.update({
       accountType: req.body.accountType,
-    //  admin: req.body.admin,
-    //  approved: req.body.approved,
       accountStatus: req.body.accountStatus,
     },
     {
