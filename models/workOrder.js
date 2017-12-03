@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const WorkOrder = sequelize.define('workOrder', {
     comment: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -30,7 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    reviewPending: {
+    CustomerReviewPending: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    DeveloperMadeReview:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

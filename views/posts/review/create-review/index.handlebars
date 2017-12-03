@@ -18,7 +18,7 @@
       <img src="/profile_pics/{{userBeingReviewed.profile.profileImage}}" class="img-rounded" alt="" style="width:200px">
     </div>
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      {{#if workOrder.reviewPending}}
+      {{#if workOrder.CustomerReviewPending}}
         <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewWinner/{{userBeingReviewed.username}}/review" method="post">
 
           <div class="row control-group">

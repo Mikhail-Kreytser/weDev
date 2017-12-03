@@ -1,3 +1,25 @@
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+function checkEmail(){
+  var email=document.getElementById( "email" ).value;
+  if(email){
+    console.log(email);
+    $.ajax({
+      url: '/check/email/'+email,
+      success: function (response) {
+    console.log(response);
+          document.getElementById("emailHelp").innerHTML = response;
+        
+      }
+    });
+  }
+}
+
+</script>
+
+
 <header class="intro-header">
           <h3>Sign Up</h3>
           <span class="subheading">Join our Turk System!</span>
@@ -57,8 +79,9 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Email Address</label>
-            <input type="email" class="form-control" name="email" required data-validation-required-message="Please enter your email address.">
+            <input type="email" id="email"  onkeyup="checkEmail()" class="form-control" name="email" required data-validation-required-message="Please enter your email address.">
             <p class="help-block text-danger"></p>
+            <h1 id="emailHelp"></h1>
           </div>
         </div>
 

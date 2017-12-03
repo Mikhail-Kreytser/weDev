@@ -20,30 +20,66 @@
       <p id="countDown" class="col-xs-9" ></p>
       <p>{{post.body}}</p>
       <br>
-      <p>Tags: <span id="postTags"></span></p>
-      {{#if developer}}
-        <div class="create-post">
-          <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
-        </div>
-      {{/if}}
-
-      {{#if owner}}
-        {{#if workOrderCreated}}
-            {{#if closed}}
-              <h1>The project has been completed</h1>
+      <p>Tags: <span id="postTags"></span></p>   
+      {{#if closed}}
+        {{#if complete}}
+          <h1>The project has been completed</h1>
+        {{else}}
+          <h1>The project has been closed</h1>
+        {{/if}}
+        {{#if winningDev}}
+          {{#if DeveloperMadeReview}}
+          {{else}}
+            <div class="create-post">
+              <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{user.username}}/review">Review Customer </a>
+            </div>
+          {{/if}}
+        {{/if}}
+      {{else}}
+        {{#if owner}}
+          {{#if expired}}
+            {{#if CustomerReviewPending}}
+              <div class="review-developer">
+                <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{user.username}}/review">Review Developer </a>
+              </div>
             {{else}}
-              {{#if reviewPending}}
-                <div class="review-developer">
-                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{user.username}}/review">Review Developer </a>
-                </div>
-              {{else}}
+              {{#if workOrderCreated}}
                 <h1>Please wait for the Developer to finish the project</h1>
+              {{else}}
+                <div class="choose-winner">
+                  <a id="btnOwner" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner"> Choose Winner </a>
+                </div>
               {{/if}}
             {{/if}}
+          {{else}}
+            <div class="update-post">
+              <a id="btnOwner" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+            </div>
+          {{/if}}
         {{else}}
-          <div class="update-post">
-            <a id="btn" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+        {{#if developer}}
+        {{#if expired}}
+          {{#if winningDev}}
+            {{#if complete}}
+              <h1>Customer has to finish reviewing the project</h1>
+              {{#if DeveloperMadeReview}}
+              {{else}}
+                <div class="create-post">
+                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{user.username}}/review">Review Customer </a>
+                </div>
+              {{/if}}
+            {{else}}
+              <div class="create-post">
+                <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{user.username}}/review">Upload project files </a>
+              </div>
+            {{/if}}
+          {{/if}}
+        {{else}}
+          <div class="create-post">
+            <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
           </div>
+        {{/if}}
+      {{/if}}
         {{/if}}
       {{/if}}
     </div> 
@@ -66,8 +102,6 @@
     if (distance < 0) {
         clearInterval(x);
         document.getElementById("countDown").innerHTML = "EXPIRED";
-        document.getElementById("btn").href="/posts/{{user.username}}/{{post.slug}}/reviewWinner";
-        document.getElementById("btn").innerHTML = "Choose Winner";
     }
   }, 50);
 </script>

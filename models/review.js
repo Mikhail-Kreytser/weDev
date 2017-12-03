@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Review = sequelize.define('review', {
     comment: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true,

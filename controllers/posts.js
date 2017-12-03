@@ -218,14 +218,26 @@ module.exports = {
           },
         }).then((workOrder) => {
           var workOrderCreated = false;
-          var reviewPending = false;
+          var CustomerReviewPending = false;
+          var DeveloperMadeReview = false;
+          var winningDev = false;
+          var complete = false;
+          var closed = false;
+          var expired = false;
           if (workOrder.length > 0){
             workOrderCreated = true;
-            reviewPending = workOrder[0].reviewPending;
-            closed = workOrder[0].closed
+            CustomerReviewPending = workOrder[0].CustomerReviewPending;
+            closed = workOrder[0].closed;
+            complete = workOrder[0].complete;
+            DeveloperMadeReview = workOrder[0].DeveloperMadeReview;
+            if(req.user)
+              if(workOrder[0].userId == req.user.id)
+                winningDev = true;
           }
-
-          (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet", reviewPending , workOrderCreated, closed }) : res.redirect('/posts'));
+            var date = new Date();
+            if( date > post.bidingDeadline)
+              expired = true;
+          (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
       });
     });
@@ -274,7 +286,7 @@ module.exports = {
           postId: post.id,
         },
       }).then((workOrder) => {
-        if (workOrder.complete && workOrder.reviewPending && !workOrder.closed)
+        if (workOrder.complete && workOrder.CustomerReviewPending && !workOrder.closed)
           models.User.findOne({
             where: {
               id: workOrder.userId,
@@ -310,6 +322,7 @@ module.exports = {
               slug: req.params.slug,
             },
           }).then((post)=>{
+            var titleP = post.title; 
             models.WorkOrder.findOne({
               where: {
                 postId:post.id,

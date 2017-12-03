@@ -1,0 +1,38 @@
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+function loaddata(){
+ var name=document.getElementById( "username" ).value;
+	
+ if(name){
+  $.ajax({
+  url: '/check/username/'+name,
+  success: function (response) {
+   // We get the element having id of display_info and put the response inside it
+   document.getElementById("display_info").innerHTML = response;
+  }
+  });
+ }
+	
+ else
+ {document.getElementById("display_info").innerHTML = "Please Enter Some Words";
+ }
+}
+
+</script>
+
+</head>
+<body>
+		
+
+
+<h1>HELOOREEFINWOF</h1>
+<input type="text" name="username" id="username" onkeyup="loaddata();">
+  <div id="display_info" >
+</div>
+
+	 
+</body>
+</html>

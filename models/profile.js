@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     bio: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     companyWebsite: {      
       type: DataTypes.STRING,
