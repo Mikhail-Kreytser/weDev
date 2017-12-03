@@ -9,8 +9,13 @@ module.exports = {
     const router = express.Router();
 
     router.get ('/', this.index);
+    router.get ('/test', this.test);
 
     return router;
+  },
+  test(req, res){
+  	res.render('live-database/test');
+
   },
 
   index(req, res) {
@@ -220,7 +225,7 @@ module.exports = {
   			model: models.WorkOrder,
   			where:{
   				complete: true,
-  				reviewPending: false,
+  				CustomerReviewPending: false,
   			},
   		}],
   	}).then((posts) => {
@@ -266,7 +271,7 @@ module.exports = {
 	                    	returning: true,
 	                  	}).then(() => {
 							models.WorkOrder.update({
-								reviewPending: true,
+								CustomerReviewPending: true,
 				                closed: false,
 				            },
 				            {

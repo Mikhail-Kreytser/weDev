@@ -20,6 +20,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('./public'));
 app.use('/profile_pics', express.static('./public/profile_img'));
+app.use('/jquery', express.static('./node_modules/jquery/dist/'));
 
 app.engine('handlebars', exphbs({
   layoutsDir: './views/layouts',

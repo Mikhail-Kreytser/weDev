@@ -1,3 +1,25 @@
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+function checkEmail(){
+  var email=document.getElementById( "email" ).value;
+  if(email){
+    console.log(email);
+    $.ajax({
+      url: '/check/email/'+email,
+      success: function (response) {
+    console.log(response);
+          document.getElementById("emailHelp").innerHTML = response;
+        
+      }
+    });
+  }
+}
+
+</script>
+
+
 <header class="intro-header">
           <h3>Sign Up</h3>
           <span class="subheading">Join our Turk System!</span>
@@ -33,6 +55,7 @@
 
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <form name="sign-up" action="/sign-up" method="post">
+
 
         <ul class="stepper horizontal">
          <li class="step active">

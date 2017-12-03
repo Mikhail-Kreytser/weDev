@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const SystemMessage = sequelize.define('systemMessage', {
     comment: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true,
