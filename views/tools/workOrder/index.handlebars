@@ -24,7 +24,11 @@
       <br>
 
       <h5>Job total price: ${{workOrder.price}}</h5>
-      <h5>Amount due to Developer: ${{half}}</h5>
+      {{#if workOrder.closed}}
+        <h5>Amount due to Developer: $0</h5>
+      {{else}}
+        <h5>Amount due to Developer: ${{half}}</h5>
+      {{/if}}
       <br>
       <br>
       <div class="container">
@@ -33,7 +37,7 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Ammount that will be paid</label>
-            <input type="number" class="form-control" name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
+            <input type="number" class="form-control" disabled="{{workOrder.closed}}" name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
@@ -41,7 +45,7 @@
         <br>
         <div class="row">
           <div class="form-group col-xs-6 text-right">
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" disabled="{{workOrder.closed}}"  class="btn btn-default">Submit</button>
           </div>
       </form>
     </div>

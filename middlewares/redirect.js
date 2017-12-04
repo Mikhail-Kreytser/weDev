@@ -53,7 +53,7 @@ redirect.ifBlocked = (route = '/approval-status') =>
 redirect.ifNotApproved = (route = '/approval-status') =>
   (req, res, next) => (req.user.accountStatus == "Approved" ? next() : res.redirect(route));
 
-redirect.ifApproved = (route = '/profile') =>
+redirect.ifApproved = (route = '/') =>
   (req, res, next) => (req.user.accountStatus == "Approved" ? res.redirect(route) : next());
 
 redirect.ifNotAuthorized = (route) =>
@@ -67,6 +67,9 @@ redirect.ifNotDeveloper = (route = '/profile') =>
 
 redirect.ifNotAdmin = (route = '/profile') =>
   (req, res, next) => (req.user.accountType == "Admin" ?  next() :res.redirect(route) );
+
+redirect.ifAdmin = (route = '/tools') =>
+  (req, res, next) => (req.user.accountType == "Admin" ?  res.redirect(route) : next() );
 
 redirect.ifBidOver = ( route = '/posts') =>
   (req, res, next) => (

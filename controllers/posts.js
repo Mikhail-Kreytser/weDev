@@ -374,6 +374,17 @@ module.exports = {
               userId:developer.id,
             },
           }).then((workOrder)=>{
+            console.log(workOrder);
+            console.log(workOrder);
+            console.log(workOrder);
+            console.log(workOrder);
+            console.log(workOrder);
+            console.log(developer.id);
+            console.log(developer.id);
+            console.log(developer.id);
+            console.log(developer.id);
+            console.log(developer.id);
+            console.log(developer.id);
             if(review.rating >= 3){
               var half = workOrder.price/2;
               var fee = workOrder.price * 0.05;
