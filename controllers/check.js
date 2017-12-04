@@ -17,9 +17,9 @@ module.exports = {
     }).then((username) => {
       console.log(req.params.email);
       if(username.count == 0)
-        res.send('true');
+        res.send('free');
       else
-        res.send('false');
+        res.send('taken');
 
     });
   },
