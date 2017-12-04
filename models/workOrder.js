@@ -46,6 +46,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    CustomerMadeReview:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     closed:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
