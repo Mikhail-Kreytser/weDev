@@ -9,7 +9,7 @@ function checkEmail(){
     $.ajax({
       url: '/check/email/'+email,
       success: function (response) {
-        document.getElementById("emailHelp").hidden = response;
+        document.getElementById("btn").disabled = response;
         console.log(response);
       }
     });
@@ -48,8 +48,6 @@ function checkEmail(){
               </div>
             </div>
           {{/if}}
-          
-  <div class="row">
 
 
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -103,7 +101,7 @@ function checkEmail(){
                   </div>
                </div>
                <div class="step-actions">
-                  <button class="waves-effect waves-dark btn" type="submit">Register</button>
+                  <button class="waves-effect waves-dark btn" id="btn" type="submit">Register</button>
                </div>
             </div>
          </li>

@@ -15,26 +15,77 @@
   <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="input-field">
-          <input id="myInput" onkeyup="myFunction()" type="search" placeholder="            Browse">
+          <input id="myInputPosts" onkeyup="myFunctionPosts()" type="search" placeholder="Browse">
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
-
+        
         {{#if customer}}
-        <div class="create-post">
-          <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
-        </div>
-
-{{!--         <div class="create-post">
-          <a class="btn btn-default" href="/posts/new-post">Create Post</a>
-        </div> --}}
+          <div class="create-post">
+            <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
+          </div>
         {{/if}}
+
+        <ul id="myULPosts" >
+          {{#each allPosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+              
+            </li>
+          {{/each}}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function myFunctionPosts() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputPosts");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULPosts");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{!--    
         {{#each allPosts}}
 
         <ul class="collection">
 {{!--           <a href="#!" class="collection-item hoverable">Post 1</li> --}}
           <li class="collection-item">
-            <span class="title"><h5><a class="indigo-text" href="/posts/{{this.user.username}}/{{this.slug}}/">{{this.title}}</h5></span>
-            <p class="black-text">Posted by <a href="/profile/{{this.user.username}}/">{{this.user.username}}</a></p>
+            
           </li>
         </ul>
 
@@ -47,7 +98,7 @@
               </a>
               <p class="post-meta">Posted by <a href="/users/{{this.user.username}}/">{{this.user.username}}</a></p>
           </div> --}}
-        {{/each}}
+  {{!--      {{/each}}
         {{#if allPosts}}
         <ul class="pager">
           <li class="next">
@@ -58,3 +109,4 @@
       </div>
   </div>
 </div>
+--}}
