@@ -17,9 +17,9 @@ module.exports = {
     }).then((username) => {
       console.log(req.params.email);
       if(username.count == 0)
-        res.send('avalible');
+        res.send('true');
       else
-        res.send('taken');
+        res.send('false');
 
     });
   },
