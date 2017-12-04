@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const express = require('express');
+const dateFormat = require('dateformat');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
