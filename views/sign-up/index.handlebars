@@ -9,12 +9,13 @@ function checkEmail(){
     $.ajax({
       url: '/check/email/'+email,
       success: function (response) {
-        document.getElementById("btn").disabled = response;
+        if (response == "free");
         console.log(response);
       }
     });
   }
 }
+
 
 </script>
 
@@ -64,7 +65,7 @@ function checkEmail(){
                   </div>
                   <div class="row">        
                     <p class="center-align">
-                      <input name="accountType" type="radio" id="Customer" value="Customer" class="required"/>
+                      <input name="accountType" checked type="radio" id="Customer" value="Customer" class="required"/>
                       <label for="Customer">Customer</label>
                       <input name="accountType" type="radio" id="Developer" value="Developer"/>
                       <label for="Developer">Developer</label>
@@ -72,7 +73,7 @@ function checkEmail(){
                   </div>
                </div>
                <div class="step-actions">
-                  <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
+                  <button class="waves-effect waves-dark btn next-step " >CONTINUE</button>
                </div>
             </div>
          </li>
@@ -96,12 +97,12 @@ function checkEmail(){
             <div class="step-content">
                <div class="row">
                   <div class="input-field col s12">
-                     <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required>
+                     <input id="email" name="email" type="email" class="validate" required>
                      <label for="email">Your E-mail</label>
                   </div>
                </div>
                <div class="step-actions">
-                  <button class="waves-effect waves-dark btn" id="btn" type="submit">Register</button>
+                  <button class="waves-effect waves-dark btn" type="submit">Register</button>
                </div>
             </div>
          </li>
