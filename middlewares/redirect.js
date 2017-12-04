@@ -57,7 +57,7 @@ redirect.ifApproved = (route = '/profile') =>
   (req, res, next) => (req.user.accountStatus == "Approved" ? res.redirect(route) : next());
 
 redirect.ifNotAuthorized = (route) =>
-  (req, res, next) => (req.user.username !== req.params.username ? res.redirect(route) : next());
+  (req, res, next) => (req.user.username !== req.params.username ? (req.user.username !== req.params.winnersName ? res.redirect(route) : next()) : next());
 
 redirect.ifNotCustomer = (route = '/profile') =>
   (req, res, next) => (req.user.accountType == "Customer" ? next() : res.redirect(route));

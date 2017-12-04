@@ -71,8 +71,8 @@ module.exports = {
         res.redirect('/');
       else{
         var rating = user.profile.rating;
-        if(profile.rating == 0)
-          rating = "No reviews"
+        if(rating == 0)
+          rating = "No reviews";
         res.render('profile', {username: user.username, accountType: user.accountType, profile: user.profile, rating:rating});
       } 
     }).catch(() =>{

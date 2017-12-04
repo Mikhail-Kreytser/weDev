@@ -14,8 +14,11 @@ module.exports = {
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
     router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
-    router.get('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReview);
-    router.post('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReview);
+    router.get('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnDev);
+    router.get('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnCus);
+
+    router.post('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnCus);
+    router.post('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnDev);
     router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
@@ -47,8 +50,10 @@ module.exports = {
       slug: getSlug(req.body.title.toLowerCase()),
       title: req.body.title.toLowerCase(),
       body: req.body.body,
+      //HERE
       completionDeadline: req.body.completionDeadline,
       bidingDeadline: req.body.bidingDeadline,
+      //HERE
     }).then((post) => {
       res.redirect(`/posts/${req.user.username}/${post.slug}/`);
     }).catch(() => {
@@ -216,6 +221,9 @@ module.exports = {
           where: {
             postId: post.id,
           },
+          include: [{
+            model: models.User,
+          }],
         }).then((workOrder) => {
           var workOrderCreated = false;
           var CustomerReviewPending = false;
@@ -224,20 +232,23 @@ module.exports = {
           var complete = false;
           var closed = false;
           var expired = false;
+          var winnersName ="";
           if (workOrder.length > 0){
             workOrderCreated = true;
             CustomerReviewPending = workOrder[0].CustomerReviewPending;
             closed = workOrder[0].closed;
             complete = workOrder[0].complete;
             DeveloperMadeReview = workOrder[0].DeveloperMadeReview;
-            if(req.user)
+            if(req.user){
               if(workOrder[0].userId == req.user.id)
                 winningDev = true;
+              winnersName = workOrder[0].user.username;
+            }
           }
             var date = new Date();
             if( date > post.bidingDeadline)
               expired = true;
-          (post ? res.render('posts/single', { post, user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
+          (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
       });
     });
@@ -269,7 +280,7 @@ module.exports = {
     });
   },
 
-  createReview(req,res) {
+  createReviewOnDev(req,res) {
     models.Post.findOne({
       where: {
         slug: req.params.slug,
@@ -295,13 +306,48 @@ module.exports = {
               model: models.Profile,
             }]
           }).then((userBeingReviewed) => {
-            res.render('posts/review/create-review', {poster: req.params.username, slug: req.params.slug, post, workOrder, userBeingReviewed});
+            res.render('posts/review/create-review', {poster: req.params.username, winnersName: req.params.winnersName, slug: req.params.slug, post, workOrder, userBeingReviewed});
           });
       });
     });
   },
 
-  postReview(req, res) {
+  createReviewOnCus(req,res) {
+    console.log("here");
+    models.Post.findOne({
+      where: {
+        slug: req.params.slug,
+      },
+      include: [{
+        model: models.User,
+        where: {
+          username: req.params.username,
+        },
+      }],
+    }).then((post) => {
+      models.WorkOrder.findOne({
+        where:{
+          postId: post.id,
+        },
+      }).then((workOrder) => {
+        if (workOrder.complete && !workOrder.DeveloperMadeReview)
+          models.User.findOne({
+            where: {
+              id: post.userId,
+            },
+            include: [{
+              model: models.Profile,
+            }]
+          }).then((userBeingReviewed) => {
+            res.render('posts/review/create-review', {poster: req.params.username, winnersName: req.params.winnersName, slug: req.params.slug, post, workOrder, userBeingReviewed});
+          });
+        else
+           res.redirect('/posts');
+      });
+    });
+  },
+
+  postReviewOnDev(req, res) {
     models.User.findOne({
       where:{
         username: req.params.winnersName,
@@ -379,6 +425,40 @@ module.exports = {
             });
           });
         }
+      });
+    });
+  },
+
+  postReviewOnCus(req, res) {
+    models.User.findOne({
+      where:{
+        username: req.params.username,
+      },
+    }).then((customer) => {
+      models.Review.create({
+        comment: req.body.comment,
+        rating: req.body.rating,
+        ownerId: req.user.id,
+        recipientId: customer.id,
+      }).then((review)=> {
+        models.Post.findOne({
+          where: {
+            slug: req.params.slug,
+          },
+        }).then((post)=>{
+          models.WorkOrder.findOne({
+            where: {
+              postId:post.id,
+              userId:req.user.id,
+            },
+          }).then((workOrder)=>{
+            workOrder.update({
+              DeveloperMadeReview: true,
+            }).then(() => {
+              res.redirect('/');
+            });
+          });
+        });
       });
     });
   },
