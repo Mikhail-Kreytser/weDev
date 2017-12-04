@@ -54,18 +54,37 @@ module.exports = {
           }).then((badReviewdWorkOrder) => {
             models.WorkOrder.findAll({
               where:{
-                closed: false,
-                CustomerMadeReview: true,
+                closed: true,
               },
               include: [{
                 model: models.Post,
               }],
             }).then((closedWorkOrder) => {
+              models.WorkOrder.findAll({
+                where:{
+                  closed: false,
+                  CustomerMadeReview: false,
+                  complete: true,
+                },
+                include: [{
+                  model: models.Post,
+                }],
+              }).then((ProjectCompleteWorkOrder) => {
+                models.WorkOrder.findAll({
+                  where:{
+                    closed: false,
+                    CustomerMadeReview: false,
+                    complete: false,
+                  },
+                  include: [{
+                    model: models.Post,
+                  }],
+                }).then((ProjectNotCompleteWorkOrder) => {
 
-              res.render('tools', { allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
-
+                  res.render('tools', {ProjectNotCompleteWorkOrder,ProjectCompleteWorkOrder, allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
+                });
+              });
             });
-          
           });
         });
       });
@@ -146,25 +165,6 @@ module.exports = {
             }],
           }).then((developer) => {
             var refund = workOrder.price/2 - req.body.payment;
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
-            console.log(refund);
             var remaining = req.body.payment;
             var fee = workOrder.price * 0.05;
             if(refund >0 ){
