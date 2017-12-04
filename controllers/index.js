@@ -220,7 +220,10 @@ router.get('/', (req, res) => {
             },
           }],
         }).then((professionalDevelopers) =>{
-            res.render('homepage', {topDevelopers, topCustomers, totalUsers:totalUsers.count, renownedCustomers:renownedCustomers.count, professionalDevelopers:professionalDevelopers.count}); 
+          models.WorkOrder.findAndCountAll({
+          }).then(numOfProjects =>{
+            res.render('homepage', {numOfProjects: numOfProjects.count, topDevelopers, topCustomers, totalUsers:totalUsers.count, renownedCustomers:renownedCustomers.count, professionalDevelopers:professionalDevelopers.count}); 
+            });
           });
         });  
       });

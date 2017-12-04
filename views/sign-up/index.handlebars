@@ -9,9 +9,8 @@ function checkEmail(){
     $.ajax({
       url: '/check/email/'+email,
       success: function (response) {
-    console.log(response);
-          document.getElementById("emailHelp").innerHTML = response;
-        
+        document.getElementById("emailHelp").hidden = response;
+        console.log(response);
       }
     });
   }
@@ -56,14 +55,13 @@ function checkEmail(){
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <form name="sign-up" action="/sign-up" method="post">
 
-
         <ul class="stepper horizontal">
          <li class="step active">
             <div class="step-title waves-effect">Username</div>
             <div class="step-content">
                <div class="row">
-                  <div class="input-field col s12">
-                     <input id="username" name="username" type="text" class="validate" autofocus required>
+                  <div class="input-field col s12 ">
+                     <input id="username" name="username"  data-error="taken" type="text" class="validate" autofocus required>
                      <label for="username">Username</label>
                   </div>
                   <div class="row">        
@@ -100,7 +98,7 @@ function checkEmail(){
             <div class="step-content">
                <div class="row">
                   <div class="input-field col s12">
-                     <input id="email" name="email" type="email" class="validate" required>
+                     <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required>
                      <label for="email">Your E-mail</label>
                   </div>
                </div>
