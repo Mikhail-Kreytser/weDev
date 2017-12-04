@@ -362,19 +362,19 @@ module.exports = {
         ownerId: req.user.id,
         recipientId: developer.id,
       }).then((review)=> {
-        if(review.rating >= 3){
-          models.Post.findOne({
+        models.Post.findOne({
+          where: {
+            slug: req.params.slug,
+          },
+        }).then((post)=>{
+          var titleP = post.title; 
+          models.WorkOrder.findOne({
             where: {
-              slug: req.params.slug,
+              postId:post.id,
+              userId:developer.id,
             },
-          }).then((post)=>{
-            var titleP = post.title; 
-            models.WorkOrder.findOne({
-              where: {
-                postId:post.id,
-                userId:developer.id,
-              },
-            }).then((workOrder)=>{
+          }).then((workOrder)=>{
+            if(review.rating >= 3){
               var half = workOrder.price/2;
               var fee = workOrder.price * 0.05;
               models.Wallet.update({
@@ -405,6 +405,7 @@ module.exports = {
                   }).then(() => {
                     workOrder.update({
                       closed: true,
+                      CustomerMadeReview: true,
                     }).then(() => {
                       post.update({
                         closed: true,
@@ -422,9 +423,15 @@ module.exports = {
                   });
                 });
               });
-            });
+            }
+            else{
+              workOrder.update({
+                CustomerMadeReview: true,
+              }).then(() => {
+              });
+            }
           });
-        }
+        });
       });
     });
   },
