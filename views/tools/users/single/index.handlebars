@@ -20,7 +20,12 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Account Type</label>
-            <input type="text" class="form-control" name="accountType" value="{{user.accountType}}" required data-validation-required-message="Please enter Acount Type.">
+            <input class="form-control" name="accountType" checked type= "radio" id="Admin" value="Admin">
+            <label for="Admin">Admin</label>
+            <input class="form-control" name="accountType" checked type="radio" id="Customer" value="Customer">
+            <label for="Customer">Customer</label>
+            <input class="form-control" name="accountType" checked type="radio" id="Developer" value="Developer">
+            <label for="Developer">Developer</label>
             <p class="help-block text-danger"></p>
           </div>
         </div>
@@ -28,10 +33,16 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Account Status</label>
-            <input type="text" class="form-control" name="accountStatus" value="{{user.accountStatus}}" required data-validation-required-message="Please enter Acount Status.">
+           {{!--  <input required data-validation-required-message="Please choose Account Status."> --}}
+            <input class="form-control" name="accountStatus" checked type="radio" id="Approved" value="Approved">
+            <label for="Approved">Approved</label>
+            <input class="form-control" name="accountStatus" checked type="radio" id="Pending" value="Pending">
+            <label for="Pending">Pending</label>
+            <input class="form-control" name="accountStatus" checked type="radio" id="Blocked" value="Blocked" required data-validation-required-message="Please enter a reason why.">
+            <label for="Blocked">Blocked</label>
             <p class="help-block text-danger"></p>
           </div>
-        </div>
+         </div>
 
         <br>
         <div class="row">
