@@ -19,6 +19,7 @@
       
       
       <h5>Discription: {{post.body}}</h5>
+      <br>
       <h5>Customer's Comment: {{review.comment}}</h5>
       <h5>Rating given by Customer: {{review.rating}}</h5>
       <br>
@@ -37,15 +38,14 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Ammount that will be paid</label>
-            <input type="number" class="form-control" disabled="{{workOrder.closed}}" name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
+            <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
-
         <br>
         <div class="row">
           <div class="form-group col-xs-6 text-right">
-              <button type="submit" disabled="{{workOrder.closed}}"  class="btn btn-default">Submit</button>
+              <button id="dis"type="submit" {{disabled}}  class="btn btn-default">Submit</button>
           </div>
       </form>
     </div>
@@ -54,3 +54,5 @@
   </div>
 </div>
 
+<script>
+</script>

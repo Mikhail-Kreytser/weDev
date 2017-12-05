@@ -6,16 +6,30 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/email/:email', this.index);
+    router.get('/email/:email', this.indexEmail);
+    router.get('/username/:username', this.indexUsername);
     return router; 
   },
-  index(req, res) {
+  indexEmail(req, res) {
     models.User.findAndCountAll({
       where:{
         email : req.params.email,
       },
     }).then((username) => {
-      console.log(req.params.email);
+      if(username.count == 0)
+        res.send('free');
+      else
+        res.send('taken');
+
+    });
+  },
+  
+  indexUsername(req, res) {
+    models.User.findAndCountAll({
+      where:{
+        username : req.params.username,
+      },
+    }).then((username) => {
       if(username.count == 0)
         res.send('free');
       else

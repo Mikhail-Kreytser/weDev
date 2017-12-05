@@ -46,8 +46,8 @@
 
           {{#if admin}}
           <li>  <a href="/tools">Tools
-                  {{#if numOfPendingUsers}}
-                    <span class="new badge blue-grey lighten-2">{{numOfPendingUsers}}</span>
+                  {{#if notify}}
+                    <span class="new badge blue-grey lighten-2">{{notify}}</span>
                   {{/if}}
                 </a></li>
           {{/if}}
@@ -156,8 +156,6 @@ $(function(){
       parallel: false // By default we don't assume the stepper is parallel, this is set to true when stepper has .parallel class
    });
 });
-
-
 </script>
 
   {{#if cur_user}}

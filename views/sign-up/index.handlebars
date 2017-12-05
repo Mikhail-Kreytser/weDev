@@ -5,12 +5,39 @@
 function checkEmail(){
   var email=document.getElementById( "email" ).value;
   if(email){
-    console.log(email);
     $.ajax({
       url: '/check/email/'+email,
       success: function (response) {
-        if (response == "free");
-        console.log(response);
+        if (response == "taken"){
+          var popup = document.getElementById("myPopupEmail");
+          popup.classList.remove("show","hide");
+          popup.classList.add("show");
+        }
+        else{
+          var popup = document.getElementById("myPopupEmail");
+          popup.classList.remove("show","hide");
+          popup.classList.add("hide");
+        }
+      }
+    });
+  }
+}
+function checkUsername(){
+  var username=document.getElementById( "username" ).value;
+  if(username){
+    $.ajax({
+      url: '/check/username/'+username,
+      success: function (response) {
+        if (response == "taken"){
+          var popup = document.getElementById("myPopupUsername");
+          popup.classList.remove("show","hide");
+          popup.classList.add("show");
+        }
+        else{
+          var popup = document.getElementById("myPopupUsername");
+          popup.classList.remove("show","hide");
+          popup.classList.add("hide");
+        }
       }
     });
   }
@@ -59,8 +86,13 @@ function checkEmail(){
             <div class="step-title waves-effect">Username</div>
             <div class="step-content">
                <div class="row">
+                 <div style="text-align:center" > 
+                  <div class ="popup" style=" bottom: 100%;">
+                      <span class="popuptext" id="myPopupUsername">Username Taken</span>
+                  </div>
+                </div>
                   <div class="input-field col s12 ">
-                     <input id="username" name="username"  data-error="taken" type="text" class="validate" autofocus required>
+                     <input id="username" name="username" onkeyup="checkUsername()" data-error="taken" type="text" class="validate" autofocus required>
                      <label for="username">Username</label>
                   </div>
                   <div class="row">        
@@ -94,13 +126,20 @@ function checkEmail(){
          </li>
          <li class="step">
             <div class="step-title waves-effect">E-mail</div>
-            <div class="step-content">
+              <div class="step-content">
                <div class="row">
+                <div style="text-align:center" > 
+                  <div class ="popup" >
+                      <span class="popuptext" id="myPopupEmail">Email Taken</span>
+                  </div>
+                </div>
                   <div class="input-field col s12">
-                     <input id="email" name="email" type="email" class="validate" required>
+                     <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required>
                      <label for="email">Your E-mail</label>
+              
                   </div>
                </div>
+
                <div class="step-actions">
                   <button class="waves-effect waves-dark btn" type="submit">Register</button>
                </div>

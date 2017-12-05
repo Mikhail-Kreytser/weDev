@@ -1,12 +1,25 @@
   
 <header>
  <nav class="nav-extended">
-    <div class="nav-wrapper">
+    <div class="nav-wrapper ">
     </div>
-    <div class="nav-content">
+    <div class="nav-content blue darken-2">
       <ul class="tabs tabs-transparent">
-        <li class="tab"><a class="active" href="#users">Users</a></li>
-        <li class="tab"><a  href="#workOrders">Work Orders</a></li>
+        <li class="tab">
+          <a class="active" href="/#users">
+            Users
+            {{#if numOfPendingUsers}}
+              <span class="new badge blue-grey lighten-2">{{numOfPendingUsers}}</span>
+            {{/if}}
+          </a>
+        </li>
+        <li class="tab"><a  href="/#workOrders">
+          Work Orders
+          {{#if numOfAttentionWorkOrders}}
+              <span class="new badge blue-grey lighten-2">{{numOfAttentionWorkOrders}}</span>
+            {{/if}}
+          </a>
+        </li>
         <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
         <li class="tab"><a href="#test4">Test 4</a></li>
       </ul>
@@ -101,7 +114,7 @@
           <li>
             <a href="/tools/workOrder/{{this.id}}">
                 <h7 class="col s4">{{this.post.title}}</h7>
-                <span class="new badge red accent-4" data-badge-caption="&nbsp&nbsp&nbsp;Attention Needed &nbsp&nbsp&nbsp"></span>
+                <span class="new badge red accent-4" data-badge-caption="&nbsp&nbsp&nbsp&nbsp;Attention Needed &nbsp&nbsp&nbsp"></span>
                 <span class="new badge black" data-badge-caption="&nbsp;${{this.price}} &nbsp"></span>
             </a>
           </li>

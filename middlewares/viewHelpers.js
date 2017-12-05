@@ -8,7 +8,9 @@ helpers.register = () => {
     res.locals.developer = false;
     res.locals.admin = false;
     res.locals.owner = false;
+    res.locals.notify = 0;
     res.locals.numOfPendingUsers = 0;
+    res.locals.numOfAttentionWorkOrders = 0;
     if (req.user){
         if(req.user.accountStatus == "Approved"){
         	if(req.user.accountType == "Customer")
@@ -21,14 +23,23 @@ helpers.register = () => {
                     where: {
                     accountStatus: "Pending",
                     },
-                    }).then((allPendingUsers) => {
+                }).then((allPendingUsers) => {
+                    models.WorkOrder.count({
+                    where:{
+                      closed: false,
+                      CustomerMadeReview: true,
+                    },
+                    }).then((badReviewdWorkOrder) => {
+                        res.locals.numOfAttentionWorkOrders = badReviewdWorkOrder;
                         res.locals.numOfPendingUsers = allPendingUsers;
+                        res.locals.notify = allPendingUsers+badReviewdWorkOrder;
+                    });
                 });
             }
             if(req.url.indexOf(req.user.username) > -1)
-                    res.locals.owner = true;
-        };
-	};
+                res.locals.owner = true;
+        }
+	} 
     next();
   }
 };
