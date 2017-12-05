@@ -131,8 +131,12 @@ module.exports = {
                   recipientId: developer.id,
                 },
               }).then((review) => {
-                var half = workOrder.price/2;
-                res.render('tools/workOrder', {half: half, workOrder, post, customer, developer, review });
+                var half = Math.floor((workOrder.price/2)* 100) / 100;
+                var disabled = "disabled";
+                if ( workOrder.closed !== true && workOrder.CustomerMadeReview == true && workOrder.CustomerReviewPending == true)
+                  disabled = "";
+
+                res.render('tools/workOrder', {half: half, workOrder, disabled, post, customer, developer, review });
               });
             });
           });

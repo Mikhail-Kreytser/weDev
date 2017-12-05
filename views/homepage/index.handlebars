@@ -21,34 +21,68 @@
       <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <form id="signUp" name="sign-up" action="/sign-up" method="post" class="col s12">
-              <div class="row">
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input name="username" id="username" type="text" class="validate" required="" aria-required="true">
-                      <label for="username" data-error="wrong" data-success="right">Username</label>
-                    </div>
-              <div class="row">
-                  <p>
-                    <input name="accountType" type="radio" id="Customer" value="Customer" required="" />
-                    <label for="Customer" data-error="wrong" data-success="right">Customer</label>
-                    <input name="accountType" type="radio" id="Developer" value="Developer" />
-                    <label for="Developer" data-error="wrong" data-success="right">Developer</label>
-                  </p>
-              </div>
+<ul class="stepper vertical">
+         <li class="step active">
+            <div class="step-title waves-effect">Username</div>
+            <div class="step-content">
+               <div class="row">
+                 <div style="text-align:center" > 
+                  <div class ="popup" style=" bottom: 100%;">
+                      <span class="popuptext" id="myPopupUsername">Username Taken</span>
+                  </div>
+                </div>
+                  <div class="input-field col s12 ">
+                     <input id="username" name="username" onkeyup="checkUsername()" data-error="taken" type="text" class="validate" autofocus required>
+                     <label for="username">Username</label>
+                  </div>
+                  <div class="row">        
+                    <p class="center-align">
+                      <input name="accountType" checked type="radio" id="Customer" value="Customer" class="required"/>
+                      <label for="Customer">Customer</label>
+                      <input name="accountType" type="radio" id="Developer" value="Developer"/>
+                      <label for="Developer">Developer</label>
+                    </p>
+                  </div>
+               </div>
+               <div class="step-actions">
+                  <button class="waves-effect waves-dark btn next-step " >CONTINUE</button>
+               </div>
             </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input name ="email" id="email" type="email" class="validate" required="" aria-required="true">
-                      <label for="email" data-error="wrong" data-success="right">Email</label>
-                    </div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect">Password</div>
+            <div class="step-content">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <input id="password" name="password" type="password" class="validate" required>
+                     <label for="password">Your password</label>
                   </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input name ="password" id="password" type="password" value="password" required="">
-                      <label for="password" data-error="wrong" data-success="right">Password</label>
-                    </div>
+               </div>
+               <div class="step-actions">
+                  <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
+                  <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+               </div>
+            </div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect">E-mail</div>
+              <div class="step-content">
+               <div class="row">
+                <div style="text-align:center" > 
+                  <div class ="popup" >
+                      <span class="popuptext" id="myPopupEmail">Email Taken</span>
                   </div>
-              </div>
+                </div>
+                  <div class="input-field col s12">
+                     <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required>
+                     <label for="email">Your E-mail</label>
+              
+                  </div>
+               </div>
+
+            </div>
+         </li>
+        </ul>
               </form>
           </div>
       </div>
@@ -111,6 +145,7 @@
 
   <canvas id="myChart" width="100" height="50"></canvas>
 <script>
+
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -169,5 +204,53 @@ var myChart = new Chart(ctx, {
 };
 
 </script>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+function checkEmail(){
+  var email=document.getElementById( "email" ).value;
+  if(email){
+    $.ajax({
+      url: '/check/email/'+email,
+      success: function (response) {
+        if (response == "taken"){
+          var popup = document.getElementById("myPopupEmail");
+          popup.classList.remove("show","hide");
+          popup.classList.add("show");
+        }
+        else{
+          var popup = document.getElementById("myPopupEmail");
+          popup.classList.remove("show","hide");
+          popup.classList.add("hide");
+        }
+      }
+    });
+  }
+}
+function checkUsername(){
+  var username=document.getElementById( "username" ).value;
+  if(username){
+    $.ajax({
+      url: '/check/username/'+username,
+      success: function (response) {
+        if (response == "taken"){
+          var popup = document.getElementById("myPopupUsername");
+          popup.classList.remove("show","hide");
+          popup.classList.add("show");
+        }
+        else{
+          var popup = document.getElementById("myPopupUsername");
+          popup.classList.remove("show","hide");
+          popup.classList.add("hide");
+        }
+      }
+    });
+  }
+}
+
+
+</script>
+
   </div>
 
