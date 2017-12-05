@@ -42,7 +42,9 @@ module.exports = {
   },
 
   newBid(req, res) {
-    res.render('posts/new-bid',{poster: req.params.username,slug: req.params.slug});
+    req.user.getWallet({}).then((wallet) => {
+      res.render('posts/new-bid',{totalMoney : wallet.amountDeposited, poster: req.params.username,slug: req.params.slug});
+    });
   },
 
   createPost(req, res) {
@@ -270,7 +272,6 @@ module.exports = {
         where:{
           postId: post.id,
         },
-        //order: models.sequelize.fn('max', models.sequelize.col('price')),
         include: [{
         model: models.User,
         }],
