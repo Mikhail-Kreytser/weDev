@@ -3,8 +3,6 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h3>{{user.username}}</h3>
-          <hr class="small">
           <span class="subheading">{{profile.firstName}} {{profile.lastName}}</span>
         </div>
       </div>
@@ -13,11 +11,34 @@
 </header>
 
 <div class="container center-align">
-  <div class="row">
-  <div class="col-lg-1 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <img src="/profile_pics/{{profile.profileImage}}" class="img-rounded" alt="" style="width:200px">
+  <div class="row valign-wrapper">
+  <div class="col s4 m6 offset-m3">
+    <div class="card hoverable">
+      <div class="card-image">
+        <img src="/profile_pics/{{profile.profileImage}}">
+        {{!-- class="img-rounded" alt="" style="width:200px" --}}
+        <span class="card-title">{{user.username}}</span>
+      </div> 
+      <div class="card-content black-text">
+        {{#if developer}}
+        <p>Biography: {{profile.bio}} </p>
+        {{/if}}
+        {{#if customer}}
+        <p> Company Information: {{profile.companyInfo}}</p>
+      </div>
+      <div class="card-action">
+        <p>Website: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
+        {{/if}}
+
+        {{#if developer}}
+        <p> Portfolio: <a href="#"></a></p>
+        {{/if}}
+
+        <p>Ratings: {{rating}} </p>
+      </div>   
     </div>
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+{{!--     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       
       {{#if developer}}
       <p>Biography:
@@ -31,11 +52,11 @@
       <p>Company:
         {{profile.companyInfo}}
       </p>
-      {{/if}}
+      {{/if}} --}}
 
-      <p>Rating:
+      {{!-- <p>Rating:
         {{rating}}
-      </p>
+      </p> --}}
 
       {{#if owner}}
         <div class="update-post">
