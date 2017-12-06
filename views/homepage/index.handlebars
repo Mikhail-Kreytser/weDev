@@ -1,5 +1,3 @@
-
-
 <div id="home-section" class="col s12 center-align"></br></br><i class="material-icons large">data_usage</i>
  <p>This is WeDev. </br></br>weDev is where clients and developers come to connect.
  </br>weDev an internet marketplace comes to make system solutions better and efficient.
@@ -18,74 +16,72 @@
 <div class="modal modal-fixed-footer" id="modal1">
   <div class="modal-content">
     <h4>Sign Up</h4>
-      <div class="row">
-          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <form id="signUp" name="sign-up" action="/sign-up" method="post" class="col s12">
-<ul class="stepper vertical">
-         <li class="step active">
-            <div class="step-title waves-effect">Username</div>
-            <div class="step-content">
-               <div class="row">
-                 <div style="text-align:center" > 
-                  <div class ="popup" style=" bottom: 100%;">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form id="signUp" name="sign-up" action="/sign-up" method="post" class="col s12">
+          <ul class="stepper vertical">
+            <li class="step active">
+              <div class="step-title waves-effect">Username</div>
+              <div class="step-content">
+                <div class="row">
+                  <div style="text-align:center"> 
+                    <div class ="popup" style=" bottom: 100%;">
                       <span class="popuptext" id="myPopupUsername">Username Taken</span>
+                    </div>
+                  </div>
+                  <div class="input-field col s12 ">
+                    <input id="username" name="username" onkeyup="checkUsername()" data-error="taken" type="text" class="validate" autofocus required/>
+                    <label for="username">Username</label>
                   </div>
                 </div>
-                  <div class="input-field col s12 ">
-                     <input id="username" name="username" onkeyup="checkUsername()" data-error="taken" type="text" class="validate" autofocus required>
-                     <label for="username">Username</label>
-                  </div>
-                  <div class="row">        
-                    <p class="center-align">
-                      <input name="accountType" checked type="radio" id="Customer" value="Customer" class="required"/>
-                      <label for="Customer">Customer</label>
-                      <input name="accountType" type="radio" id="Developer" value="Developer"/>
-                      <label for="Developer">Developer</label>
-                    </p>
-                  </div>
-               </div>
-               <div class="step-actions">
+                <div class="row">        
+                  <p class="center-align">
+                    <input name="accountType" checked type="radio" id="Customer" value="Customer" class="required"/>
+                    <label for="Customer">Customer</label>
+                    <input name="accountType" type="radio" id="Developer" value="Developer"/>
+                    <label for="Developer">Developer</label>
+                  </p>
+                </div>
+                <div class="step-actions">
                   <button class="waves-effect waves-dark btn next-step " >CONTINUE</button>
-               </div>
-            </div>
-         </li>
-         <li class="step">
-            <div class="step-title waves-effect">Password</div>
-            <div class="step-content">
-               <div class="row">
+                </div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-title waves-effect">Password</div>
+              <div class="step-content">
+                <div class="row">
                   <div class="input-field col s12">
-                     <input id="password" name="password" type="password" class="validate" required>
-                     <label for="password">Your password</label>
+                    <input id="password" name="password" type="password" class="validate" required/>
+                    <label for="password">Your password</label>
                   </div>
-               </div>
-               <div class="step-actions">
+                </div>
+                <div class="step-actions">
                   <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
                   <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
-               </div>
-            </div>
-         </li>
-         <li class="step">
-            <div class="step-title waves-effect">E-mail</div>
+                </div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-title waves-effect">E-mail</div>
               <div class="step-content">
-               <div class="row">
-                <div style="text-align:center" > 
-                  <div class ="popup" >
+                <div class="row">
+                  <div style="text-align:center" > 
+                    <div class ="popup" >
                       <span class="popuptext" id="myPopupEmail">Email Taken</span>
+                    </div>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required />
+                    <label for="email">Your E-mail</label>
                   </div>
                 </div>
-                  <div class="input-field col s12">
-                     <input id="email" name="email" onkeyup="checkEmail()" type="email" class="validate" required>
-                     <label for="email">Your E-mail</label>
-              
-                  </div>
-               </div>
-
-            </div>
-         </li>
-        </ul>
-              </form>
-          </div>
+              </div>
+            </li>
+          </ul>
+        </form>
       </div>
+    </div>
   </div>
 
   <div class="modal-footer">
