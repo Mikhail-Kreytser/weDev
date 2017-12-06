@@ -82,7 +82,7 @@ header {
 	margin: 0 auto;
 }
 
-#myInput1 {
+#usersSearch, #workOrdersSearch {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -94,14 +94,14 @@ header {
   box-sizing: border-box;
 }
 
-#myUL1 {
+#usersUL, #blackListUL, #warnedUsersUL, #workOrdersUL {
   list-style-type: none;
   padding: 0;
   margin: 0;
 
 }
 
-#myUL1 li a {
+#usersUL li a, #workOrdersUL li a, #warnedUsersUL li a, #blackListUL li a{
   border: 1px solid #ddd;
   margin-top: -1px;
   background-color: #f6f6f6;
@@ -113,46 +113,13 @@ header {
   display: block;
 }
 
-#myUL1 li a:hover:not(.header) {
+#usersUL li a:hover:not(.header), #workOrders li a:hover:not(.header), #warnedUsersUL li a:hover:not(.header), #blackListUL li a:hover:not(.header) {
   background-color: #eee;
 }
 
-#myInput2 {
-  background-image: url('/css/searchicon.png');
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 24px;
-  box-sizing: border-box;
-}
 
-#myUL2 {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 
-}
-
-#myUL2 li a {
-  border: 1px solid #ddd;
-  margin-top: -1px;
-  background-color: #f6f6f6;
-  padding: 18px;
-  padding-bottom: 36px;
-  text-decoration: none;
-  font-size: 14px;
-  color: black;
-  display: block;
-}
-
-#myUL2 li a:hover:not(.header) {
-  background-color: #eee;
-}
-
-#myInputWO {
+/*#myInputWO {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -185,7 +152,7 @@ header {
 
 #myULWO li a:hover:not(.header) {
   background-color: #eee;
-}
+}*/
 
 
 #myInputPosts {
@@ -232,113 +199,6 @@ header {
   padding-top: 200px;
 }
 
-/*html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  line-height: 1;
-}
-
-ol, ul {
-  list-style: none;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.about {
-  margin: 70px auto 40px;
-  padding: 8px;
-  width: 260px;
-  font: 10px/18px 'Lucida Grande', Arial, sans-serif;
-  color: #bbb;
-  text-align: center;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
-  background: #383838;
-  background: rgba(34, 34, 34, 0.8);
-  border-radius: 4px;
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
-  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 0 6px rgba(0, 0, 0, 0.4);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 0 6px rgba(0, 0, 0, 0.4);
-}
-.about a {
-  color: #eee;
-  text-decoration: none;
-  border-radius: 2px;
-  -webkit-transition: background 0.1s;
-  -moz-transition: background 0.1s;
-  -o-transition: background 0.1s;
-  transition: background 0.1s;
-}
-.about a:hover {
-  text-decoration: none;
-  background: #555;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.about-links {
-  height: 30px;
-}
-.about-links > a {
-  float: left;
-  width: 50%;
-  line-height: 30px;
-  font-size: 12px;
-}
-
-.about-author {
-  margin-top: 5px;
-}
-.about-author > a {
-  padding: 1px 3px;
-  margin: 0 -1px;
-}*/
-
-/*
- * Copyright (c) 2013 Thibaut Courouble
- * http://www.cssflow.com
- *
- * Licensed under the MIT License:
- * https://www.opensource.org/licenses/mit-license.php
- */
 body {
   font: 13px/20px 'Lucida Grande', Verdana, Ubuntu, sans-serif;
   color: #404040;

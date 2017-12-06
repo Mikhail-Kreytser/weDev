@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h3>{{user.username}}</h3>
+          <h4>{{user.username}}</h4>
           <span class="subheading">{{user.firstName}} {{user.lastName}}</span>
         </div>
       </div>
@@ -18,8 +18,8 @@
       <form name="edit-user" method="POST" action="/tools/user/{{user.username}}?_method=PUT">
         
         <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Account Type</label>
+          <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
+            <label>Account Type</label><br>
             <input class="form-control" name="accountType" checked type= "radio" id="Admin" value="Admin">
             <label for="Admin">Admin</label>
             <input class="form-control" name="accountType" checked type="radio" id="Customer" value="Customer">
@@ -31,8 +31,8 @@
         </div>
 
         <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Account Status</label>
+          <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
+            <label>Account Status</label><br>
            {{!--  <input required data-validation-required-message="Please choose Account Status."> --}}
             <input class="form-control" name="accountStatus" checked type="radio" id="Approved" value="Approved">
             <label for="Approved">Approved</label>

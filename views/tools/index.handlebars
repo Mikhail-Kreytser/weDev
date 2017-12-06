@@ -20,8 +20,8 @@
             {{/if}}
           </a>
         </li>
-        <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
-        <li class="tab"><a href="#test4">Test 4</a></li>
+        <li class="tab"><a href="/#warnedUsers">Warned Users</a></li>
+        <li class="tab"><a href="/#blackList">Blacklist</a></li>
       </ul>
     </div>
   </nav>
@@ -30,30 +30,85 @@
 </header>
 
 
-  <div id="test3" class="col s12">Test 3</div>
-  <div id="test4" class="col s12">Test 4</div>
+  <div id="warnedUsers" class="col s12">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+            <h3>Warned Users</h3>
+            <hr class="small">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul id="warnedUsersUL" class="collection">
+        
+        
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <div id="blackList" class="col s12">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+            <h3>Blacklist</h3>
+            <hr class="small">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <ul id="blackListUL" class="collection">
+            {{#each allBlockedUsers}}
+              <li>
+                <a class="collection-item" href="/tools/user/{{this.username}}">
+                    <h7 class="col s4">{{this.username}}</h7>
+                    <h7 class="col s4" style="color:black;">{{this.accountType}}</h7>
+                    <span class="new badge red accent-4" data-badge-caption="&nbsp;Blocked  &nbsp"></span>
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div  id="users">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="site-heading">
           
-          <h3 >Users</h3>
+          <h3>Users</h3>
           <hr class="small">
         </div>
       </div>
     </div>
   </div>
-  <div class="container" >
+  <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
         <div class="input-field">
-          <input id="myInput1" onkeyup="myFunction1()" type="search" placeholder="Search for users..">
+          <input id="usersSearch" onkeyup="usersSearch()" type="search" placeholder="Search for users..">
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
         
-        <ul id="myUL1" class="collection">
+        <ul id="usersUL" class="collection">
         {{#each allPendingUsers}}
           <li>
             <a class="collection-item" href="/tools/user/{{this.username}}">
@@ -94,22 +149,22 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="site-heading">
-          <h3 >Work Orders</h3>
+          <h3>Work Orders</h3>
           <hr class="small">
         </div>
       </div>
     </div>
   </div>
-  <div class="container" >
+  <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
         <div class="input-field">
-          <input id="myInput2" onkeyup="myFunction2()" type="search" placeholder="Search for work orders..">
+          <input id="workOrdersSearch" onkeyup="workOrdersSearch()" type="search" placeholder="Search for work orders..">
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
         
-        <ul id="myUL2" class="collection">
+        <ul id="workOrdersUL" class="collection">
         {{#each badReviewdWorkOrder}}
           <li>
             <a href="/tools/workOrder/{{this.id}}">
@@ -157,11 +212,11 @@
 
 
 <script>
-function myFunction1() {
+function usersSearch() {
     var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput1");
+    input = document.getElementById("usersSearch");
     filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL1");
+    ul = document.getElementById("usersUL");
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
@@ -174,11 +229,11 @@ function myFunction1() {
     }
 }
 
-function myFunction2() {
+function workOrdersSearch() {
     var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput2");
+    input = document.getElementById("workOrdersSearch");
     filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL2");
+    ul = document.getElementById("workOrdersUL");
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
