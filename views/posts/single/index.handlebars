@@ -39,9 +39,13 @@
         {{#if owner}}
           {{#if expired}}
             {{#if CustomerReviewPending}}
-              <div class="review-developer">
-                <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{winnersName}}/review">Review Developer </a>
-              </div>
+              {{#if CustomerMadeReview}}
+                <h1>Please wait for the Admin to review the project</h1>
+              {{else}}
+                <div class="review-developer">
+                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{winnersName}}/review">Review Developer </a>
+                </div>
+              {{/if}}
             {{else}}
               {{#if workOrderCreated}}
                 <h1>Please wait for the Developer to finish the project</h1>

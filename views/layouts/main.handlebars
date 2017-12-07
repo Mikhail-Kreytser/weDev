@@ -156,6 +156,11 @@ $(function(){
       parallel: false // By default we don't assume the stepper is parallel, this is set to true when stepper has .parallel class
    });
 });
+
+$(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });
+
 </script>
 
   {{#if cur_user}}
@@ -168,6 +173,48 @@ $(function(){
       });
     })();
   </script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript">
+
+    //var x = setInterval(
+      //function() {
+        $.ajax({
+          url: '/check/get/systemMessage',
+          success: function (response) {
+            //console.log(response.length);
+            if (response !== null){
+              var i;
+              var length = response.length;
+              console.log(response[0]);
+              for(i = 0; i < length; i++){
+                Materialize.toast(); // 4000 is the duration of the toast
+                var $toastContent = $('<span>'+response[i].comment+'</span>').add($('<button class="btn-flat toast-action" onclick="tostClick('+response[i].id+')" >Ok</button>')).attr("id",response[i].id);
+                Materialize.toast($toastContent);
+              }
+            }
+          }
+        });
+      //}, 
+    //4000);
+    function tostClick(id){
+      $.ajax({
+          url: '/check/seen/systemMessage/'+id,
+          success: function (response) {
+            length = $('.toast').length;
+
+            console.log($('.toast'));
+            for(var i = 0; i < length ; i++){
+              if($('.toast')[i].innerHTML.indexOf("id=\""+id+"\"") >= 0 ){
+                //console.log($('.toast')[i].innerHTML);
+                $('.toast')[i].remove();
+                break;
+              }
+            }
+          }
+        });
+    };
+  </script>
+
   {{/if}}
 
 
