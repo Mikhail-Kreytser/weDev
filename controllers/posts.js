@@ -2,12 +2,15 @@ const express = require('express');
 const models = require('../models');
 const Redirect = require('../middlewares/redirect');
 const getSlug = require('speakingurl');
+const Op = models.Sequelize.Op;
+
 
 module.exports = {
   registerRouter() {
     const router = express.Router();
 
     router.get('/', this.index);
+    router.post('/search', this.indexSearch);
     router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.newPost);
     router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.createPost);
     router.get('/:username/:slug', this.showPost);
@@ -34,6 +37,15 @@ module.exports = {
       include: [{model: models.User}]
     }).then((allPosts) => {
       res.render('posts', { allPosts });
+    });
+  },
+
+  indexSearch(req, res) {
+    var search = req.body.search;
+    models.Post.findAll({
+      include: [{model: models.User}]
+    }).then((allPosts) => {
+      res.render('posts', { allPosts, search });
     });
   },
 
@@ -415,7 +427,7 @@ module.exports = {
                       }).then(() => {
                         models.SystemMessage.create({
                           userId: developer.id,
-                            comment: "Congratulations, the customer has accepted the complete project \""+titleP+"\"" +
+                            comment: "Congratulations, the customer has accepted the complete project \""+titleP+"\". " +
                                      "You have been credited the remaining balance. A 5% was fee was charged for using weDev.",
                             seen: false,  
                         }).then((systemMessage) => {

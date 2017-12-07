@@ -3,6 +3,9 @@
  </br>weDev an internet marketplace comes to make system solutions better and efficient.
  </br>Join millions of business clients and software developers now.</br></p>
 </div>
+
+  {{#if cur_user}}
+  {{else}}
     <!--modal button-->
 <div class="container">
   <div class="row">
@@ -11,6 +14,8 @@
     </div>
   </div>
 </div>
+
+  {{/if}}
 
 <!--Modal popup-->
 <div class="modal modal-fixed-footer" id="modal1">
@@ -84,17 +89,19 @@
     </div>
   </div>
 
-  <div class="modal-footer">
-    <button  type="submit" form="signUp" class="btn btn-flat modal-action modal-close">Register</button>
-  </div>
+
+    <div class="modal-footer">
+      <button  type="submit" form="signUp" class="btn btn-flat modal-action modal-close">Register</button>
+    </div>
 </div>
+
 
 <div class ="center-align">
   <h5>Browse<i class="material-icons">whatshot</i></h5>
 <div class="container">
-  <form>
+  <form id="searchForm" name="searchForm" action="/posts/search" method="post">
     <div class="input-field">
-      <input id="search" type="search">
+      <input id="search" type="search" name="search" class="commentarea" >
       <label class="label-icon" for="search"><i class="material-icons">search</i></label>
       <i class="material-icons">close</i>
     </div>
@@ -141,6 +148,7 @@
 
   <canvas id="myChart" width="100" height="50"></canvas>
 <script>
+
 
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
@@ -198,6 +206,19 @@ var myChart = new Chart(ctx, {
     document.getElementById('message').innerHTML = 'not matching';
   }
 };
+
+$(document).ready(function() {
+    $('.commentarea').keydown(function(event) {
+        if (event.keyCode == 13) {
+
+            var searching = document.getElementsByTagName("search").value;
+            console.log(searching);
+            document.getElementById("searchForm").setAttribute("action", "/posts/search/"+searching);
+            //document.getElementById("searchForm").submit();
+            return false;
+         }
+    });
+});
 
 </script>
 

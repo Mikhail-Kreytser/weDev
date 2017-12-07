@@ -178,7 +178,7 @@ $(document).ready(function(){
               console.log(response[0]);
               for(i = 0; i < length; i++){
                 Materialize.toast(); // 4000 is the duration of the toast
-                var $toastContent = $('<span>'+response[i].comment+'</span>').add($('<button class="btn-flat toast-action" onclick="tostClick('+response[i].id+')" >Ok</button>')).attr("id",response[i].id);
+                var $toastContent = $('<p>'+response[i].comment+'</p>').add($('<button class="btn-flat toast-action" onclick="tostClick('+response[i].id+')" >Ok</button>')).attr("id",response[i].id);
                 Materialize.toast($toastContent);
               }
             }
