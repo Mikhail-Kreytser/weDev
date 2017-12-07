@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h3>{{userBeingReviewed.username}}</h3>
+          <h4>Review: {{userBeingReviewed.username}}'s Work</h4>
           <hr class="small">
           <span class="subheading">{{userBeingReviewed.profile.firstName}} {{userBeingReviewed.profile.lastName}}</span>
         </div>
@@ -23,18 +23,44 @@
         {{#if workOrder.CustomerReviewPending}}
           <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewWinner/{{winnersName}}/review" method="post">
 
-            <div class="row control-group">
+            {{!-- <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>Rating</label>
                 <input type="number" class="form-control" min="1" step="0.1" max="5" placeholder="5" name = "rating" required />
                 <p class="help-block text-danger"></p>
               </div>
+            </div> --}}
+
+            <div class="container">
+              <div class="star-rating">
+                <input class="hiddenRadioBtn" id="star-5" type="radio" name="rating" value="5" title="5">
+                <label for="star-5" title="5 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-4" type="radio" name="rating" value="4" title="4">
+                <label for="star-4" title="4 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-3" type="radio" name="rating" value="3" title="3">
+                <label for="star-3" title="3 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-2" type="radio" name="rating" value="2" title="2">
+                <label for="star-2" title="2 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-1" type="radio" name="rating" value="1" title="1">
+                <label for="star-1" title="1 star">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+              </div>
             </div>
 
             <div class="row control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Comment</label>
-                <input type="text" class="form-control" placeholder="Please provide a reason for the low rating" name = "comment" required />
+              <div class="form-group col-xs-12 floating-label-form-group controls"><br>
+                <label>Feedback or Comments</label>
+                <br><p>If low rating, please provide reason for low evaluations.
+                <input type="text" class="form-control" placeholder="Feedback or Comments" name = "comment" required />
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -57,11 +83,36 @@
         {{else}}
           <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewCustomer/{{winnersName}}/review" method="post">
 
-            <div class="row control-group">
+{{!--             <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>Rating</label>
                 <input type="number" class="form-control" min="1" step="0.1" max="5" placeholder="5" name = "rating" required />
                 <p class="help-block text-danger"></p>
+              </div>
+            </div> --}}
+
+            <div class="container">
+              <div class="star-rating">
+                <input class="hiddenRadioBtn" id="star-5" type="radio" name="rating" value="5" title="5">
+                <label for="star-5" title="5 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-4" type="radio" name="rating" value="4" title="4">
+                <label for="star-4" title="4 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-3" type="radio" name="rating" value="3" title="3">
+                <label for="star-3" title="3 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-2" type="radio" name="rating" value="2" title="2">
+                <label for="star-2" title="2 stars">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
+                <input class="hiddenRadioBtn" id="star-1" type="radio" name="rating" value="1" title="1">
+                <label for="star-1" title="1 star">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </label>
               </div>
             </div>
 
