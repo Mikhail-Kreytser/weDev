@@ -22,9 +22,9 @@
       <br>  
       {{#if closed}}
         {{#if complete}}
-          <h1>The project has been completed</h1>
+          <h5 class="center-align">The project has been completed</h5>
         {{else}}
-          <h1>The project has been closed</h1>
+          <h5 class="center-align">The project has been closed</h5>
         {{/if}}
         {{#if winningDev}}
           {{#if DeveloperMadeReview}}
@@ -39,7 +39,7 @@
           {{#if expired}}
             {{#if CustomerReviewPending}}
               {{#if CustomerMadeReview}}
-                <h1>Please wait for the Admin to review the project</h1>
+                <h5 class="center-align">Please wait for the Admin to review the project</h5>
               {{else}}
                 <div class="review-developer">
                   <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{winnersName}}/review">Review Developer </a>
@@ -47,7 +47,7 @@
               {{/if}}
             {{else}}
               {{#if workOrderCreated}}
-                <h1>Please wait for the Developer to finish the project</h1>
+                <h5 class="center-align">Please wait for the Developer to finish the project</h5>
               {{else}}
                 <div class="choose-winner">
                   <a id="btnOwner" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner"> Choose Winner </a>
@@ -64,7 +64,7 @@
         {{#if expired}}
           {{#if winningDev}}
             {{#if complete}}
-              <h1>Customer has to finish reviewing the project</h1>
+              <h5 class="center-align">Customer has to finish reviewing the project</h5>
               {{#if DeveloperMadeReview}}
               {{else}}
                 <div class="create-post">

@@ -15,16 +15,16 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <form name="edit-user" method="POST" action="/tools/user/{{user.username}}?_method=PUT">
+      <form id="editUser" name="edit-user" method="POST" action="/tools/user/{{user.username}}?_method=PUT">
         
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
             <label>Account Type</label><br>
-            <input class="form-control" name="accountType" checked type= "radio" id="Admin" value="Admin">
+            <input class="form-control" name="accountType" type= "radio" id="Admin" value="Admin">
             <label for="Admin">Admin</label>
-            <input class="form-control" name="accountType" checked type="radio" id="Customer" value="Customer">
+            <input class="form-control" name="accountType" type="radio" id="Customer" value="Customer">
             <label for="Customer">Customer</label>
-            <input class="form-control" name="accountType" checked type="radio" id="Developer" value="Developer">
+            <input class="form-control" name="accountType" type="radio" id="Developer" value="Developer">
             <label for="Developer">Developer</label>
             <p class="help-block text-danger"></p>
           </div>
@@ -34,12 +34,16 @@
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
             <label>Account Status</label><br>
            {{!--  <input required data-validation-required-message="Please choose Account Status."> --}}
-            <input class="form-control" name="accountStatus" checked type="radio" id="Approved" value="Approved">
+            <input class="form-control" name="accountStatus" type="radio" id="Approved" value="Approved">
             <label for="Approved">Approved</label>
-            <input class="form-control" name="accountStatus" checked type="radio" id="Pending" value="Pending">
+            <input class="form-control" name="accountStatus" type="radio" id="Pending" value="Pending">
             <label for="Pending">Pending</label>
-            <input class="form-control" name="accountStatus" checked type="radio" id="Blocked" value="Blocked" required data-validation-required-message="Please enter a reason why.">
+            <input class="form-control" name="accountStatus" type="radio" id="Blocked" value="Blocked" required data-validation-required-message="Please enter a reason why.">
             <label for="Blocked">Blocked</label>
+            <br><br><br>
+            <div class="container" id="blockedReason" style="display:none;">
+              <input id="blockedReason" name="blockedReason" placeholder="Please enter reason to reject/block user">
+            </div>
             <p class="help-block text-danger"></p>
           </div>
          </div>
@@ -47,11 +51,25 @@
         <br>
         <div class="row">
           <div class="form-group col-xs-6 text-right">
-              <button type="submit" class="btn btn-default">Edit</button>
+              <button type="submit" class="btn btn-default">Done</button>
           </div>
       </form>
     </div>
   </div>
 </div>
 </main>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script>
+  $('#editUser').change(function() {
+    if ($('#Blocked').prop('checked')) {
+        $('#blockedReason').show();
+    } else {
+        $('#blockedReason').hide();
+    }
+  // var radiobtn = document.getElementById("theid");
+  // radiobtn.checked = true;
+});
+</script>
 
