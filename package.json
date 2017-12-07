@@ -13,9 +13,13 @@
     "body-parser": "1.18.2",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.3",
+    "dateformat": "3.0.2",
     "express": "4.16.1",
     "express-handlebars": "3.0.0",
     "express-session": "1.15.6",
+    "fontawesome": "^4.7.2",
+    "jquery": "^3.2.1",
+    "jquery-bar-rating": "^1.2.2",
     "materialize-stepper": "^2.1.4",
     "method-override": "2.3.10",
     "minimatch": "3.0.4",
@@ -26,9 +30,7 @@
     "pg-hstore": "2.3.2",
     "sequelize": "4.13.3",
     "sequelize-cli": "3.0.0",
-    "speakingurl": "14.0.1",
-    "jquery": "^3.2.1",
-    "dateformat": "3.0.2"
+    "speakingurl": "14.0.1"
   },
   "devDependencies": {
     "chai": "3.5.0",

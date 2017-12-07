@@ -9,24 +9,6 @@
   min-height: 100%;
   position: relative;*/
 
-.star-rating{
-        padding: 20px;
-        direction: rtl;
-        display: inline-block;
-      }
-      .hiddenRadioBtn input[name="rating"]{
-        display: none;
-      }
-      label {
-        color: #bbb;
-        font-size: 22px;
-        cursor: pointer;
-        transition: color .3s ease-in-out;
-      }
-
-      label:hover, label:hover ~ label, input[type='radio']:checked ~ label{
-        color: #f2b600;
-      }  
 
 ul.stepper.horizontal {
   min-height: 458px;
