@@ -15,7 +15,7 @@
   <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="input-field">
-          <input id="myInputPosts" onkeyup="myFunctionPosts()" type="search" placeholder="Browse">
+          <input id="myInputPosts" onkeyup="myFunctionPosts()" type="search" placeholder="Browse" value="{{search}}">
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
         
@@ -61,6 +61,7 @@
           }
       }
   }
+  myFunctionPosts();
 </script>
 
 
