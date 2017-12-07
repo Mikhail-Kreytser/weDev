@@ -82,7 +82,7 @@ header {
 	margin: 0 auto;
 }
 
-#usersSearch, #workOrdersSearch {
+#usersSearch, #winnersSearch, #workOrdersSearch {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -119,7 +119,7 @@ header {
 
 
 
-/*#myInputWO {
+#myInputWO {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -152,7 +152,7 @@ header {
 
 #myULWO li a:hover:not(.header) {
   background-color: #eee;
-}*/
+}
 
 
 #myInputPosts {

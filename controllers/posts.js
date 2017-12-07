@@ -230,6 +230,7 @@ module.exports = {
           var workOrderCreated = false;
           var CustomerReviewPending = false;
           var DeveloperMadeReview = false;
+          var CustomerMadeReview = false;
           var winningDev = false;
           var complete = false;
           var closed = false;
@@ -241,6 +242,7 @@ module.exports = {
             closed = workOrder[0].closed;
             complete = workOrder[0].complete;
             DeveloperMadeReview = workOrder[0].DeveloperMadeReview;
+            CustomerMadeReview = workOrder[0].CustomerMadeReview;
             if(req.user){
               if(workOrder[0].userId == req.user.id)
                 winningDev = true;
@@ -250,7 +252,7 @@ module.exports = {
             var date = new Date();
             if( date > post.bidingDeadline)
               expired = true;
-          (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
+          (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",CustomerMadeReview,expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
       });
     });
@@ -375,21 +377,10 @@ module.exports = {
               userId:developer.id,
             },
           }).then((workOrder)=>{
-            console.log(workOrder);
-            console.log(workOrder);
-            console.log(workOrder);
-            console.log(workOrder);
-            console.log(workOrder);
-            console.log(developer.id);
-            console.log(developer.id);
-            console.log(developer.id);
-            console.log(developer.id);
-            console.log(developer.id);
-            console.log(developer.id);
             if(review.rating >= 3){
               var half = workOrder.price/2;
               var fee = workOrder.price * 0.05;
-              models.Wallet.update({
+              models.Wallet.update({ 
                 amountDeposited: (developer.wallet.amountDeposited + (half - fee)),
               },
               {
@@ -440,6 +431,14 @@ module.exports = {
               workOrder.update({
                 CustomerMadeReview: true,
               }).then(() => {
+                models.SystemMessage.create({
+                  userId: req.user.id,
+                    comment: "The Admin has been notified regarding the low rating on the project \""+titleP+"\". " +
+                             "Please be patient and wait for a response, Thank You.",
+                    seen: false,  
+                }).then((systemMessage) => {
+                  res.redirect('/');
+                });
               });
             }
           });
