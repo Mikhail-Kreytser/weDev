@@ -415,7 +415,7 @@ module.exports = {
                       }).then(() => {
                         models.SystemMessage.create({
                           userId: developer.id,
-                            comment: "Congratulations, the customer has accepted the complete project \""+titleP+"\"" +
+                            comment: "Congratulations, the customer has accepted the complete project \""+titleP+"\". " +
                                      "You have been credited the remaining balance. A 5% was fee was charged for using weDev.",
                             seen: false,  
                         }).then((systemMessage) => {

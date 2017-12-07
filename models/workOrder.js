@@ -29,6 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true,
       },
+    },   
+    gitHub: {      
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      },
     },
     CustomerReviewPending: {
       type: DataTypes.BOOLEAN,
