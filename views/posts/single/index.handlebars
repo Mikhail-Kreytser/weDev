@@ -15,12 +15,11 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <p>Current Bid: {{currentBid}}</p>
-      <p class="col-xs-3">Time left to bid:</p>
-      <p id="countDown" class="col-xs-9" ></p>
-      <p>{{post.body}}</p>
-      <br>
-      <p>Tags: <span id="postTags"></span></p>   
+      <p class="card-panel blue darken-1">Current Bid: {{currentBid}}</p>
+      <p class="card-panel blue lighten-3"> Time left to bid:
+      <span id="countDown"> ></span></p>
+      <p class="card-panel blue lighten-5">{{post.body}}</p>
+      <br>  
       {{#if closed}}
         {{#if complete}}
           <h1>The project has been completed</h1>
