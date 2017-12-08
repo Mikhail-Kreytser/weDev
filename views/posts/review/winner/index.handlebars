@@ -20,7 +20,7 @@
       <p id="countDown" class="col-xs-9" ></p>
       <p>{{post.body}}</p>
       {{#if isCheapestBid}}
-        <h4>IT IS THE CHEAPEST ok</h4>
+        <h4>It is the cheapest ok</h4>
         <form name="create-workOrder" action="/posts/{{user.username}}/{{post.slug}}/selectWinner/{{winningUser.username}}" method="post">
           
           <input type="hidden" name="comment" value="It is the cheapest bid">
@@ -36,7 +36,7 @@
           </div>
         </form>
       {{else}}
-        <h4>NOT THE CHEAPEST ok</h4>
+        <h4>Not the cheapest ok</h4>
         <form name="create-workOrder" action="/posts/{{user.username}}/{{post.slug}}/selectWinner/{{winningUser.username}}" method="post">
           <div class="row control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">

@@ -14,7 +14,7 @@
             <div id="card-alert" class="card red lighten-5">
               <div class="card-content red-text">
                 <i class="mdi-alert-error"></i>
-                <p><center>Your new Bid is higher then your old one</center></p>
+                <p><center>Your new Bid is higher than your old one</center></p>
               </div>
             </div>
       {{/if}}
@@ -28,7 +28,7 @@
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
             <label>Amount</label>
-            <input type="number" class="form-control" min="0.01" step="0.01" max="{{totalMoney}}" value="50.00" name = "price" equired data-validation-required-message="Please enter a value." />
+            <input type="number" class="form-control" min="0.01" step="0.01" max="{{totalMoney}}" value="50.00" name = "price" required data-validation-required-message="Please enter a value." />
             <input type="hidden" name="username" value="{{poster}}"/>
             <input type="hidden" name="slug" value="{{slug}}"/>
             <p class="help-block text-danger"></p>
