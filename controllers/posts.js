@@ -299,6 +299,7 @@ module.exports = {
               expired = true;
           (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",CustomerMadeReview,expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
+      }).catch({
       });
     });
   },
