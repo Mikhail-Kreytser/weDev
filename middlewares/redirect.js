@@ -9,12 +9,15 @@ redirect.ifNotLoggedIn = (route = '/login') =>
 
 redirect.ifNoSetUp = (route = '/set-up') => 
   (req, res, next) => {
+    if(req.user){
     req.user.getProfile().then((profile) =>{
       if(profile == null)
         res.redirect(route);
       else
         next();
     })
+  }else
+    next();;
   };
 
 redirect.ifSetUpComplete = (route = '/profile') =>
@@ -53,8 +56,15 @@ redirect.ifBlocked = (route = '/approval-status') =>
 redirect.ifNotApproved = (route = '/approval-status') =>
   (req, res, next) => (req.user.accountStatus == "Approved" ? next() : res.redirect(route));
 
-redirect.ifApproved = (route = '/') =>
-  (req, res, next) => (req.user.accountStatus == "Approved" ? res.redirect(route) : next());
+redirect.ifApproved = (route = '/') =>   
+ (req, res, next) => {
+   // req.user.getProfile().then((profile) =>{
+    //  if(profile == null)
+    //    res.redirect('/set-up');
+    //  else
+        (req.user.accountStatus == "Approved" ? res.redirect(route) : next());
+   // });
+  };
 
 redirect.ifNotAuthorized = (route) =>
   (req, res, next) => (req.user.username !== req.params.username ? (req.user.username !== req.params.winnersName ? res.redirect(route) : next()) : next());

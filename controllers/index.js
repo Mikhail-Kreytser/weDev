@@ -1,5 +1,6 @@
 const models = require('../models');
 const express = require('express');
+const Redirect = require('../middlewares/redirect');
 const fs = require('fs');
 const path = require('path');
 
@@ -15,7 +16,7 @@ fs
     router.use(`/${fileName}`, require(`./${fileName}`).registerRouter());
   });
 
-router.get('/', (req, res) => {
+router.get('/', Redirect.ifNoSetUp(), (req, res) => {
   if(req.user){
     models.SystemMessage.findAndCountAll({
       where:{

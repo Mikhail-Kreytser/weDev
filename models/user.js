@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     models.User.hasMany(models.WorkOrder);
     models.User.hasOne(models.Profile);
     models.User.hasOne(models.Wallet);
+    models.User.hasOne(models.QuitReq);
   }
 
   User.beforeCreate((user) =>

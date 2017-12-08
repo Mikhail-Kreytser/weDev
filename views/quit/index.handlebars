@@ -1,0 +1,36 @@
+<header class="intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>weDev</h4>
+          <hr class="small">
+          <span class="subheading">{{cur_user.username}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col s6 offset-s3">
+        <br><br><br><br>
+        <h4 class="center-align">We are very said you are leaving us.</h4>
+        <h5 class="status-subtitle center-align">{{user.accountStatus}}</h5>
+        <p class="center-align"> Please reconsider</p>
+        <hr>
+        <br><br><br><br>
+
+        <form name="delete-user" action="/quit/request">
+          <div class="form-group col-xs-6 text-left">
+            <button type="submit" class="btn  red accent-3">Delete Account</button>
+          </div>
+        </div>
+
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
