@@ -23,13 +23,13 @@
         {{#if workOrder.CustomerReviewPending}}
           <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewWinner/{{winnersName}}/review" method="post">
 
-            {{!-- <div class="row control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
+            <div class="row control-group">
+              <div class="col s2 m2 offset-m2">
                 <label>Rating</label>
                 <input type="number" class="form-control" min="1" step="0.1" max="5" placeholder="5" name = "rating" required />
                 <p class="help-block text-danger"></p>
               </div>
-            </div> --}}
+            </div>
 {{!-- 
             <div class="container">
               <div class="star-rating">
