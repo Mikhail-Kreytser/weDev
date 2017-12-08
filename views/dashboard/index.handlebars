@@ -23,14 +23,33 @@
         </form>
       </li> --}}
 
-      <li><a class="active" href="#"><i class="material-icons pink-item">dashboard</i>Dashboard</a></li>
+      <li><a class="active" href="/dashboard"><i class="material-icons green-item">dashboard</i>Dashboard</a></li>
       <li><div class="divider"></div></li>
 
       <li><a class="subheader">Management</a></li>
-      <li><a href="#"><i class="material-icons pink-item">supervisor_account</i>Total Users</a></li>
-      <li><a href="#"><i class="material-icons pink-item">work</i>Ratings</a></li>
-      <li><a href="#"><i class="material-icons pink-item">work</i>Reports</a></li>
-      <li><a href="#"><i class="material-icons pink-item">work</i>Finances</a></li>
+      {{#if admin}}
+      <li><a href="#/users"><i class="material-icons green-item">supervisor_account</i>Total Users</a></li>
+      <li><a href="#/ratings"><i class="material-icons green-item">star</i>Ratings</a></li>
+      <li><a href="#/reports"><i class="material-icons green-item">content_paste</i>Reports</a></li>
+      <li><a href="#/wallet"><i class="material-icons green-item">attach_money</i>Finances</a></li>
+      <li><a href="#/accInfo"><i class="material-icons green-item">info</i>Account Information</a></li>
+      {{/if}}
+
+      {{#if customer}}
+      <li><a href="#"><i class="material-icons green-item">work</i>Total Users</a></li>
+      <li><a href="#"><i class="material-icons green-item">star</i>Ratings</a></li>
+      <li><a href="#"><i class="material-icons green-item">content_paste</i>Reports</a></li>
+      <li><a href="#"><i class="material-icons green-item">attach_money</i>Finances</a></li>
+      <li><a href="#"><i class="material-icons green-item">info</i>Account Information</a></li>
+      {{/if}}
+
+      {{#if developer}}
+      <li><a href="#"><i class="material-icons green-item">work</i>My bids/projects</a></li>
+      <li><a href="#"><i class="material-icons green-item">star</i>Ratings</a></li>
+      <li><a href="#"><i class="material-icons green-item">content_paste</i>Reports</a></li>
+      <li><a href="#"><i class="material-icons green-item">attach_money</i>Finances</a></li>
+      <li><a href="#"><i class="material-icons green-item">info</i>Account Information</a></li>
+      {{/if}}
       
     </ul>
     <main>
@@ -42,8 +61,8 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>User</h3>
-              <p>Accounts</p>
+              <h3>{{totalUsers}}</h3>
+              <p>Total Accounts</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add" style="zoom: 75%; padding-top: 25px;"></i>
@@ -56,7 +75,7 @@
             <div class="small-box bg-green">
               <div class="inner">
                 <h3>Finances</h3>
-                <p>Money</p>
+                <p>USD Dollarss</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars" style="zoom: 75%; padding-top: 25px;"></i>
@@ -93,63 +112,54 @@
 
               <div class="container">
                 <div class="quick-links center-align">
-                  <h3>Quick Links</h3>
+                  <h4>Quick Links</h4>
                   <div class="row">
-                    <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Mod Handbook"><a class="waves-effect waves-light btn-large" href="#">Mod Handbook</a></div>
-                    <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Staff Applications"><a class="waves-effect waves-light btn-large" href="#">Staff Applications</a></div>
-                    <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Name Guidelines"><a class="waves-effect waves-light btn-large" href="#">User Guidelines</a></div>
+                    <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Add Money"><a class="waves-effect waves-light btn-large" href="/deposit/add">Add $</a></div>
+                    <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Account Balance"><a class="waves-effect waves-light btn-large" href="#">Balance</a></div>
+                    {{!-- <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Name Guidelines"><a class="waves-effect waves-light btn-large" href="#">User Guidelines</a></div>
                     <div class="col l3 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Issue Tracker"><a class="waves-effect waves-light btn-large" href="#">Issue Tracker</a></div>
-                    <div class="col l4 offset-l4 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="OTRS Support Site"><a class="waves-effect waves-light btn-large" href="#">Support Site</a></div>
+                    <div class="col l4 offset-l4 s12 tooltipped" data-position="top" data-delay="50" data-tooltip="OTRS Support Site"><a class="waves-effect waves-light btn-large" href="#">Support Site</a></div> --}}
                   </div>
                 </div>
 
-{{!--                 <h3 class="center-align">Current Staff Members</h3>
-                <div class="custom-responsive">
-                  <table class="striped hover centered">
-                    <thead><tr>
-                      <th>Username</th>
-                      <th>Access Level</th>
-                      <th>Last Site Login</th>
-                      <th>TFA Active?</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>MichaelGScott</td>
-                      <td>Administrator</td>
-                      <td>2017-03-31</td>
-                      <td><i class="text-green material-icons">check</i></td>
-                    </tr>
-                    <tr>
-                      <td>JimHalpert</td>
-                      <td>Sales</td>
-                      <td>2017-03-31</td>
-                      <td><i class="text-green material-icons">check</i></td>
-                    </tr>
-                    <tr>
-                      <td>KevinMalone</td>
-                      <td>Accounting</td>
-                      <td>2017-03-31</td>
-                      <td><i class="text-red material-icons">close</i></td>
-                    </tr>
-                    <tr>
-                      <td>PamBeesly</td>
-                      <td>Reception</td>
-                      <td>2017-03-31</td>
-                      <td><i class="text-green material-icons">check</i></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div> --}}
+                {{!-- <div class="container">
+                  <div class="container center-align">
+                  <div class="row valign-wrapper">
+                  <div class="col s12 m6 offset-m3">
+                    <div class="card">
+                      <div class="card-title">
+                        <p style="font-size: 9px;">Payment Information</p>
+                      </div> 
+                      <div class="card-content black-text">
+                        <p>testing testing testing testing testing</p>
+                      </div>
+                      </div>   
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Card Title</span>
+              <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ --}}
             </div>
           </div>
         </section>
         </main>
 
-        <!-- So this is basically a hack, until I come up with a better solution. autocomplete is overridden
-        in the materialize js file & I don't want that.
-        -->
-        <!-- Yo dawg, I heard you like hacks. So I hacked your hack. (moved the sidenav js up so it actually works) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
         <script>
@@ -166,7 +176,7 @@
           $('select').material_select();
           $('.collapsible').collapsible();
           </script>
-          <div class="fixed-action-btn horizontal tooltipped" data-position="top" dattooltipped" data-position="top" data-delay="50" data-tooltip="Quick Links">
+          {{!-- <div class="fixed-action-btn horizontal tooltipped" data-position="top" dattooltipped" data-position="top" data-delay="50" data-tooltip="Quick Links">
             <a class="btn-floating btn-large red">
               <i class="large material-icons">mode_edit</i>
             </a>
@@ -178,5 +188,5 @@
               <li><a class="btn-floating orange tooltipped" data-position="top" data-delay="50" data-tooltip="Support" href="#"><i class="material-icons">person</i></a></li>
             </ul>
           </div>
-        </div>
+        </div> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

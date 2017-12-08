@@ -8,6 +8,9 @@ module.exports = {
 
 		router.get('/', this.index);
 
+
+
+
 		return router;
 	},
 
