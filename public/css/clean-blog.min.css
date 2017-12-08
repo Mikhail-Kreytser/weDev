@@ -608,7 +608,7 @@ body {
 @media (min-width:993px) {
   main,
   footer {
-    padding-left: 300px;
+/*    padding-left: 300px;*/
   }
 
 }
