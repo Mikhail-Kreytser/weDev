@@ -45,6 +45,7 @@ module.exports = {
       models.WorkOrder.update({
         gitHub: req.body.gitHub,
         complete: req.body.complete,
+        CustomerReviewPending: req.body.complete,
       },
       {
         where:{
@@ -591,6 +592,7 @@ module.exports = {
       slug: getSlug(req.body.title.toLowerCase()),
       body: req.body.body,
       completionDeadline: req.body.completionDeadline,
+      bidingDeadline: req.body.bidingDeadline,
     },
     {
       where: {

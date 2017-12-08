@@ -24,6 +24,8 @@
   <div class="row">
 
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="card hoverable">
+        <div class="card-content black-text">
       <center>
         <h4>
           Current Amount in wallet: {{totalMoney}}
@@ -31,7 +33,9 @@
       </center>
       <form name="create-post" action="/posts/{{poster}}/{{slug}}/new-bid" method="post">
         <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
+          <div class="form-group col s6 offset-s3 floating-label-form-group controls">
+            <br>        <br>        <br>        <br>
+
             <label>Amount</label>
             <input type="number" class="form-control" min="0.01" step="0.01" max="{{totalMoney}}" value="50.00" name = "price" required data-validation-required-message="Please enter a value." />
             <input type="hidden" name="username" value="{{poster}}"/>
@@ -39,13 +43,22 @@
             <p class="help-block text-danger"></p>
           </div>
         </div>
-        <br>
+        <br>        <br>        <br>
         <div class="row">
-          <div class="form-group col-xs-12">
-              <button type="submit" class="btn btn-default">Send</button>
+          <div class="form-group  col s3 offset-s3">
+              <button type="submit" class="btn btn-default">Submit bid</button>
           </div>
+
+        <div class="col s3 offset-s1">
+          <div class="create-post">
+            <a class="btn btn-default" href="/deposit/add">Deposit more money </a>
+          </div>
+        </div>
+
         </div>
       </form>
     </div>
+  </div>
+  </div>
   </div>
 </div>

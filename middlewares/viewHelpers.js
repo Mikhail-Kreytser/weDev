@@ -9,8 +9,12 @@ helpers.register = () => {
     res.locals.admin = false;
     res.locals.owner = false;
     res.locals.notify = 0;
+    res.locals.quitReq = 0;
     res.locals.numOfPendingUsers = 0;
     res.locals.numOfAttentionWorkOrders = 0;
+    res.locals.unConfirmedWorkOrder = 0;
+    res.locals.badReviewdWorkOrders = 0;
+
     if (req.user){
         if(req.user.accountStatus == "Approved"){
         	if(req.user.accountType == "Customer")
@@ -30,9 +34,31 @@ helpers.register = () => {
                       CustomerMadeReview: true,
                     },
                     }).then((badReviewdWorkOrder) => {
-                        res.locals.numOfAttentionWorkOrders = badReviewdWorkOrder;
-                        res.locals.numOfPendingUsers = allPendingUsers;
-                        res.locals.notify = allPendingUsers+badReviewdWorkOrder;
+                        models.WorkOrder.count({
+                            where:{
+                            confirmed: false,
+                            },
+                        }).then((unConfirmedWorkOrder) => {
+                        models.User.count({
+                            where: {
+                              accountStatus: "Approved",
+                            },
+                            include: [{
+                              model: models.QuitReq,
+                              where:{
+                                approved: false,
+                                requested: true,
+                              }
+                            }],
+                          }).then((needsApprovedQuit)=>{ 
+                            res.locals.badReviewdWorkOrders = badReviewdWorkOrder;
+                            res.locals.unConfirmedWorkOrder = unConfirmedWorkOrder
+                            res.locals.numOfPendingUsers = allPendingUsers;
+                            res.locals.quitReq = needsApprovedQuit;
+                            res.locals.numOfAttentionWorkOrders = res.locals.badReviewdWorkOrders +res.locals.unConfirmedWorkOrder;
+                            res.locals.notify = res.locals.numOfAttentionWorkOrders + res.locals.numOfPendingUsers + res.locals.quitReq ;
+                        });
+                      });
                     });
                 });
             }
