@@ -19,7 +19,7 @@ module.exports = {
     router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
     router.get('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnDev);
     router.get('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnCus);
-
+    router.put('/:username/:slug/completeProject/:winnersName/',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.completeProject);
     router.post('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnCus);
     router.post('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnDev);
     router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
@@ -31,6 +31,30 @@ module.exports = {
 
 
     return router;
+  },
+
+
+
+
+  completeProject(req,res){
+    models.WorkOrder.findOne({
+      where:{
+        userId: req.user.id,
+      },
+    }).then((workOrder) => {
+      models.WorkOrder.update({
+        gitHub: req.body.gitHub,
+        complete: req.body.complete,
+      },
+      {
+        where:{
+          id:workOrder.id,
+        },
+        returning:true,
+      }).then(()=>{
+        res.redirect('/posts');
+      });
+    });
   },
   index(req, res) {
     models.Post.findAll({
@@ -275,6 +299,7 @@ module.exports = {
               expired = true;
           (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",CustomerMadeReview,expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
+      }).catch({
       });
     });
   },
