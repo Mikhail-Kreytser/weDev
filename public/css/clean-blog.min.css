@@ -627,6 +627,8 @@ div.page-announce {
   background-color: #f4425c;
   padding: 40px;
   margin-bottom: 10px;
+  padding-left: 310px;
+  padding-top: 100px;
 }
 
 h1.page-announce-text {

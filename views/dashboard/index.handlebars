@@ -4,24 +4,24 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <ul id="slide-out" class="side-nav fixed z-depth-4 col s2">
-      <li>
-        <div class="userView">
+{{!--       <li> --}}
+{{!--         <div class="userView">
           <div class="background">
             <p>{{user.username}}</p>
-          </div>
+          </div> --}}
 {{!--           <a href="#!user"><img class="circle" src="/profile_pics/{{profile.profileImage}}"></a>
           <a href="#!name"><span class="white-text name">Welcome back,</span></a>
           <a href="#!email"><span class="white-text email">{{user.username}}</span></a> --}}
-        </div>
+{{!--         </div>
       </li>
-
-      <li>
+ --}}
+      {{!-- <li>
         <form class="sidebar-form">
           <div class="input-group">
             <input id="accounts" type="text" name="username" class="form-control" placeholder="Universal Search" autocomplete="off" />
           </div>
         </form>
-      </li>
+      </li> --}}
 
       <li><a class="active" href="#"><i class="material-icons pink-item">dashboard</i>Dashboard</a></li>
       <li><div class="divider"></div></li>
@@ -37,7 +37,7 @@
     <section class="content">
       <div class="page-announce valign-wrapper"><a href="#" data-activates="slide-out" class="button-collapse valign hide-on-large-only"><i class="material-icons">menu</i></a><h4 class="page-announce-text valign white-text center-align">Dashboard</h4></div>
       <!-- Stat Boxes -->
-      <div class="row">
+      <div class="row" style="padding-left: 300px;">
         <div class="col l3 s6">
           <!-- small box -->
           <div class="small-box bg-aqua">
@@ -46,7 +46,7 @@
               <p>Accounts</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-person-add" style="zoom: 75%; padding-top: 25px;"></i>
             </div>
             <a href="#" class="small-box-footer" class="animsition-link">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -59,7 +59,7 @@
                 <p>Money</p>
               </div>
               <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="ion ion-stats-bars" style="zoom: 75%; padding-top: 25px;"></i>
               </div>
               <a href="#" class="small-box-footer" class="animsition-link">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
@@ -72,7 +72,7 @@
                   <p>Info</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-email"></i>
+                  <i class="ion ion-email" style="zoom: 75%; padding-top: 25px;"></i>
                 </div>
                 <a href="#" class="small-box-footer" class="animsition-link">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -85,7 +85,7 @@
                     <p>Unique Visitors</p>
                   </div>
                   <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="ion ion-pie-graph" style="zoom: 75%; padding-top: 25px;"></i>
                   </div>
                   <a href="#" class="small-box-footer" class="animsition-link">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
@@ -103,7 +103,7 @@
                   </div>
                 </div>
 
-                <h3 class="center-align">Current Staff Members</h3>
+{{!--                 <h3 class="center-align">Current Staff Members</h3>
                 <div class="custom-responsive">
                   <table class="striped hover centered">
                     <thead><tr>
@@ -140,7 +140,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
+              </div> --}}
             </div>
           </div>
         </section>
