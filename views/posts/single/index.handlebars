@@ -79,9 +79,17 @@
             {{/if}}
           {{/if}}
         {{else}}
+        <div class="col s6">
           <div class="create-post">
             <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
           </div>
+        </div>
+
+        <div class="col s6">
+          <div class="create-post">
+            <a class="btn btn-default" href="/deposit/add">Deposit more money </a>
+          </div>
+        </div>
         {{/if}}
       {{/if}}
         {{/if}}
