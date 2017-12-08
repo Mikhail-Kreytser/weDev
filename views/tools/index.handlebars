@@ -13,7 +13,12 @@
             {{/if}}
           </a>
         </li>
-        <li class="tab"><a href="/#quitRequests">Quit Requests</a></li>
+        <li class="tab"><a href="/#quitRequests">Quit Requests
+        {{#if quitReq}}
+              <span class="new badge blue-grey lighten-2">{{quitReq}}</span>
+            {{/if}}
+          </a>
+        </li>
         {{!-- <li class="tab"><a href="/#warnedUsers">Warned Users</a></li> --}}
         <li class="tab"><a href="/#blackList">Blacklist</a></li>
         <li class="tab"><a  href="/#workOrders">

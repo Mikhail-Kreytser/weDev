@@ -45,6 +45,7 @@ module.exports = {
       models.WorkOrder.update({
         gitHub: req.body.gitHub,
         complete: req.body.complete,
+        CustomerReviewPending: req.body.complete,
       },
       {
         where:{
