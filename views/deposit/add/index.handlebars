@@ -1,6 +1,5 @@
 <header class="intro-header">
   <h3>Add Money</h3>
-  <hr class="small">
   <span class="subheading"><i id="header-logo" class="material-icons">data_usage</i></span>
 </header>
 
@@ -11,23 +10,70 @@
         <div class="alert alert-danger">{{this.error}}</div>
       {{/if}}
       
-      <h5 class="center-align">Total amount in your wallet: {{balance}}</h5>
- 
-      <form name="deposit" action="/deposit/add?_method=PUT" method="POST">
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Deposit</label>
-            <input type="text" name="amountDeposited" class="form-control" value="200" required data-validation-required-message="Please enter the amount.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
+      <h5 class="center-align">Current total amount in your wallet: {{balance}}</h5>
 
-        <div class="row">
-          <div class="form-group col-xs-12">
-              <button type="submit" class="btn">Deposit</button>
+      <form class="checkout" name="deposit" action="/deposit/add/" method="post">
+    <div class="checkout-header">
+      <h1 class="checkout-title">
+        Deposit Additional Funds
+        <span id="checkout" style="font-size: 11px" class="checkout-price" >$0</span>
+      </h1>
+    </div>
+    <p>
+      <input type="number" onkeyup="money()" name="amountDeposited" class="checkout-input checkout-name" placeholder="200" id="deposit" min="1" step="1.0" autofocus required>
+      <input type="date" id="datefield" name="expirationDate" class="checkout-input checkout-exp" required data-validation-required-message="Please enter expiration date.">
+      <input type="text" name="zipCode" class="checkout-input checkout-exp" maxlength="5" placeholder="Zip Code" required data-validation-required-message="Please enter zip code.">
+    </p>
+    <p>
+      <input type="text" onkeydown="creditCard()" name="creditCardNumber" id ="creditCard" class="checkout-input checkout-card" maxlength="16" placeholder="4111 1111 1111 1111" data-validation-required-message="Please enter the credit card number." required>
+      <input type="text" name="cvv" class="checkout-input checkout-cvc" maxlength="3" data-validation-required-message="Please enter the amount." placeholder="CVV" required>
+    </p>
+    <p>
+      <div class="form-group col-xs-12">
+              <button type="submit" class="btn">Finish Deposit</button>
           </div>
-        </div>
-      </form>
+    </p>
+  </form>
     </div>
   </div>
 </div>
+</div>
+  <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <!--jQuery easing plugin-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <!-- jQueryValidation Plugin -->
+      <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+      <!--Import Materialize-Stepper JavaScript (after the jquery.validate.js and materialize.js) -->
+      <script src="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.min.js"></script>
+
+<script>
+  function money(){
+    var curValue = document.getElementById("deposit").value;
+    if(!curValue)
+      document.getElementById("checkout").innerHTML = "$0"
+    else if(curValue < 1000)
+      document.getElementById("checkout").innerHTML = "$" + curValue;
+    else if(curValue < 1000000)
+      if(curValue%1000 == 0 || curValue/1000 > 99)
+        document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(0) +"K";
+      else
+        document.getElementById("checkout").innerHTML = (curValue/1000).toFixed(1) +"K";
+  }
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+   if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+
+  today = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("datefield").setAttribute("min", today);
+</script>

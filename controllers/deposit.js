@@ -6,11 +6,11 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get ('/',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.index);
-    router.post('/',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.create);
+    router.get ('/initial',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.index);
+    router.post('/initial',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.create);
+
     router.get ('/add', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifNoWalletCreated(), this.show);
-    router.put ('/add', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifNoWalletCreated(), 
-                                                                        Redirect.ifNotAuthorized(), this.update);
+    router.post ('/add', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifNoWalletCreated(), this.update);
 
     return router;
   },
@@ -41,26 +41,22 @@ module.exports = {
   },
 
   update(req, res) {
-//    req.user.getWallet()
- //   .then((wallet) => {
-
-                        console.log("HERE");
-                        console.log("add more money ");
-   /*   console.log(req.body.amountDeposited);
-      models.wallet.update({
-        amountDeposited: req.body.amountDeposited,//wallet.amountDeposited + 
+    req.user.getWallet().then((wallet) => {
+      models.Wallet.update({
+        amountDeposited: parseFloat(wallet.amountDeposited) + (req.body.amountDeposited * 1.0),
+        creditCardNumber: req.body.creditCardNumber,
+        expirationDate: req.body.expirationDate,
+        cvv: req.body.cvv,
+        zipCode: req.body.zipCode,
         },
         {
           where: {
             userId: req.user.id,
           },
           returning: true,
-        }).then(([numRows, rows]) => {
-            const post = rows[0];
+        }).then(() => {
             res.redirect('/');
-      });*/
- //   });
- 
- res.redirect('/profile')
+      });
+    });
   },
 };

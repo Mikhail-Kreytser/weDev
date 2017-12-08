@@ -105,6 +105,7 @@ module.exports = {
           }).then((winningBid) => {
             if(customer.wallet.amountDeposited < winningBid.price){
               console.log("not enough money");
+              
             }
             else{
               models.WorkOrder.create({
@@ -328,7 +329,6 @@ module.exports = {
   },
 
   createReviewOnCus(req,res) {
-    console.log("here");
     models.Post.findOne({
       where: {
         slug: req.params.slug,

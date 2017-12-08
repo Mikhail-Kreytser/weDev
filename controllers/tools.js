@@ -75,13 +75,22 @@ module.exports = {
                     closed: false,
                     CustomerMadeReview: false,
                     complete: false,
+                    confirmed: true,
                   },
                   include: [{
                     model: models.Post,
                   }],
                 }).then((ProjectNotCompleteWorkOrder) => {
-
-                  res.render('tools', {ProjectNotCompleteWorkOrder,ProjectCompleteWorkOrder, allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
+                  models.WorkOrder.findAll({
+                    where:{
+                      confirmed: false,
+                    },
+                    include: [{
+                      model: models.Post,
+                    }],
+                  }).then((workOrderNeedsApproval) =>{
+                      res.render('tools', {ProjectNotCompleteWorkOrder,ProjectCompleteWorkOrder,workOrderNeedsApproval, allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
+                  });
                 });
               });
             });
