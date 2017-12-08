@@ -35,10 +35,20 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <body>
       <ul id="dropdown1" class="dropdown-content">
+
       <li><a href="/profile/show"><i class="material-icons">face</i>Profile</a></li>
-      <li><a href="#!"><i class="material-icons">work</i>My Bids</a></li>
-      <li><a href="#!"><i class="material-icons">mail_outline</i>Messages</a></li>
-      <li><a href="#!"><i class="material-icons">settings</i>Settings</a></li>
+      {{#if admin}}
+      <li><a href="/dashboard"><i class="material-icons">work</i>Overview</a></li>
+      {{/if}}
+      {{#if developer}}
+      <li><a href="/dashboard"><i class="material-icons">work</i>My Bids</a></li>
+      {{/if}}
+      {{#if customer}}
+      <li><a href="/dashboard"><i class="material-icons">work</i>My Bids</a></li>
+      {{/if}}
+{{!--       <li><a href="#!"><i class="material-icons">mail_outline</i>Messages</a></li> --}}
+{{!--       <li><a href="#!"><i class="material-icons">settings</i>Settings</a></li> --}}
+
       <li class="divider"></li>
       <li id="logout"><a href="#"><i class="material-icons">exit_to_app</i>Sign Out</a></li>
     </ul>
