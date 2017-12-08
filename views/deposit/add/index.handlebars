@@ -6,8 +6,13 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      {{#if error}}
-        <div class="alert alert-danger">{{this.error}}</div>
+      {{#if amountNeeded}}
+            <div id="card-alert" class="card red lighten-5">
+              <div class="card-content red-text">
+                <i class="mdi-alert-error"></i>
+                <p><center>You need a minimum balance of: {{amountNeeded}}</center></p>
+              </div>
+            </div>
       {{/if}}
       
       <h5 class="center-align">Current total amount in your wallet: {{balance}}</h5>

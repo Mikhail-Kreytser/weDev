@@ -55,7 +55,7 @@ module.exports = {
 
   newBid(req, res) {
     req.user.getWallet({}).then((wallet) => {
-      res.render('posts/new-bid',{totalMoney : wallet.amountDeposited, poster: req.params.username,slug: req.params.slug});
+      res.render('posts/new-bid',{totalMoney : wallet.amountDeposited, poster: req.params.username, slug: req.params.slug});
     });
   },
 
@@ -180,23 +180,31 @@ module.exports = {
           postId: post.id,
         },
       }).then((bid) => {
-        if(bid){
-          if(bid.price < req.body.price)
-            res.render('posts/new-bid',{poster: req.body.username, slug: post.slug, higherBid: true});
-          else{  
-            models.Bid.update({
-              price: req.body.price,
-            },
-            {
-            where: {
-              userId: req.user.id,
-              postId: post.id,
-            },
-            returning: true,
-            }).then(() => {
-              res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
-            });
+        models.Wallet.findOne({
+          where:{
+            userId: req.user.id,
+          },
+        }).then((wallet)=>{
+          if(req.body.price > wallet.amountDeposited){
+            res.render('deposit/add', { amountNeeded: req.body.price })
           }
+          if(bid){
+            if(bid.price < req.body.price)
+              res.render('posts/new-bid',{poster: req.body.username, slug: post.slug, higherBid: true});
+            else{  
+              models.Bid.update({
+                price: req.body.price,
+              },
+              {
+              where: {
+                userId: req.user.id,
+                postId: post.id,
+              },
+              returning: true,
+              }).then(() => {
+                res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
+              });
+            }
         }
         else{
           req.user.createBid({
@@ -206,6 +214,7 @@ module.exports = {
             res.redirect(`/posts/${req.body.username}/${req.body.slug}/`);
           });
         }
+        });
       });
     }).catch(() => {
         res.redirect(`/posts/${req.body.username}/${req.body.slug}/new-bid`);
