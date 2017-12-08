@@ -15,10 +15,25 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      {{#if delete}}
+ <div class="col s6 offset-s3">
+        <br><br><br><br>
+
+        <br><br><br><br>
+        <form name="delete-user" action="/quit/delete/{{user.id}}">
+          <div class="form-group col-xs-6 text-left">
+            <button type="submit" class="btn  red accent-3">Delete Account</button>
+          </div>
+        </div>
+
+      </form>
+      </div>
+      {{else}}
       <form id="editUser" name="edit-user" method="POST" action="/tools/user/{{user.username}}?_method=PUT">
         
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
+            <h6>Current Type: {{user.accountType}}</h6>
             <label>Account Type</label><br>
             <input class="form-control" name="accountType" type= "radio" id="Admin" value="Admin">
             <label for="Admin">Admin</label>
@@ -32,6 +47,8 @@
 
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
+
+          <h6>Current status: {{user.accountStatus}}</h6>
             <label>Account Status</label><br>
            {{!--  <input required data-validation-required-message="Please choose Account Status."> --}}
             <input class="form-control" name="accountStatus" type="radio" id="Approved" value="Approved">
@@ -54,6 +71,7 @@
               <button type="submit" class="btn btn-default">Done</button>
           </div>
       </form>
+      {{/if}}
     </div>
   </div>
 </div>

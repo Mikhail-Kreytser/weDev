@@ -89,7 +89,34 @@ module.exports = {
                       model: models.Post,
                     }],
                   }).then((workOrderNeedsApproval) =>{
-                      res.render('tools', {ProjectNotCompleteWorkOrder,ProjectCompleteWorkOrder,workOrderNeedsApproval, allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
+                    models.User.findAll({
+                      where: {
+                        accountStatus: "Approved",
+                      },
+                      include: [{
+                        model: models.QuitReq,
+                        where:{
+                          approved: true,
+                          requested: true,
+                        }
+                      }],
+                    }).then((approvedQuit) => {
+                      models.User.findAll({
+                        where: {
+                          accountStatus: "Approved",
+                        },
+                        include: [{
+                          model: models.QuitReq,
+                          where:{
+                            approved: false,
+                            requested: true,
+                          }
+                        }],
+                      }).then((needsApprovedQuit)=>{ 
+                        res.render('tools', {needsApprovedQuit, approvedQuit,ProjectNotCompleteWorkOrder,ProjectCompleteWorkOrder,workOrderNeedsApproval, allApprovedUsers, allPendingUsers, allBlockedUsers,badReviewdWorkOrder, closedWorkOrder });
+              
+                      });
+                    });    
                   });
                 });
               });

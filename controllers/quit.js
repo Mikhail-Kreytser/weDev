@@ -7,6 +7,8 @@ module.exports = {
     const router = express.Router();
 
     router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), this.index);
+    router.get('/delete/:who', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNotAdmin(), this.delete);
+    router.get('/get/:who', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNotAdmin(), this.get);
     router.get('/request',Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), this.postReq);
     return router; 
   },
@@ -26,17 +28,39 @@ module.exports = {
       }).then((systemMessage) => {
         res.redirect('/');
       });
-    }); 
-    /*
-    models.Users.destroy({
+    });
+  },
+
+
+  get(req, res) {
+    models.User.findOne({
       where: {
-        id: req.user.id,
+        id: req.params.who,
       },
-      include: [{
-        model: models.Profile,
-      }],
-    }).then(() => {
-      res.redirect('/posts');
-    });*/
+    }).then((user) => {
+      if(user) {
+        res.render('tools/users/single', { user: user, delete: true });
+      } else {
+        res.redirect('/tools');
+      }
+    }).catch(() => {
+      res.redirect('/profile');
+    });
+  },
+
+  delete(req, res){
+    models.User.findOne({
+      where: {
+        id: req.params.who,
+      },
+    }).then((theUser) => {
+      theUser.destroy({
+        include: [{
+          model: models.Profile,
+        }],
+      }).then(() => {
+        res.redirect('/tools');
+      });
+    });
   },
 };
