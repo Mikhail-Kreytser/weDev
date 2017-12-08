@@ -32,7 +32,7 @@
           {{#if DeveloperMadeReview}}
           {{else}}
             <div class="create-post">
-              <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{winnersName}}/review">Review Customer </a>
+              <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{winnersName}}">Review Customer </a>
             </div>
           {{/if}}
         {{/if}}
@@ -44,7 +44,7 @@
                 <h5 class="center-align">Please wait for the Admin to review the project</h5>
               {{else}}
                 <div class="review-developer">
-                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner/{{winnersName}}/review">Review Developer </a>
+                  <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewWinner/{{winnersName}}">Review Developer </a>
                 </div>
               {{/if}}
             {{else}}
@@ -70,8 +70,9 @@
               {{#if DeveloperMadeReview}}
               {{else}}
                 <div class="create-post">
-                  <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{user.username}}/review">Review Customer </a>
+                  <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{user.username}}">Review Customer </a>
                 </div>
+                <a href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{user.username}}/review">Review Customer </a>
               {{/if}}
             {{else}}
 

@@ -21,7 +21,7 @@
       {{winnersName}}
       {{#if customer}}
         {{#if workOrder.CustomerReviewPending}}
-          <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewWinner/{{winnersName}}/review" method="post">
+          <form name="create-review" action="/review/{{poster}}/{{slug}}/createReviewWinner/{{winnersName}}" method="post">
 
             {{!-- <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
@@ -87,7 +87,7 @@
       {{#if developer}}
         {{#if workOrder.DeveloperMadeReview}}
         {{else}}
-          <form name="create-review" action="/posts/{{poster}}/{{slug}}/reviewCustomer/{{winnersName}}/review" method="post">
+          <form name="create-review" action="/review/{{poster}}/{{slug}}/createReviewCustomer/{{winnersName}}" method="post">
 
 {{!--             <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
