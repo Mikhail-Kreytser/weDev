@@ -592,6 +592,7 @@ module.exports = {
       slug: getSlug(req.body.title.toLowerCase()),
       body: req.body.body,
       completionDeadline: req.body.completionDeadline,
+      bidingDeadline: req.body.bidingDeadline,
     },
     {
       where: {
