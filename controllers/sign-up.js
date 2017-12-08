@@ -24,7 +24,7 @@ module.exports = {
       accountStatus: "Pending",
     }).then((user) => {
       req.login(user, () =>
-        res.redirect('/deposit')
+        res.redirect('/deposit/initial')
       );
     }).catch(() => {
         models.User.findOne({
