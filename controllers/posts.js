@@ -16,12 +16,17 @@ module.exports = {
     router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
-    router.get('/:username/:slug/reviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
-    router.get('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnDev);
-    router.get('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnCus);
+    router.get('/:username/:slug/reviewWinner/:winnersName/', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
+
+
+    router.get('/:username/:slug/createReviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnDev);
+    router.get('/review/:username/:slug/createReviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnCus);
     router.put('/:username/:slug/completeProject/:winnersName/',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.completeProject);
-    router.post('/:username/:slug/reviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnCus);
-    router.post('/:username/:slug/reviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnDev);
+    router.post('/review/:username/:slug/createReviewCustomer/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnCus);
+    router.post('/:username/:slug/createReviewWinner/:winnersName/review', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.postReviewOnDev);
+
+
+
     router.post('/:username/:slug/selectWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.order);
     router.put('/:username/:slug',      Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.update);
     router.delete('/:username/:slug',   Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.delete);
