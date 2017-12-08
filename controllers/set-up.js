@@ -27,13 +27,8 @@ module.exports = {
       companyWebsite: (req.body.companyWebsite) ? req.body.companyWebsite : 'http://developer.com',
       rating: 0,
     }).then((user) => {
-        res.redirect('/profile');
+        res.redirect('/profile/show');
     }).catch(() => {
-          console.log(req.body.firstName);
-     console.log(req.body.lastName);
-      console.log(req.body.bio);
-      console.log(req.body.rating);
-      console.log("Pending");
 
       res.render('set-up',{ error: true});
     });

@@ -7,7 +7,7 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifLoggedIn('/profile'), this.index);
+    router.get('/', Redirect.ifLoggedIn('/profile/show'), this.index);
     router.post('/', this.submit);
 
     return router;
