@@ -6,8 +6,8 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get ('/initial',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.index);
-    router.post('/initial',    Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.create);
+    router.get ('/initial', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.index);
+    router.post('/initial', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifWalletCreated(), this.create);
 
     router.get ('/add', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifNoWalletCreated(), this.show);
     router.post ('/add', Redirect.ifNotLoggedIn(), Redirect.ifBlocked(), Redirect.ifNoWalletCreated(), this.update);

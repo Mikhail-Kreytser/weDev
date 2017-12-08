@@ -11,8 +11,8 @@ module.exports = {
 
     router.get('/', this.index);
     router.post('/search', this.indexSearch);
-    router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.newPost);
-    router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), this.createPost);
+    router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp(), this.newPost);
+    router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp() , this.createPost);
     router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
@@ -104,8 +104,7 @@ module.exports = {
             },
           }).then((winningBid) => {
             if(customer.wallet.amountDeposited < winningBid.price){
-              console.log("not enough money");
-              
+              res.redirect('/deposit/add',{amountNeededWin:winningBid.price })
             }
             else{
               models.WorkOrder.create({
@@ -186,7 +185,7 @@ module.exports = {
           },
         }).then((wallet)=>{
           if(req.body.price > wallet.amountDeposited){
-            res.render('deposit/add', { amountNeeded: req.body.price })
+            res.render('deposit/add', { amountNeededBid: req.body.price })
           }
           if(bid){
             if(bid.price < req.body.price)

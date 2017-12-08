@@ -12,7 +12,7 @@
 
 <div class="container center-align">
   <div class="row valign-wrapper">
-  <div class="col s4 m6 offset-m3">
+  <div class="col s6 offset-m3">
     <div class="card hoverable">
       <div class="card-image">
         <img src="/profile_pics/{{profile.profileImage}}">
@@ -20,19 +20,29 @@
         <span class="card-title">{{user.username}}</span>
       </div> 
       <div class="card-content black-text">
-        {{#if developer}}
-        <p>Biography: {{profile.bio}} </p>
+        {{#if isDeveloper}}
+          <p>Biography: {{profile.bio}} </p>
         {{/if}}
-        {{#if customer}}
-        <p> Company Information: {{profile.companyInfo}}</p>
+
+        {{#if isCustomer}}
+          <p> Company Information: {{profile.companyInfo}}</p>
+        {{/if}}
       </div>
+
+
       <div class="card-action">
+        {{#if isCustomer}}
         <p>Website: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
+        {{/if}}
+
+        {{#if isDeveloper}}
+        <p> GitHub: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
         {{/if}}
 
         <p>Ratings: {{rating}} </p>
       </div>   
     </div>
+  </div>
 
 {{!--     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       
@@ -54,12 +64,14 @@
         {{rating}}
       </p> --}}
 
-      {{#if owner}}
-        <div class="update-post">
+
+
+    </div>
+          {{#if owner}}
+
+        <div class="update-post col 6">
           <a class="btn btn-default" href="/profile/edit">Update profile </a>
         </div>
       {{/if}}
-
-    </div>
   </div>
 </div>

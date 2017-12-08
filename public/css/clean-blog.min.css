@@ -83,7 +83,7 @@ header {
 	margin: 0 auto;
 }
 
-#usersSearch, #winnersSearch, #workOrdersSearch {
+#usersSearch,#quitSearch, #winnersSearch,#blackSearch, #workOrdersSearch {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -95,14 +95,14 @@ header {
   box-sizing: border-box;
 }
 
-#usersUL, #blackListUL, #warnedUsersUL, #workOrdersUL {
+#usersUL,#quitUL, #blackListUL, #warnedUsersUL,#blackUL, #workOrdersUL {
   list-style-type: none;
   padding: 0;
   margin: 0;
 
 }
 
-#usersUL li a, #workOrdersUL li a, #warnedUsersUL li a, #blackListUL li a{
+#usersUL li a, #workOrdersUL li a,#quitUL li a,#blackUL li a, #warnedUsersUL li a, #blackListUL li a{
   border: 1px solid #ddd;
   margin-top: -1px;
   background-color: #f6f6f6;

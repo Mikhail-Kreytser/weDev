@@ -25,31 +25,39 @@
           
   <div class="row">
 
-
+<div class="card hoverable">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="card-content black-text">
       <form name="upload-profile" action="/set-up" method="post" enctype="multipart/form-data">
-
+<br><br>
         <div class="row control-group">
-{{!--           <div class="form-group col-xs-6 floating-label-form-group controls"> --}}
-          <div class="col s4 m6">
-{{!--             <label>First Name</label> --}}
-            <input type="text" class="form-control" placeholder="First Name" name="firstName" required data-validation-required-message="Please enter your first name.">
+
+          <div class="col s3 offset-s2">
+            <center><label>First Name</label>
+            <input type="text" style="text-align:center;" class="form-control" placeholder="Billy" name="firstName" required data-validation-required-message="Please enter your first name.">
+
             <p class="help-block text-danger"></p>
+            </center>
           </div>
 
 
-          <div class="col s4 m6">
-{{!--             <label>Last Name</label> --}}
-            <input type="text" class="form-control" placeholder="Last Name" name="lastName" required data-validation-required-message="Please enter your first name.">
+          <div class="col s3  offset-s2">
+            <center>
+            <label>Last Name</label>
+            <input style="text-align:center;" type="text" class="form-control" placeholder="McDonald" name="lastName" required data-validation-required-message="Please enter your first name.">
+
             <p class="help-block text-danger"></p>
+            </center>
           </div>
         </div>
-        
+        <br>
         <div class="row control-group">
-          <div class="col s6 m6 offset-m3">
 
-            <label>Upload a Profile Picture:</label>
-            <input type="file" name="profileImage" id="profileImage"/>
+          <div class="col s6 offset-s3">
+
+            <label >Upload a Profile Picture:</label>
+            <input style="text-align:center;" type="file" name="profileImage" id="profileImage"/>
+
             <span class="hint">Supported files: jpg, jpeg, png.</span>
             <hr class="divider">
             <br>
@@ -58,26 +66,37 @@
 
         {{#if customer}}
         <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
+          <div class="col s6 offset-s3">
             <label>Company Website</label>
-            <input type="url" class="form-control" placeholder="Company Website" name="companyWebsite" required data-validation-required-message="Please fill in company website">
+            <input type="url" class="form-control" style="text-align:center;" placeholder="http://weDev.tech:3000" name="companyWebsite" required data-validation-required-message="Please fill in company website">
             <p class="help-block text-danger"></p>
           </div>
         </div>
 
 
         <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
+          <div class="col s6 offset-s3">
             <label>Company Information</label>
-            <input type="text" class="form-control" placeholder="Company Information" name="companyInfo" required data-validation-required-message="Please fill in your company information.">
+            <input type="text" class="form-control" placeholder="Best Turk System Ever!" style="text-align:center;" name="companyInfo" required data-validation-required-message="Please fill in your company information.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
         {{else}} 
+
         <div class="row control-group">
-          <div class="col s8 m6 offset-m3">
+          <div class="col s6 offset-s3">
+            <label>GitHub Link</label>
+            <input type="text" class="form-control" placeholder="http://GitHub.com/mikhail-kreytser/weDev" style="text-align:center;" name="companyWebsite" required data-validation-required-message="Please fill in your company information.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <div class="row control-group">
+
+          <div class="col s6 offset-s3">
             <label>Biography</label>
-            <input type="text" class="form-control" placeholder="Biography" name="bio" required data-validation-required-message="Please fill in your bio.">
+            <input type="text" class="form-control" placeholder="We are WeDev!" name="bio" style="text-align:center;" required data-validation-required-message="Please fill in your bio.">
+
             <p class="help-block text-danger"></p>
           </div>
         </div>
@@ -85,11 +104,15 @@
 
         <br>
         <div class="row">
+
           <div class="col s2 offset-m5">
+
               <button type="submit" class="btn btn-default">Done</button>
           </div>
         </div>
       </form>
     </div>
+    </div>
   </div>
+</div>
 </div>
