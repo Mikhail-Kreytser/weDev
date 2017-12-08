@@ -12,21 +12,49 @@
     </div>
   </div>
 </header>
-
+<main>
 <div class="container">
   <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      
-      
-      <h5>Discription: {{post.body}}</h5>
+    <div class="col s7 m6 offset-m4">
+
+      <div class="row valign">
+        <div class="col s12 m8">
+          <div class="card">
+            <div class="card-content black-text">
+              <span class="card-title center-align">Information</span>
+              <p><b>Description:</b> {{post.body}}</p>
+              <p><b>Customer's Comment:</b> {{review.comment}}</p>
+              <p><b>Rating given by Customer:</b> {{review.rating}}</p>
+              <p><b>Job total price:</b> ${{workOrder.price}}</p>
+      {{#if workOrder.closed}}
+        <p><b>Amount due to Developer:</b> $0</p>
+      {{else}}
+        <p><b>Amount due to Developer:</b> ${{half}}</p>
+      {{/if}}
       <br>
-      <h5>Customer's Comment: {{review.comment}}</h5>
-      <h5>Rating given by Customer: {{review.rating}}</h5>
+      <br>
+            </div>
+            <div class="card-action">
+              <form name="edit-user" method="POST" action="/tools/workOrder/{{workOrder.id}}?_method=PUT">
+                  <label>Amount that will be paid</label>
+                <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
+                <p class="help-block text-danger"></p>
+                </div>
+                  {{!-- <button id="dis"type="submit" {{disabled}}  class="btn btn-default">Submit</button> --}}
+              </form>
+        </div>
+      </div>
+      
+      
+      {{!-- <h6>Description: {{post.body}}</h6>
+      <br>
+      <h6>Customer's Comment: {{review.comment}}</h6>
+      <h6>Rating given by Customer: {{review.rating}}</h6>
       <br>
 
-      <h5>Job total price: ${{workOrder.price}}</h5>
+      <h6>Job total price: ${{workOrder.price}}</h6>
       {{#if workOrder.closed}}
-        <h5>Amount due to Developer: $0</h5>
+        <h6>Amount due to Developer: $0</h6>
       {{else}}
         <h5>Amount due to Developer: ${{half}}</h5>
       {{/if}}
@@ -37,7 +65,7 @@
         
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Ammount that will be paid</label>
+            <label>Amount that will be paid</label>
             <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
             <p class="help-block text-danger"></p>
           </div>
@@ -51,8 +79,10 @@
     </div>
 </div>
     </div> 
-  </div>
+  </div> --}}
 </div>
+
+</main>
 
 <script>
 </script>
