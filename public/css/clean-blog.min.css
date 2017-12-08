@@ -613,8 +613,8 @@ body {
 
 }
 
-i.pink-item {
-  color: #f4425c !important;
+i.green-item {
+  color: green !important;
 }
 
 form.sidebar-form {
@@ -862,4 +862,8 @@ div.quick-links a {
   h1.page-announce-text {
     font-size: 32px;
   }
+}
+
+.dashboardContainer {
+  padding-left: 310px;
 }
