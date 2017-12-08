@@ -36,7 +36,7 @@ module.exports = {
   show(req, res) {
     req.user.getWallet()
     .then((wallet) => {
-      res.render('deposit/add',{balance: wallet.amountDeposited});
+      res.render('deposit/add',{balance: wallet.amountDeposited, amountNeededBid:false,amountNeededWin:false});
     });
   },
 

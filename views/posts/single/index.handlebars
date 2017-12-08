@@ -74,9 +74,43 @@
                 </div>
               {{/if}}
             {{else}}
-              <div class="create-post">
-                <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewCustomer/{{user.username}}/review">Upload project files </a>
-              </div>
+
+                <br><br>
+
+                <br><br>
+
+
+
+              <form name="edit-post" method="POST" action="/posts/{{user.username}}/{{post.slug}}/completeProject/{{winnersName}}?_method=PUT">
+                <div class="row control-group">
+                  <div class="col s6 offset-s3">
+                    <label>GitHub Link</label>
+                    <input type="text" class="form-control" style="text-align:center;" placeholder="http://GitHub.com" name="gitHub" required >
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+
+                <div class="row control-group">
+                  <div class="col s6 offset-s3">
+                    <p>
+                      <center>
+                      <input type="checkbox" class="filled-in" id="filled-in-box" name="complete"checked="checked" />
+                      <label for="filled-in-box">Project Complete</label>
+                      </center>
+                    </p>
+                  </div>
+                </div>
+                <br><br>
+
+            <div class="form-group col s6 offset-s3">
+              <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+          <br>
+      </form>
+
+
+
+
             {{/if}}
           {{/if}}
         {{else}}
