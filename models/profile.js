@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     companyWebsite: {      
       type: DataTypes.STRING,
       validate: {
-        isUrl: true,
       },
     },
     companyInfo: {

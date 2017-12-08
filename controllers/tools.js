@@ -139,7 +139,7 @@ module.exports = {
         res.redirect('/tools');
       }
     }).catch(() => {
-      res.redirect('/profile');
+      res.redirect('/profile/show');
     });
   },
 

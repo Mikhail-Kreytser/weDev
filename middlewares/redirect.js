@@ -20,7 +20,7 @@ redirect.ifNoSetUp = (route = '/set-up') =>
     next();;
   };
 
-redirect.ifSetUpComplete = (route = '/profile') =>
+redirect.ifSetUpComplete = (route = '/profile/show') =>
     (req, res, next) => {
     req.user.getProfile().then((profile) =>{
       if(profile == null)
@@ -69,13 +69,13 @@ redirect.ifApproved = (route = '/') =>
 redirect.ifNotAuthorized = (route) =>
   (req, res, next) => (req.user.username !== req.params.username ? (req.user.username !== req.params.winnersName ? res.redirect(route) : next()) : next());
 
-redirect.ifNotCustomer = (route = '/profile') =>
+redirect.ifNotCustomer = (route = '/profile/show') =>
   (req, res, next) => (req.user.accountType == "Customer" ? next() : res.redirect(route));
 
-redirect.ifNotDeveloper = (route = '/profile') =>
+redirect.ifNotDeveloper = (route = '/profile/show') =>
   (req, res, next) => (req.user.accountType == "Developer" ? next() : res.redirect(route));
 
-redirect.ifNotAdmin = (route = '/profile') =>
+redirect.ifNotAdmin = (route = '/profile/show') =>
   (req, res, next) => (req.user.accountType == "Admin" ?  next() :res.redirect(route) );
 
 redirect.ifAdmin = (route = '/tools') =>
