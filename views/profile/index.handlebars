@@ -17,7 +17,7 @@
       <div class="card hoverable">
         <div class="card-image">
           <img src="/profile_pics/{{profile.profileImage}}">
-          <span class="card-title">{{user.username}}</span>
+          <span class="card-title black-text">{{user.username}}</span>
         </div> 
         <div class="card-content black-text">
           {{#if isDeveloper}}
@@ -44,11 +44,11 @@
 
         {{#if owner}}
     <br><br>
-    <div class="update-post col 5 offset-s1">
-      <a class="btn btn-default" href="/profile/edit">&nbsp;&nbsp;Update profile&nbsp;&nbsp; </a>
+    <div class="update-post col m6 offset-s1">
+      <a class="btn btn-default brown lighten-1" href="/profile/edit">&nbsp;&nbsp;Update&nbsp;&nbsp; </a>
     </div>
-    <div class="update-post col 5 offset-s1">
-      <a class="btn btn-default" href="/deposit/add">Add more money</a>
+    <div class="update-post col m6 offset-s1">
+      <a class="btn btn-default brown lighten-1" href="/deposit/add">Add funds</a>
     </div>
     <br><br>
   {{/if}}
