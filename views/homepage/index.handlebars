@@ -103,7 +103,7 @@
     <div class="input-field">
       <input id="search" type="search" name="search" class="commentarea" >
       <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-      <i class="material-icons">close</i>
+      {{!-- <i class="material-icons">close</i> --}}
     </div>
   </form>
   </div>
@@ -147,9 +147,12 @@
   <h4>Our Success.</h4>
 
   <canvas id="myChart" width="100" height="50"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+
+
+
 <script>
-
-
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -191,30 +194,13 @@ var myChart = new Chart(ctx, {
     }
 });
 
-  $(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
-
-  var check = function() {
-  if (document.getElementById('password').value ==
-    document.getElementById('confirmPassword').value) {
-    document.getElementById('message').style.color = 'green';
-    document.getElementById('message').innerHTML = 'matching';
-  } else {
-    document.getElementById('message').style.color = 'red';
-    document.getElementById('message').innerHTML = 'not matching';
-  }
-};
 
 $(document).ready(function() {
     $('.commentarea').keydown(function(event) {
         if (event.keyCode == 13) {
-
             var searching = document.getElementsByTagName("search").value;
             console.log(searching);
             document.getElementById("searchForm").setAttribute("action", "/posts/search/"+searching);
-            //document.getElementById("searchForm").submit();
             return false;
          }
     });
@@ -222,7 +208,6 @@ $(document).ready(function() {
 
 </script>
 
-<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
 
 function checkEmail(){
@@ -268,6 +253,5 @@ function checkUsername(){
 
 
 </script>
-
   </div>
 
