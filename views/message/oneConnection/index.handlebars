@@ -1,0 +1,93 @@
+<header class="intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>Messages to {{otherUser}}</h4>
+          <hr class="small">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="input-field">
+      <input id="myInputMessages" onkeyup="myFunctionMessages()" type="search" placeholder="Search" value="{{search}}">
+      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+    </div>
+
+      <ul id="myULMessages"class="col s8 offset-s2" style="overflow:auto;height:400px;">
+        {{#each messages}}
+          <div >
+            <li class="collection ">
+              <a class="collection-item">
+                <h4 class="left-align col s4 brown-text text-lighten-1">{{this.sender.username}}:</h4>
+                <h4 class="left-align brown-text text-lighten-1">{{this.body}} </h4>
+              </a>
+            </li>
+          </div>
+        {{/each}}
+        <div id="bottom">
+        </div>
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s6 offset-s2">
+        <textarea style="resize:none;" type="text" cols="10" autofocus="" spellcheck=""  required="" form ="msgForm" name="body" rows="35" wrap="soft"></textarea>
+      </div>
+
+      <div class="col s2 center-align">
+        <form method="post" id="msgForm" name="create-msg" action="/messages/new/msg/{{otherUser}}" >
+          <input type="hidden" id="connectionId" name="connectionId" value="{{connectionId}}">
+          <input type="hidden" id="myId" name="myId" value="{{cur_user.id}}">
+          <button type="submit" class="btn brown lighten-1">Send</button>
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function myFunctionMessages() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputMessages");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULMessages");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+  myFunctionMessages();
+
+  document.getElementById( 'bottom' ).scrollIntoView();
+</script>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+  
+  var connectionId = document.getElementById( "connectionId" ).value;
+  var myId = document.getElementById( "myId" ).value;
+  var x = setInterval(function() {
+    $.ajax({
+      url: '/messages/check/'+connectionId+'/'+myId,
+      success: function (response) {
+        console.log(response);
+        if (response == "new msg"){
+         window.location.href = window.location.href; 
+        }
+      }
+    });
+  }, 500);
+</script>
