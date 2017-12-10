@@ -11,6 +11,7 @@ module.exports = {
 
     router.get('/', this.index);
     router.post('/search', this.indexSearch);
+    router.get('/search', this.getSearch);
     router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp(), this.newPost);
     router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp() , this.createPost);
     router.get('/:username/:slug', this.showPost);
@@ -40,7 +41,9 @@ module.exports = {
 
 
 
-
+  getSearch(req,res){
+    res.redirect('/posts');
+  },
   completeProject(req,res){
     models.WorkOrder.findOne({
       where:{
@@ -63,21 +66,82 @@ module.exports = {
     });
   },
   index(req, res) {
+    var date = new Date();
+    console.log(date);
     models.Post.findAll({
-      include: [{model: models.User}]
-    }).then((allPosts) => {
-      res.render('posts', { allPosts });
+      where:{
+        bidingDeadline: {
+          [Op.gte]: date,
+        },
+      },
+      include: [{
+        model: models.User
+      }],
+    }).then((livePosts) => {
+      models.Post.findAll({
+        where:{
+          bidingDeadline: {
+            [Op.lte]: date,
+            },
+          closed: false,
+        },
+        include: [{
+          model: models.User
+        }],
+      }).then((workingPosts) => {
+        models.Post.findAll({
+          where:{
+            closed: true,
+          },
+          include: [{
+            model: models.User
+          }],
+        }).then((donePosts) => {
+
+          res.render('posts', { livePosts, workingPosts, donePosts });
+        });
+      });
     });
   },
 
   indexSearch(req, res) {
-    var search = req.body.search;
+    var date = new Date();
+    console.log(date);
     models.Post.findAll({
-      include: [{model: models.User}]
-    }).then((allPosts) => {
-      res.render('posts', { allPosts, search });
+      where:{
+        bidingDeadline: {
+          [Op.gte]: date,
+        },
+      },
+      include: [{
+        model: models.User
+      }],
+    }).then((livePosts) => {
+      models.Post.findAll({
+        where:{
+          bidingDeadline: {
+            [Op.lte]: date,
+            },
+          closed: false,
+        },
+        include: [{
+          model: models.User
+        }],
+      }).then((workingPosts) => {
+        models.Post.findAll({
+          where:{
+            closed: true,
+          },
+          include: [{
+            model: models.User
+          }],
+        }).then((donePosts) => {
+          res.render('posts', { livePosts, workingPosts, donePosts, search: req.body.search});
+        });
+      });
     });
   },
+
 
   newPost(req, res) {
     res.render('posts/new-post');
