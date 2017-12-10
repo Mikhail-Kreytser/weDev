@@ -418,7 +418,7 @@ module.exports = {
         changed = true;
       oldType = user.accountType;
       var status;
-      if(req.body.accountStatus == "Approved" ||req.body.accountStatus == "Pending")
+      if(req.body.accountStatus[0] == "Approved" ||req.body.accountStatus[0] == "Pending")
         status = req.body.accountStatus[0];
       else
         status = req.body.accountStatus[1];
