@@ -17,7 +17,7 @@
       <div class="card-image">
         <img src="/profile_pics/{{profile.profileImage}}">
         {{!-- class="img-rounded" alt="" style="width:200px" --}}
-        <span class="card-title">{{user.username}}</span>
+        <span class="card-title black-text">{{user.username}}</span>
       </div> 
       <div class="card-content black-text">
         {{#if isDeveloper}}
@@ -48,13 +48,13 @@
     </div>
           {{#if owner}}
 
-        <div class="update-post col 6">
-          <a class="btn btn-default" href="/profile/edit">Update profile </a>
+        <div class="update-post col m6">
+          <a class="btn btn-default brown lighten-1" href="/profile/edit">Update</a>
         </div>
 <br>
 <br>
-        <div class="update-post col 6">
-          <a class="btn btn-default" href="/deposit/add">Add more money</a>
+        <div class="update-post col m6">
+          <a class="btn btn-default brown lighten-1" href="/deposit/add">Add funds</a>
         </div>
       {{/if}}
   </div>
