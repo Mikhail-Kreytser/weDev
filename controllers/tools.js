@@ -417,9 +417,14 @@ module.exports = {
       if (user.accountType !== req.body.accountType)
         changed = true;
       oldType = user.accountType;
+      var status;
+      if(req.body.accountStatus == "Approved" ||req.body.accountStatus == "Pending")
+        status = req.body.accountStatus[0];
+      else
+        status = req.body.accountStatus[1];
       models.User.update({
         accountType: req.body.accountType,
-        accountStatus: req.body.accountStatus[1],
+        accountStatus: status,
       },
       {
         where: {
