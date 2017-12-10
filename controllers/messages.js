@@ -8,10 +8,11 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), Redirect.ifNoSetUp(), this.index);
-    router.post('/new/msg/:username', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), Redirect.ifNoSetUp(), this.createMsg);
-    router.get('/view/:username', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), Redirect.ifNoSetUp(), this.show);
-    router.get('/check/:connectionId/:myId', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), Redirect.ifNoSetUp(), this.check);
+    router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), this.index);
+
+    router.post('/new/msg/:username', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(),  this.createMsg);
+    router.get('/view/:username', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(), this.show);
+    router.get('/check/:connectionId/:myId', Redirect.ifNotLoggedIn(), Redirect.ifNoWalletCreated(),  this.check);
 
     return router;
   },

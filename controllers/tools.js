@@ -12,6 +12,7 @@ module.exports = {
     router.get('/user/:username', Redirect.ifNotLoggedIn(), Redirect.ifNotAdmin(), this.showUser);
     router.get('/workOrder/:workOrder', Redirect.ifNotLoggedIn(), Redirect.ifNotAdmin(), this.showWorkOrder);
     router.put('/workOrder/:workOrder', Redirect.ifNotLoggedIn(), Redirect.ifNotAdmin(), this.updateWorkOrder);
+    router.put('/workOrder/:workOrder/confirm', Redirect.ifNotLoggedIn(), Redirect.ifNotAdmin(), this.confirmWorkOrder);
     router.put('/user/:username', Redirect.ifNotLoggedIn(), Redirect.ifNotAdmin(), this.updateUser);
 
     return router;
@@ -144,6 +145,7 @@ module.exports = {
   },
 
   showWorkOrder(req, res) {
+    var needsApproval = false;
     models.WorkOrder.findOne({
       where: {
         id: req.params.workOrder,
@@ -171,8 +173,9 @@ module.exports = {
                 var disabled = "disabled";
                 if ( workOrder.closed !== true && workOrder.CustomerMadeReview == true && workOrder.CustomerReviewPending == true)
                   disabled = "";
-
-                res.render('tools/workOrder', {half: half, workOrder, disabled, post, customer, developer, review });
+                if(!workOrder.confirmed)
+                  needsApproval = true;
+                res.render('tools/workOrder', {half: half, workOrder, disabled, post, customer, developer, review,needsApproval });
               });
             });
           });
@@ -184,9 +187,135 @@ module.exports = {
       res.redirect('/tools');
     });
   },
+  confirmWorkOrder(req,res){
+    if(req.body.approved == 'true'){
+      models.WorkOrder.update({
+        confirmed: true,
+      },
+      {
+        where:{
+          id: req.body.workOrderId,
+        },
+        returning: true,
+      }).then((workOrder)=>{
+        models.Post.findOne({
+          where:{
+            userId:req.body.cusId,
+          },
+          include:[{
+            model: models.WorkOrder,
+            where:{
+              id: req.body.workOrderId,
+            },
+          }],
+        }).then((post) => {
+          models.User.findOne({
+            where:{
+              id:post.userId,
+            },
+            include:[{
+              model: models.Wallet,
+            }],
+          }).then((customer) => {
+            models.User.findOne({
+              where:{
+                id:req.body.devId,
+              },
+              include:[{
+                model: models.Wallet,
+              }],
+            }).then((developer) => {
+              models.Bid.findOne({
+                where:{
+                  postId: post.id,
+                  userId: developer.id,
+                },
+              }).then((winningBid) => {
+                var half = winningBid.price/2 ;
+                models.Wallet.update({
+                    amountDeposited: (customer.wallet.amountDeposited - half),
+                    creditCardNumber: customer.wallet.creditCardNumber,
+                    cvv: customer.wallet.cvv,
+                    expirationDate: customer.wallet.expirationDate,
+                    zipCode: customer.wallet.zipCode,
+                  },
+                  {
+                  where: {
+                    userId: customer.id,
+                  },
+                  returning: true,
+                }).then(([numRows, rows]) => {
+                  models.Wallet.update({
+                    amountDeposited: (developer.wallet.amountDeposited + half),
+                    creditCardNumber: developer.wallet.creditCardNumber,
+                    cvv: developer.wallet.cvv,
+                    expirationDate: developer.wallet.expirationDate,
+                    zipCode: developer.wallet.zipCode,
+                  },
+                  {
+                  where: {
+                    userId: developer.id,
+                  },
+                  returning: true,
+                }).then(([numRows, rows]) => {
+                  models.SystemMessage.create({
+                    userId: developer.id,
+                      comment: "Congratulations! You have been chosen to develop: " + post.title,
+                      seen: false, 
+                  }).then((systemMessage) => {
+                    models.SystemMessage.create({
+                      userId: customer.id,
+                        comment: "Congratulations! The workOrder for " + post.title + " was approved.",
+                        seen: false, 
+                    }).then((systemMessage) => {
+                      models.Connection.create({
+                        customerUsername: customer.username,
+                        customerId: customer.id,
+                        developerUsername: developer.username,
+                        developerId: developer.id,
+                      }).then(()=>{
+                        res.redirect('/tools');
+                      });
+                    });
+                  });
+                });
+              });
+              
+              });
+            });
+          });
+        });
+      });
+    }else{
+      models.Post.findOne({
+        where:{
+          userId:req.body.cusId,
+        },
+        include:[{
+          model: models.WorkOrder,
+          where:{
+            id: req.body.workOrderId,
+          },
+        }],
+      }).then((post) => {
+        models.WorkOrder.destroy({
+          where: {
+            id: req.body.workOrderId,
+          },
+        }).then(()=>{
+          models.SystemMessage.create({
+            userId: req.body.cusId,
+              comment: "Sorry, The workOrder for " + post.title + " was not approved due to: "+req.body.reason,
+              seen: false, 
+          }).then((systemMessage) => {
+            res.redirect('/tools');
+          });
+        });
+      });
+    }
+  },
 
   updateWorkOrder(req, res) {
-
     models.WorkOrder.findOne({
       where: {
         id: req.params.workOrder,
@@ -278,24 +407,130 @@ module.exports = {
   },
 
   updateUser(req, res) {
-    models.User.update({
-      accountType: req.body.accountType,
-      accountStatus: req.body.accountStatus,
-    },
-    {
-      where: {
+    var changed = false;
+    var oldType;
+    models.User.findOne({
+      where:{
         username: req.params.username,
       },
-      /*include: [{
-        model: models.User,
+    }).then((user)=>{
+      if (user.accountType !== req.body.accountType)
+        changed = true;
+      oldType = user.accountType;
+      models.User.update({
+        accountType: req.body.accountType,
+        accountStatus: req.body.accountStatus,
+      },
+      {
         where: {
           username: req.params.username,
         },
-      }],*/
-      returning: true,
-    }).then(([numRows, rows]) => {
-      const post = rows[0];
-      res.redirect(`/tools/#users`);///${req.user.username}/`);
+        returning: true,
+      }).then(() => {
+        if(changed){
+          if(oldType == "Customer" && req.body.accountType !== "Admin"){
+            models.Connection.findAll({
+              where:{
+                customerUsername: user.username,
+                customerId:user.id,
+              }
+            }).then((connections)=>{
+              for(var i = 0; i < connections.length;i++){
+                models.Connection.update({
+                  customerUsername: "",
+                  customerId: "",
+                  developerUsername: user.username,
+                  developerId: user.id,
+                },
+                {
+                  where:{
+                    customerUsername: user.username,
+                    customerId:user.id,
+                  },
+                  returning: true,
+                }).then(()=>{
+                });
+              }
+            });
+          }
+          else if(req.body.accountType == "Admin"){
+            models.Connection.findAll({
+              where:{
+                customerUsername: user.username,
+                customerId:user.id,
+              }
+            }).then((connections)=>{
+              for(var i = 0; i < connections.length;i++){
+                models.Connection.update({
+                  customerUsername: "",
+                  customerId: "",
+                  adminUsername: user.username,
+                  adminId: user.id,
+                },
+                {
+                  where:{
+                    customerUsername: user.username,
+                    customerId:user.id,
+                  },
+                  returning: true,
+                }).then(()=>{
+                });
+              }
+            });
+          }
+          if(oldType == "Developer" && req.body.accountType !== "Admin"){
+            models.Connection.findAll({
+              where:{
+                developerUsername: user.username,
+                developerId:user.id,
+              }
+            }).then((connections)=>{
+              for(var i = 0; i < connections.length;i++){
+                models.Connection.update({
+                  developerUsername: "",
+                  developerId: "",
+                  customerUsername: user.username,
+                  customerId: user.id,
+                },
+                {
+                  where:{
+                    developerUsername: user.username,
+                    developerId:user.id,
+                  },
+                  returning: true,
+                }).then(()=>{
+                });
+              }
+            });
+          }
+          else if(req.body.accountType == "Admin"){
+            models.Connection.findAll({
+              where:{
+                developerUsername: user.username,
+                developerId:user.id,
+              }
+            }).then((connections)=>{
+              for(var i = 0; i < connections.length;i++){
+                models.Connection.update({
+                  developerUsername: "",
+                  developerId: "",
+                  adminUsername: user.username,
+                  adminId: user.id,
+                },
+                {
+                  where:{
+                    developerUsername: user.username,
+                    developerId:user.id,
+                  },
+                  returning: true,
+                }).then(()=>{
+                });
+              }
+            });
+          }
+        }
+        res.redirect(`/tools/#users`);
+      });
     });
   },
 

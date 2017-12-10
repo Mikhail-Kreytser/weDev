@@ -15,7 +15,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <div class="card-panel red lighten-4">
+      <div class="card-panel brown lighten-4">
       <p class="flow-text">Current Bid: {{currentBid}} </span></p>
       <p class="flow-text"> Time left to bid:
       <span id="countDown"> ></span></p>
@@ -32,7 +32,7 @@
           {{#if DeveloperMadeReview}}
           {{else}}
             <div class="create-post">
-              <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{winnersName}}">Review Customer </a>
+              <a class="btn brown lighten-1" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{winnersName}}">Review Customer </a>
             </div>
           {{/if}}
         {{/if}}
@@ -44,7 +44,7 @@
                 <h5 class="center-align">Please wait for the Admin to review the project</h5>
               {{else}}
                 <div class="review-developer">
-                  <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewWinner/{{winnersName}}">Review Developer </a>
+                  <a class="btn brown lighten-1" href="/review/{{user.username}}/{{post.slug}}/createReviewWinner/{{winnersName}}">Review Developer </a>
                 </div>
               {{/if}}
             {{else}}
@@ -52,13 +52,13 @@
                 <h5 class="center-align">Please wait for the Developer to finish the project</h5>
               {{else}}
                 <div class="choose-winner">
-                  <a id="btnOwner" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner"> Choose Winner </a>
+                  <a id="btnOwner" class="btn brown lighten-1" href="/posts/{{user.username}}/{{post.slug}}/reviewWinner"> Choose Winner </a>
                 </div>
               {{/if}}
             {{/if}}
           {{else}}
             <div class="update-post">
-              <a id="btnOwner" class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
+              <a id="btnOwner" class="btn brown lighten-1" href="/posts/{{user.username}}/{{post.slug}}/edit">Update post </a>
             </div>
           {{/if}}
         {{else}}
@@ -70,7 +70,7 @@
               {{#if DeveloperMadeReview}}
               {{else}}
                 <div class="create-post">
-                  <a class="btn btn-default" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{user.username}}">Review Customer </a>
+                  <a class="btn brown lighten-1" href="/review/{{user.username}}/{{post.slug}}/createReviewCustomer/{{user.username}}">Review Customer </a>
                 </div>
               {{/if}}
             {{else}}
@@ -103,7 +103,7 @@
                 <br><br>
 
             <div class="form-group col s6 offset-s3">
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="btn brown lighten-1">Submit</button>
           </div>
           <br>
       </form>
@@ -116,13 +116,13 @@
         {{else}}
         <div class="col s6">
           <div class="create-post">
-            <a class="btn btn-default" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
+            <a class="btn brown lighten-1" href="/posts/{{user.username}}/{{post.slug}}/new-bid">Create a bid </a>
           </div>
         </div>
 
         <div class="col s6">
           <div class="create-post">
-            <a class="btn btn-default" href="/deposit/add">Deposit more money </a>
+            <a class="btn brown lighten-1" href="/deposit/add">Deposit more money </a>
           </div>
         </div>
         {{/if}}
