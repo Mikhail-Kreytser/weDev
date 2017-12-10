@@ -1,32 +1,63 @@
-<header class="intro-header">
+<header>
+ <nav class="nav-extended grey darken-1">
+    <div class="nav-wrapper grey darken-1">
+    </div>
+    <div class="nav-content grey darken-1">
+      <ul class="tabs tabs-transparent">
+        {{#if search}}
+        <li class="tab">
+          <a href="/#livePosts">live Posts</a>
+        </li>
+        {{else}}
+        <li class="tab">
+          <a class="active" href="/#livePosts">live Posts</a>
+        </li>
+        {{/if}}
+        <li class="tab">
+          <a href="/#workingPosts">Current Projects</a>
+        </li>
+        <li class="tab">
+          <a href="/#closedPosts">Completed/Closed Projects</a>
+        </li>
+        {{#if search}}
+        <li class="tab">
+          <a class="active" href="/#allPosts">All Projects and Projects</a>
+        </li>
+        {{else}}
+        <li class="tab">
+          <a href="/#allPosts">All Projects and Projects</a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div  id="livePosts">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="site-heading">
-          <h4>Browse Posts</h4>
+          <h4>Browse Live Posts</h4>
           <hr class="small">
         </div>
       </div>
     </div>
   </div>
-</header>
-
-<div class="container">
-  <div class="row">
+  <div class="container">
+    <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="input-field">
-          <input id="myInputPosts" onkeyup="myFunctionPosts()" type="search" placeholder="Browse" value="{{search}}">
+          <input id="myInputLivePosts" onkeyup="myFunctionLivePosts()" type="search" placeholder="Browse" >
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
-        
         {{#if customer}}
           <div class="create-post">
             <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
           </div>
         {{/if}}
-
-        <ul id="myULPosts" >
-          {{#each allPosts}}
+        <ul id="myULLivePosts" >
+          {{#each livePosts}}
             <li class="collection">
               <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
                 <h4 class="col s5">{{this.title}}</h4>
@@ -34,22 +65,163 @@
                 <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
                 <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
               </a>
-              
             </li>
           {{/each}}
         </ul>
-
       </div>
     </div>
   </div>
 </div>
 
+<div  id="workingPosts">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>Browse Current Projects</h4>
+          <hr class="small">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="input-field">
+          <input id="myInputCurrentPosts" onkeyup="myFunctionCurrentPosts()" type="search" placeholder="Browse" >
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        </div>
+        {{#if customer}}
+          <div class="create-post">
+            <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
+          </div>
+        {{/if}}
+        <ul id="myULCurrentPosts" >
+          {{#each workingPosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  id="closedPosts">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>Browse Complete/Closed Projects</h4>
+          <hr class="small">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="input-field">
+          <input id="myInputClosedPosts" onkeyup="myFunctionClosedPosts()" type="search" placeholder="Browse">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        </div>
+        {{#if customer}}
+          <div class="create-post">
+            <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
+          </div>
+        {{/if}}
+        <ul id="myULClosedPosts" >
+          {{#each donePosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div  id="allPosts">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>Browse Complete/Closed Projects</h4>
+          <hr class="small">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="input-field">
+          <input id="myInputAllPosts" onkeyup="myFunctionAllPosts()" type="search" placeholder="Browse" value="{{search}}">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        </div>
+        {{#if customer}}
+          <div class="create-post">
+            <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
+          </div>
+        {{/if}}
+        <ul id="myULAllPosts">
+          {{#each livePosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <span class="new badge green lighten-1" data-badge-caption="&nbsp;&nbsp;&nbsp; Live &nbsp;&nbsp;&nbsp"></span>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+            </li>
+          {{/each}}
+          {{#each workingPosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <span class="new badge deep-orange lighten-1" data-badge-caption="&nbsp;Current&nbsp"></span>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+            </li>
+          {{/each}}
+          {{#each donePosts}}
+            <li class="collection">
+              <a class="collection-item" href="/posts/{{this.user.username}}/{{this.slug}}/">
+                <h4 class="col s5">{{this.title}}</h4>
+                <p class="black-text">Bidding Deadline: {{this.bidingDeadline}}</p>
+                <p class="black-text">Completion Deadline: {{this.completionDeadline}}</p>
+                <span class="new badge blue-grey lighten-2" data-badge-caption="&nbsp;Closed &nbsp"></span>
+                <p class="black-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posted by {{this.user.username}}</p>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  function myFunctionPosts() {
+  function myFunctionLivePosts() {
       var input, filter, ul, li, a, i;
-      input = document.getElementById("myInputPosts");
+      input = document.getElementById("myInputLivePosts");
       filter = input.value.toUpperCase();
-      ul = document.getElementById("myULPosts");
+      ul = document.getElementById("myULLivePosts");
       li = ul.getElementsByTagName("li");
       for (i = 0; i < li.length; i++) {
           a = li[i].getElementsByTagName("a")[0];
@@ -61,7 +233,61 @@
           }
       }
   }
-  myFunctionPosts();
+  myFunctionCurrentPosts();
+
+  function myFunctionCurrentPosts() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputCurrentPosts");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULCurrentPosts");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+  myFunctionLivePosts();
+
+  function myFunctionClosedPosts() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputClosedPosts");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULClosedPosts");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+  myFunctionClosedPosts();
+
+    function myFunctionAllPosts() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputAllPosts");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULAllPosts");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+  myFunctionAllPosts();
 </script>
 
 

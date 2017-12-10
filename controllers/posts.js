@@ -11,12 +11,13 @@ module.exports = {
 
     router.get('/', this.index);
     router.post('/search', this.indexSearch);
+    router.get('/search', this.getSearch);
     router.get('/new-post',  Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp(), this.newPost);
     router.post('/new-post',    Redirect.ifNotLoggedIn(), Redirect.ifNotCustomer('/posts'), Redirect.ifNoSetUp() , this.createPost);
     router.get('/:username/:slug', this.showPost);
     router.get('/:username/:slug/edit', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.edit);
     router.get('/:username/:slug/reviewWinner', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.review);
-    router.get('/:username/:slug/reviewWinner/:winnersName/', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
+    router.get('/:username/:slug/reviewWinner/:winnersName/:error', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.pick);
 
 
     router.get('/:username/:slug/createReviewWinner/:winnersName', Redirect.ifNotLoggedIn(), Redirect.ifNotAuthorized(), this.createReviewOnDev);
@@ -40,7 +41,9 @@ module.exports = {
 
 
 
-
+  getSearch(req,res){
+    res.redirect('/posts');
+  },
   completeProject(req,res){
     models.WorkOrder.findOne({
       where:{
@@ -63,21 +66,82 @@ module.exports = {
     });
   },
   index(req, res) {
+    var date = new Date();
+    console.log(date);
     models.Post.findAll({
-      include: [{model: models.User}]
-    }).then((allPosts) => {
-      res.render('posts', { allPosts });
+      where:{
+        bidingDeadline: {
+          [Op.gte]: date,
+        },
+      },
+      include: [{
+        model: models.User
+      }],
+    }).then((livePosts) => {
+      models.Post.findAll({
+        where:{
+          bidingDeadline: {
+            [Op.lte]: date,
+            },
+          closed: false,
+        },
+        include: [{
+          model: models.User
+        }],
+      }).then((workingPosts) => {
+        models.Post.findAll({
+          where:{
+            closed: true,
+          },
+          include: [{
+            model: models.User
+          }],
+        }).then((donePosts) => {
+
+          res.render('posts', { livePosts, workingPosts, donePosts });
+        });
+      });
     });
   },
 
   indexSearch(req, res) {
-    var search = req.body.search;
+    var date = new Date();
+    console.log(date);
     models.Post.findAll({
-      include: [{model: models.User}]
-    }).then((allPosts) => {
-      res.render('posts', { allPosts, search });
+      where:{
+        bidingDeadline: {
+          [Op.gte]: date,
+        },
+      },
+      include: [{
+        model: models.User
+      }],
+    }).then((livePosts) => {
+      models.Post.findAll({
+        where:{
+          bidingDeadline: {
+            [Op.lte]: date,
+            },
+          closed: false,
+        },
+        include: [{
+          model: models.User
+        }],
+      }).then((workingPosts) => {
+        models.Post.findAll({
+          where:{
+            closed: true,
+          },
+          include: [{
+            model: models.User
+          }],
+        }).then((donePosts) => {
+          res.render('posts', { livePosts, workingPosts, donePosts, search: req.body.search});
+        });
+      });
     });
   },
+
 
   newPost(req, res) {
     res.render('posts/new-post');
@@ -134,7 +198,7 @@ module.exports = {
             },
           }).then((winningBid) => {
             if(customer.wallet.amountDeposited < winningBid.price){
-              res.redirect('/deposit/add',{amountNeededWin:winningBid.price })
+              res.redirect('/posts/'+req.user.username+'/'+post.slug+'/reviewWinner/'+developer.username+'/NoMoney');
             }
             else{
               models.WorkOrder.create({
@@ -177,15 +241,28 @@ module.exports = {
                         comment: "Congratulations! You have been chosen to develop: " + post.title,
                         seen: false, 
                     }).then((systemMessage) => {
-                      console.log("created workOrder, money transfered");
+                      if(req.user.accountType == "Customer"){
+                        models.Connection.create({
+                          customerUsername: req.user.username,
+                          customerId: req.user.id,
+                          developerUsername: developer.username,
+                          developerId: developer.id,
+                        }).then(()=>{
+                        });
+                      }          
                       res.redirect('/posts');
                     });
                   });
                 });
               }
               else{
-                console.log("created workOrder, but it needs approval");
-                res.redirect('/posts');
+                models.SystemMessage.create({
+                  userId: customer.id,
+                    comment: "The Admin has been notified he will review the work order request for project \""+post.title+"\". ",
+                    seen: false,  
+                }).then((systemMessage) => {
+                  res.redirect('/posts');
+                });
               }
             });
           }
@@ -566,7 +643,10 @@ module.exports = {
             var isCheapestBid = false;
             if(cheapestBid.price == winnersBid.price)
               isCheapestBid = true;
-            (post ? res.render('posts/review/winner', { post, user: post.user, winningUser, winnersBid, isCheapestBid}) : res.redirect('/posts'));
+            var noCash;
+            if (req.params.error =="NoMoney")
+              noCash= "Not Enough Money";
+            (post ? res.render('posts/review/winner', { post, user: post.user, winningUser, winnersBid, isCheapestBid, noCash}) : res.redirect('/posts'));
           });
         });
       });

@@ -22,16 +22,22 @@ module.exports = {
   index(req, res) {
     req.user.getProfile()
     .then((profile) => {
-      var rating = profile.rating;
-      if(profile.rating == 0)
-        rating = "No reviews"
-      var isCustomer = false;
-      var isDeveloper = false;
+      models.Review.findAll({
+        where: {
+          recipientId: req.user.id,
+        },
+      }).then((review)=>{
+        var rating = profile.rating;
+        if(profile.rating == 0)
+          rating = "No reviews"
+        var isCustomer = false;
+        var isDeveloper = false;
         if (req.user.accountType == "Developer")
           var isDeveloper = true;
-        else
+        if (req.user.accountType == "Customer")
           var isCustomer = true;
-          res.render('profile', {user: req.user,isDeveloper,isCustomer, profile: profile, owner: true, rating:rating});
+        res.render('profile', {user: req.user,isDeveloper,isCustomer, profile: profile, owner: true, rating:rating,review});
+      });
     });
   },
 
@@ -40,23 +46,15 @@ module.exports = {
     .then((profile) =>{
       var isCustomer = false;
       var isDeveloper = false;
-        if (req.user.accountType == "Developer")
-          var isDeveloper = true;
-        else
-          var isCustomer = true;
+      if (req.user.accountType == "Developer")
+        var isDeveloper = true;
+      if (req.user.accountType == "Customer")
+        var isCustomer = true;
       profile ? res.render('profile/edit', {user: req.user,isDeveloper,isCustomer, profile }) : res.redirect('/profile/show');
     });
   },
 
   update(req, res) {
-
-     console.log(req.body.firstName);
-     console.log(req.body.lastName);
-      console.log(req.body.bio);
-      console.log((req.body.companyWebsite) ? req.body.companyWebsite : thisUser.profile.companyWebsite);
-      console.log(req.body.companyInfo);
-      console.log(req.body.rating);
-      console.log("Pending");
     models.User.findOne({
       where:{
         id: req.user.id,
@@ -95,18 +93,23 @@ module.exports = {
       if (user.accountType == "Admin" || user.accountStatus != "Approved")
         res.redirect('/');
       else{
-        var rating = user.profile.rating;
-        if(rating == 0)
-          rating = "No reviews";
-        var isCustomer = false;
-        var isDeveloper = false;
-        if (user.accountType == "Developer")
-          var isDeveloper = true;
-        else
-          var isCustomer = true;
-
-        res.render('profile', {username: user.username,isCustomer,isDeveloper, accountType: user.accountType, profile: user.profile, rating:rating});
-      } 
+        models.Review.findAll({
+          where: {
+            recipientId: user.id,
+          },
+        }).then((review)=>{
+          var rating = user.profile.rating;
+            if(rating == 0)
+              rating = "No reviews";
+          var isCustomer = false;
+          var isDeveloper = false;
+          if (user.accountType == "Developer")
+            var isDeveloper = true;
+          if (user.accountType == "Customer")
+            var isCustomer = true;
+          res.render('profile', {username: user.username,isCustomer,isDeveloper, accountType: user.accountType, profile: user.profile, rating:rating, review});
+        });
+      }  
     }).catch(() =>{
       res.redirect('/login');
     });

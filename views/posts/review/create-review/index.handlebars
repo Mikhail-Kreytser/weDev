@@ -25,8 +25,10 @@
           <form name="create-review" action="/review/{{poster}}/{{slug}}/createReviewWinner/{{winnersName}}" method="post">
 
             <div class="row control-group">
+
               <div class="col s2 m2 offset-m5">
                 <br><br>
+
                 <label>Rating</label>
                 <input type="number" class="form-control" min="1" step="0.1" max="5" placeholder="5" name = "rating" required />
                 <p class="help-block text-danger"></p>
@@ -56,14 +58,18 @@
                   <i class="fa fa-star" aria-hidden="true"></i>
                 </label>
               </div>
+
             </div> --}}
 {{!--             <select id="example" name="rating">
+
               <option value="1">1<i class="fa fa-star" aria-hidden="true"></i></option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
+
             </select> --}}
+
             <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls"><br>
                 <label>Feedback or Comments</label>
@@ -91,15 +97,15 @@
         {{else}}
           <form name="create-review" action="/review/{{poster}}/{{slug}}/createReviewCustomer/{{winnersName}}" method="post">
 
-{{!--             <div class="row control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
+            <div class="row control-group">
+              <div class="col s2 offset-s5">
                 <label>Rating</label>
                 <input type="number" class="form-control" min="1" step="0.1" max="5" placeholder="5" name = "rating" required />
                 <p class="help-block text-danger"></p>
               </div>
-            </div> --}}
+            </div> 
 
-            <div class="container">
+ {{!--            <div class="container">
               <div class="star-rating">
                 <input class="hiddenRadioBtn" id="star-5" type="radio" name="rating" value="5" title="5">
                 <label for="star-5" title="5 stars">
@@ -123,11 +129,11 @@
                 </label>
               </div>
             </div>
-
+ --}}
             <div class="row control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>Comment</label>
-                <input type="text" class="form-control" placeholder="Please provide a reason for the low rating" name = "comment" required />
+                <input type="text" class="form-control" placeholder="Please provide comment" name = "comment" required />
                 <p class="help-block text-danger"></p>
               </div>
             </div>

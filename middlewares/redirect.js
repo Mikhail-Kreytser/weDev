@@ -30,7 +30,7 @@ redirect.ifSetUpComplete = (route = '/profile/show') =>
     })
   };
 
-redirect.ifNoWalletCreated = (route = '/deposit') =>
+redirect.ifNoWalletCreated = (route = '/deposit/initial') =>
   (req, res, next) => {
     req.user.getWallet().then((wallet) =>{
       if(wallet == null)

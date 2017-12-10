@@ -12,50 +12,79 @@
 
 <div class="container center-align">
   <div class="row valign-wrapper">
-  <div class="col s6 offset-m3">
-    <div class="card hoverable">
-      <div class="card-image">
-        <img src="/profile_pics/{{profile.profileImage}}">
-        {{!-- class="img-rounded" alt="" style="width:200px" --}}
-        <span class="card-title black-text">{{user.username}}</span>
-      </div> 
-      <div class="card-content black-text">
-        {{#if isDeveloper}}
-          <p>Biography: {{profile.bio}} </p>
-        {{/if}}
 
-        {{#if isCustomer}}
-          <p> Company Information: {{profile.companyInfo}}</p>
-        {{/if}}
+    <div class="col s6 offset-s3">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="/profile_pics/{{profile.profileImage}}">
+          <span class="card-title">{{user.username}}</span>
+        </div> 
+        <div class="card-content black-text">
+          {{#if isDeveloper}}
+            <p>Biography: {{profile.bio}} </p>
+          {{/if}}
+          {{#if isCustomer}}
+            <p> Company Information: {{profile.companyInfo}}</p>
+          {{/if}}
+        </div>
+        <div class="card-action">
+          {{#if isCustomer}}
+            <p>Website: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
+          {{/if}}
+
+          {{#if isDeveloper}}
+            <p> GitHub: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
+          {{/if}}
+
+
+
+          <p>Ratings: {{rating}} </p>
+        </div>   
       </div>
 
-
-      <div class="card-action">
-        {{#if isCustomer}}
-        <p>Website: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
-        {{/if}}
-
-        {{#if isDeveloper}}
-        <p> GitHub: <a href="{{profile.companyWebsite}}">{{profile.companyWebsite}}</a></p>
-        {{/if}}
-
-        <p>Ratings: {{rating}} </p>
-      </div>   
+        {{#if owner}}
+    <br><br>
+    <div class="update-post col 5 offset-s1">
+      <a class="btn btn-default" href="/profile/edit">&nbsp;&nbsp;Update profile&nbsp;&nbsp; </a>
     </div>
-  </div>
-
-
+    <div class="update-post col 5 offset-s1">
+      <a class="btn btn-default" href="/deposit/add">Add more money</a>
     </div>
-          {{#if owner}}
+    <br><br>
+  {{/if}}
 
-        <div class="update-post col m6">
-          <a class="btn btn-default brown lighten-1" href="/profile/edit">Update</a>
-        </div>
-<br>
-<br>
-        <div class="update-post col m6">
-          <a class="btn btn-default brown lighten-1" href="/deposit/add">Add funds</a>
-        </div>
+      {{#if review}}
+        <br>
+        <h4 class="left-align">Reviews</h4>
+        <hr>
       {{/if}}
+      {{#each review}}
+        <div class="card hoverable">
+          <div class="card-content black-text left-align">
+            {{this.comment}}           
+            <span id="rating" class="new badge {{this.rating}}" data-badge-caption="&nbsp;{{this.rating}} &nbsp"></span>
+          </div>
+        </div>
+      {{/each}}
+    </div>
   </div>
+
+
 </div>
+
+<script>
+
+  var x = document.querySelectorAll("span");
+  for(var i = 0; i < x.length ;i++)
+    if(x[i].className == "new badge 1" )
+      x[i].className = "new badge red accent-2 black-text";
+    else if(x[i].className == "new badge 2" )
+      x[i].className = "new badge orange accent-2 black-text";
+    else if(x[i].className == "new badge 3" )
+      x[i].className = "new badge yellow accent-2 black-text";
+    else if(x[i].className == "new badge 4" )
+      x[i].className = "new badge green accent-2 black-text";
+    else if(x[i].className == "new badge 5" )
+      x[i].className = "new badge light-green accent-3 black-text";
+
+</script>
