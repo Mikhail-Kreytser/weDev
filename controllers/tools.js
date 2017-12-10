@@ -419,7 +419,7 @@ module.exports = {
       oldType = user.accountType;
       models.User.update({
         accountType: req.body.accountType,
-        accountStatus: req.body.accountStatus,
+        accountStatus: req.body.accountStatus[1],
       },
       {
         where: {

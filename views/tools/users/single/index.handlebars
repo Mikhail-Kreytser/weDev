@@ -60,7 +60,7 @@
             <label for="Blocked">Blocked</label>
             <br><br><br>
             <div class="container" id="blockedReason" style="display:none;">
-              <input id="blockedReason" name="blockedReason" placeholder="Please enter reason to reject/block user">
+              <input id="blockedReasonInput" name="accountStatus" value="" placeholder="Please enter reason to reject/block user">
             </div>
             <p class="help-block text-danger"></p>
           </div>
@@ -83,8 +83,11 @@
   $('#editUser').change(function() {
     if ($('#Blocked').prop('checked')) {
         $('#blockedReason').show();
+        $('#blockedReasonInput').show();
     } else {
         $('#blockedReason').hide();
+        $('#blockedReasonInput').hide();
+
     }
   // var radiobtn = document.getElementById("theid");
   // radiobtn.checked = true;
@@ -93,8 +96,12 @@
       $("#Approved").attr("checked","true");
   else if($('#accountStatus').val() == "Pending")
       $("#Pending").attr("checked","true");
-  else
+  else{
       $("#Blocked").attr("checked","true");
+      $('#blockedReason').show();
+      $('#blockedReasonInput').show();
+      $('#blockedReasonInput').val($('#accountStatus').val());
+    }
 
 
   if($('#accountType').val() == "Customer")
