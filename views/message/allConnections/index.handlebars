@@ -1,0 +1,83 @@
+<header class="intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="site-heading">
+          <h4>Messenger</h4>
+          <hr class="small">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="input-field">
+          <input id="myInputMessages" onkeyup="myFunctionMessages()" type="search" placeholder="Browse" value="{{search}}">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        </div>
+        
+        <div class="create-post">
+          <a href="/posts/new-post" class="btn-floating waves-effect red btn"><i class="material-icons">add</i></a>
+        </div>
+
+        <ul id="myULMessages" >
+          {{#each connectionsAdmin}}
+          <div class="col s6">
+            <li class="collection">
+              <a class="collection-item" href="/messages/view/{{this.customerUsername}}{{this.developerUsername}}/">
+                <h4 class="left-align">{{this.customerUsername}}{{this.developerUsername}}</h4>
+              </a>
+              
+            </li>
+            </div>
+          {{/each}}
+
+          {{#each connectionsDeveloper}}
+            <div class="col s6">
+              <li class="collection">
+                <a class="collection-item" href="/messages/view/{{this.customerUsername}}{{this.adminUsername}}/">
+                  <h4 class="left-align">{{this.customerUsername}}{{this.adminUsername}}</h4>
+                </a>
+              </li>
+            </div>
+          {{/each}}
+
+
+          {{#each connectionsCustomer}}
+            <div class="col s6">
+              <li class="collection">
+                <a class="collection-item" href="/messages/view/{{this.adminUsername}}{{this.developerUsername}}/">
+                  <h4 class="left-align">{{this.adminUsername}}{{this.developerUsername}}</h4>
+                </a>
+              </li>
+            </div>
+          {{/each}}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function myFunctionMessages() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInputMessages");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myULMessages");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+
+          }
+      }
+  }
+  myFunctionMessages();
+</script>
