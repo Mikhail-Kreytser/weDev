@@ -23,6 +23,26 @@ module.exports = {
       accountType: req.body.accountType,
       accountStatus: "Pending",
     }).then((user) => {
+      if(req.body.accountType == "Customer"){
+        console.log(user.username);
+        console.log(user.id);
+        models.Connection.create({
+          customerUsername: user.username,
+          customerId: user.id,
+          adminUsername: "Admin",
+          adminId: 1,
+        }).then(()=>{
+        });
+      }
+      else{
+        models.Connection.create({
+          developerUsername: user.username,
+          developerId: user.id,
+          adminUsername: "Admin",
+          adminId: 1,
+        }).then(()=>{
+        });
+      }
       req.login(user, () =>
         res.redirect('/deposit/initial')
       );

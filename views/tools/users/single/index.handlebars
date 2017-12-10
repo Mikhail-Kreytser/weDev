@@ -33,7 +33,8 @@
         
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
-            <h6>Current Type: {{user.accountType}}</h6>
+            <br>
+            <input type="hidden" value="{{user.accountType}}" id="accountType"name="tempAccountType">
             <label>Account Type</label><br>
             <input class="form-control" name="accountType" type= "radio" id="Admin" value="Admin">
             <label for="Admin">Admin</label>
@@ -47,10 +48,10 @@
 
         <div class="row control-group">
           <div class="form-group col-xs-12 floating-label-form-group controls col s6 m6 offset-m3">
-
-          <h6>Current status: {{user.accountStatus}}</h6>
+<br>
             <label>Account Status</label><br>
            {{!--  <input required data-validation-required-message="Please choose Account Status."> --}}
+            <input type="hidden" value="{{user.accountStatus}}" id="accountStatus"name="tempAccountStatus">
             <input class="form-control" name="accountStatus" type="radio" id="Approved" value="Approved">
             <label for="Approved">Approved</label>
             <input class="form-control" name="accountStatus" type="radio" id="Pending" value="Pending">
@@ -64,11 +65,9 @@
             <p class="help-block text-danger"></p>
           </div>
          </div>
-
-        <br>
         <div class="row">
-          <div class="form-group col-xs-6 text-right">
-              <button type="submit" class="btn btn-default">Done</button>
+          <div class="form-group col s12 center-align">
+              <button type="submit" class="btn brown lighten-1">Done</button>
           </div>
       </form>
       {{/if}}
@@ -89,5 +88,21 @@
   // var radiobtn = document.getElementById("theid");
   // radiobtn.checked = true;
 });
+  if($('#accountStatus').val() == "Approved")
+      $("#Approved").attr("checked","true");
+  else if($('#accountStatus').val() == "Pending")
+      $("#Pending").attr("checked","true");
+  else
+      $("#Blocked").attr("checked","true");
+
+
+  if($('#accountType').val() == "Customer")
+      $("#Customer").attr("checked","true");
+  else if($('#accountType').val() == "Developer")
+      $("#Developer").attr("checked","true");
+  else
+      $("#Admin").attr("checked","true");
+
+
 </script>
 

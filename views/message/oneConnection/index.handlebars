@@ -19,6 +19,17 @@
     </div>
 
       <ul id="myULMessages"class="col s8 offset-s2" style="overflow:auto;height:400px;">
+        {{#if messages}}
+        {{else}}
+          <div >
+            <li class="collection ">
+              <a class="collection-item">
+                <h4 class="left-align col s4 brown-text text-lighten-1">System:</h4>
+                <h4 class="left-align brown-text text-lighten-1">No Messages Sent</h4>
+              </a>
+            </li>
+          </div>
+        {{/if}}
         {{#each messages}}
           <div >
             <li class="collection ">

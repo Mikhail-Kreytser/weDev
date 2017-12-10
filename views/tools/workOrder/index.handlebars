@@ -23,66 +23,77 @@
             <div class="card-content black-text">
               <span class="card-title center-align">Information</span>
               <p><b>Description:</b> {{post.body}}</p>
+              {{#if needsApproval}}
+              <p><b>Customer's Comment:</b> {{workOrder.comment}}</p>
+              {{else}}
               <p><b>Customer's Comment:</b> {{review.comment}}</p>
               <p><b>Rating given by Customer:</b> {{review.rating}}</p>
+              {{/if}}
               <p><b>Job total price:</b> ${{workOrder.price}}</p>
-      {{#if workOrder.closed}}
-        <p><b>Amount due to Developer:</b> $0</p>
-      {{else}}
-        <p><b>Amount due to Developer:</b> ${{half}}</p>
-      {{/if}}
-      <br>
-      <br>
+              {{#if workOrder.closed}}
+                <p><b>Amount due to Developer:</b> $0</p>
+              {{else}}
+                {{#if needsApproval}}
+                {{else}}
+                <p><b>Amount due to Developer:</b> ${{half}}</p>
+                {{/if}}
+              {{/if}}
+              <br>
+              <br>
             </div>
             <div class="card-action">
-              <form name="edit-user" method="POST" action="/tools/workOrder/{{workOrder.id}}?_method=PUT">
+              {{#if needsApproval}}
+                <form name="edit-user" method="POST" action="/tools/workOrder/{{workOrder.id}}/confirm?_method=PUT">
+                  <label>Approve Work Order:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <input class="form-control" onclick ="myFunction()" name="approved" type= "radio" id="Yes" value="true">
+                  <label for="Yes">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <input class="form-control" onclick ="myFunction()" name="approved" type="radio" id="No" value="false" required>
+                  <label for="No">No</label>
+                  <input type="hidden" name="workOrderId" value="{{workOrder.id}}">
+                  <input type="hidden" name="devId" value="{{developer.id}}">
+                  <input type="hidden" name="cusId" value="{{customer.id}}">
+                  <br><br><br>
+                  <div class="container" id="reason" style="display:none;">
+                    <input id="reason" name="reason" placeholder="Please enter reason">
+                  </div>
+                            <div class="form-group col-xs-6 center-align">
+            <button type="submit" class="btn brown lighten-1">Submit</button>
+          </div>
+                </form>
+              {{else}}
+                <form name="edit-user" id="editUser" method="POST" action="/tools/workOrder/{{workOrder.id}}?_method=PUT">
                   <label>Amount that will be paid</label>
-                <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
-                <p class="help-block text-danger"></p>
-                </div>
-                  {{!-- <button id="dis"type="submit" {{disabled}}  class="btn btn-default">Submit</button> --}}
-              </form>
+                  <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
+                  <input type="hidden" name="workOrderId" value="{{workOrder.id}}">
+                  <input type="hidden" name="devId" value="{{developer.id}}">
+                  <input type="hidden" name="cusId" value="{{customer.id}}">
+                  <p class="help-block text-danger"></p>
+                            <div class="form-group col-xs-6 center-align">
+            <button type="submit" {{disabled}} class="btn brown lighten-1">Submit</button>
+          </div>
+                </form>
+              {{/if}}
+            </div>
+          </div>
         </div>
       </div>
-      
-      
-      {{!-- <h6>Description: {{post.body}}</h6>
-      <br>
-      <h6>Customer's Comment: {{review.comment}}</h6>
-      <h6>Rating given by Customer: {{review.rating}}</h6>
-      <br>
-
-      <h6>Job total price: ${{workOrder.price}}</h6>
-      {{#if workOrder.closed}}
-        <h6>Amount due to Developer: $0</h6>
-      {{else}}
-        <h5>Amount due to Developer: ${{half}}</h5>
-      {{/if}}
-      <br>
-      <br>
-      <div class="container">
-      <form name="edit-user" method="POST" action="/tools/workOrder/{{workOrder.id}}?_method=PUT">
-        
-        <div class="row control-group">
-          <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Amount that will be paid</label>
-            <input id="dis" type="number" class="form-control" {{disabled}} name="payment" value="{{half}}" max ="{{half}}" required data-validation-required-message="Please enter value.">
-            <p class="help-block text-danger"></p>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="form-group col-xs-6 text-right">
-              <button id="dis"type="submit" {{disabled}}  class="btn btn-default">Submit</button>
-          </div>
-      </form>
     </div>
-</div>
-    </div> 
-  </div> --}}
-</div>
+  </div>
 
-</main>
+  </main>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script>
+
+  function myFunction(){
+    var no = document.getElementById( "No" ).checked;
+    if(no){
+      $('#reason').show();
+      $("#reason").attr("required","true");
+    }
+    else
+      $('#reason').hide();
+      $("#reason").removeAttr("required");
+  }
 </script>
