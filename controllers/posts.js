@@ -45,31 +45,38 @@ module.exports = {
     res.redirect('/posts');
   },
   completeProject(req,res){
-    models.WorkOrder.findOne({
+    models.Post.findOne({
       where:{
-        userId: req.user.id,
+        slug: req.params.slug,
       },
-    }).then((workOrder) => {
-      models.WorkOrder.update({
-        gitHub: req.body.gitHub,
-        complete: req.body.complete,
-        CustomerReviewPending: req.body.complete,
-      },
-      {
+      include:[{
+        model: models.User,
         where:{
-          id:workOrder.id,
+          username:req.params.username,
         },
-        returning:true,
-      }).then(()=>{
-        if(req.body.complete == "true"){
-          models.Post.findOne({
-            where:{
-              id: workOrder.postId,
-            },
-            include:[{
-              model: models.User,
-            }],
-          }).then((post) => {          
+      }],
+    }).then((post) => { 
+      models.WorkOrder.findOne({
+        where:{
+          userId: req.user.id,
+          postId: post.id,
+        },
+      }).then((workOrder) => {
+        var complete = false;
+        if(req.body.complete=="on")
+          complete=true;
+        models.WorkOrder.update({
+          gitHub: req.body.gitHub,
+          complete: complete,
+          CustomerReviewPending: complete,
+        },
+        {
+          where:{
+            id:workOrder.id,
+          },
+          returning:true,
+        }).then(()=>{
+          if(complete){
             models.SystemMessage.create({
               userId: post.user.id,
                 comment: "The developer has finished the project \""+post.title+"\". Please review his work.",
@@ -115,12 +122,13 @@ module.exports = {
                 });
               });                 
             });
-          })
-        }
-        res.redirect('/posts');
+          }
+          res.redirect('/posts');
+        });
       });
     });
   },
+
   index(req, res) {
     var date = new Date();
     console.log(date);
@@ -436,7 +444,7 @@ module.exports = {
             var date = new Date();
             if( date > post.bidingDeadline)
               expired = true;
-          (post ? res.render('posts/single', { post,winnersName , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",CustomerMadeReview,expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
+          (post ? res.render('posts/single', { post,winnersName, gitHub: workOrder.gitHub , user: post.user, currentBid: (bid.price) ? bid.price : "No Bids yet",CustomerMadeReview,expired,winningDev,DeveloperMadeReview, CustomerReviewPending,complete, workOrderCreated, closed }) : res.redirect('/posts'));
         });
       }).catch({
       });

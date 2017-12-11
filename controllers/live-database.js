@@ -220,7 +220,7 @@ module.exports = {
 									   		seen: false,  
 									    }).then((systemMessage) => {
 									    	models.Review.create({
-										        comment: "Project "+titleP+" was not completed",
+										        comment: "Project "+titleP+" was not completed on time.",
 										        rating: 1,
 										        ownerId: customer.id,
 										    	recipientId: developer.id,
