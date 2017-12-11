@@ -51,6 +51,13 @@
       <a class="btn btn-default brown lighten-1" href="/deposit/add">Add funds</a>
     </div>
     <br><br>
+    <br>
+    {{#if admin}}
+    {{else}}
+      <div class="update-post center-align">
+        <a class="btn btn-default red lighten-1" href="/quit">Quit</a>
+      </div>
+    {{/if}}
   {{/if}}
 
       {{#if review}}
