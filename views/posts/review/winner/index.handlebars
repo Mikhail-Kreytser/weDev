@@ -25,12 +25,13 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <p>Current Bid: {{currentBid}}</p>
-      <p class="col-xs-3">Time left to bid:</p>
-      <p id="countDown" class="col-xs-9" ></p>
-      <p>{{post.body}}</p>
+      <div class="card-panel brown lighten-4">
+        <p class="flow-text">Current Bid: {{currentBid}} </span></p>
+        <p class="flow-text"> Time left to bid:
+        <span id="countDown"> ></span></p>
+        <p class="flow-text">{{post.body}}</p>
+      </div>
       {{#if isCheapestBid}}
-        <h4>It is the cheapest ok</h4>
         <form name="create-workOrder" action="/posts/{{user.username}}/{{post.slug}}/selectWinner/{{winningUser.username}}" method="post">
           
           <input type="hidden" name="comment" value="It is the cheapest bid">
@@ -46,7 +47,6 @@
           </div>
         </form>
       {{else}}
-        <h4>Not the cheapest ok</h4>
         <form name="create-workOrder" action="/posts/{{user.username}}/{{post.slug}}/selectWinner/{{winningUser.username}}" method="post">
           <div class="row control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
@@ -66,12 +66,12 @@
 
             <div class="form-group col-xs-12">
                 <button type="submit" class="btn btn-default brown lighten-1">Confirm</button>
-
             </div>
             {{#if noCash}}
-            <div class="col s3 offset-s1">
+            <br><br><br>
+            <div class="col s3 ">
               <div class="create-post">
-                <a class="btn btn-default" href="/deposit/add">Deposit more money </a>
+                <a class="btn brown lighten-1" href="/deposit/add">Deposit more money </a>
               </div>
             </div>
             {{/if}}
