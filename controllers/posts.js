@@ -61,6 +61,62 @@ module.exports = {
         },
         returning:true,
       }).then(()=>{
+        if(req.body.complete == "true"){
+          models.Post.findOne({
+            where:{
+              id: workOrder.postId,
+            },
+            include:[{
+              model: models.User,
+            }],
+          }).then((post) => {          
+            models.SystemMessage.create({
+              userId: post.user.id,
+                comment: "The developer has finished the project \""+post.title+"\". Please review his work.",
+                seen: false,  
+            }).then((systemMessage) => {
+              models.User.findOne({
+                where:{
+                  id: post.user.id,
+                },
+                include:[{
+                  model: models.Wallet,
+                }],
+              }).then((customer) => {
+                var half = workOrder.price/2;
+                models.Wallet.update({ 
+                  amountDeposited: (customer.wallet.amountDeposited - half),
+                },
+                {
+                  where: {
+                      userId: customer.id,
+                    },
+                  returning: true,
+                }).then(() => {
+                });
+                models.User.findOne({
+                  where:{
+                    username: "Admin",
+                  },
+                  include:[{
+                    model: models.Wallet,
+                  }],  
+                }).then((admin) => {
+                   models.Wallet.update({
+                    amountDeposited: (admin.wallet.amountDeposited + half ),
+                  },
+                  {
+                    where: {
+                      userId: admin.id,
+                    },
+                    returning: true,
+                  }).then(() => {
+                  });
+                });
+              });                 
+            });
+          })
+        }
         res.redirect('/posts');
       });
     });
