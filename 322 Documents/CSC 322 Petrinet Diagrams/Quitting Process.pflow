@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+    <id/>
+    <x/>
+    <y/>
+    <label/>
+    <subnet>
+        <id/>
+        <x>0</x>
+        <y>0</y>
+        <label/>
+        <place>
+            <id>1</id>
+            <x>-216</x>
+            <y>-116</y>
+            <label>Registered User</label>
+            <tokens>1</tokens>
+            <isStatic>false</isStatic>
+        </place>
+        <place>
+            <id>3</id>
+            <x>-3</x>
+            <y>-117</y>
+            <label>Demand Ready for Admin</label>
+            <tokens>0</tokens>
+            <isStatic>false</isStatic>
+        </place>
+        <place>
+            <id>4</id>
+            <x>-217</x>
+            <y>-25</y>
+            <label>Super User</label>
+            <tokens>1</tokens>
+            <isStatic>false</isStatic>
+        </place>
+        <place>
+            <id>6</id>
+            <x>15</x>
+            <y>-18</y>
+            <label>User Removed From System</label>
+            <tokens>0</tokens>
+            <isStatic>false</isStatic>
+        </place>
+        <transition>
+            <id>2</id>
+            <x>-123</x>
+            <y>-118</y>
+            <label>Quit Demand</label>
+        </transition>
+        <transition>
+            <id>5</id>
+            <x>-129</x>
+            <y>-18</y>
+            <label>Review Demand</label>
+        </transition>
+        <arc>
+            <type>regular</type>
+            <sourceId>5</sourceId>
+            <destinationId>6</destinationId>
+            <multiplicity>1</multiplicity>
+        </arc>
+        <arc>
+            <type>regular</type>
+            <sourceId>4</sourceId>
+            <destinationId>5</destinationId>
+            <multiplicity>1</multiplicity>
+        </arc>
+        <arc>
+            <type>regular</type>
+            <sourceId>3</sourceId>
+            <destinationId>5</destinationId>
+            <multiplicity>1</multiplicity>
+            <breakPoint>
+                <x>-178</x>
+                <y>-39</y>
+            </breakPoint>
+        </arc>
+        <arc>
+            <type>regular</type>
+            <sourceId>2</sourceId>
+            <destinationId>3</destinationId>
+            <multiplicity>1</multiplicity>
+        </arc>
+        <arc>
+            <type>regular</type>
+            <sourceId>1</sourceId>
+            <destinationId>2</destinationId>
+            <multiplicity>1</multiplicity>
+        </arc>
+    </subnet>
+    <roles/>
+</document>
