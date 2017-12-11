@@ -8,6 +8,7 @@ module.exports = {
 
     router.get('/', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), this.index);
     router.get('/delete/:who', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNotAdmin(), this.delete);
+    router.get('/reject/:who', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNotAdmin(), this.reject);
     router.get('/get/:who', Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), Redirect.ifNotAdmin(), this.get);
     router.get('/request',Redirect.ifNotLoggedIn(), Redirect.ifNotApproved(), this.postReq);
     return router; 
@@ -46,6 +47,29 @@ module.exports = {
     }).catch(() => {
       res.redirect('/profile/show');
     });
+  },
+
+  reject(req, res){
+    models.User.findOne({
+      where: {
+        id: req.params.who,
+      },
+      include:[{
+        model: models.QuitReq,
+      }],
+    }).then((theUser) => {
+      theUser.quitReq.destroy({
+      }).then(() => {
+        models.SystemMessage.create({
+          userId: theUser.id,
+            comment: "Quit request denied. Please message the Admin for further clarification.",
+            seen: false, 
+        }).then((systemMessage) => {
+          res.redirect('/tools');
+        });
+      });
+    });
+
   },
 
   delete(req, res){
