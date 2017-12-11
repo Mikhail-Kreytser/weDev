@@ -237,7 +237,7 @@ module.exports = {
 		    });
   		}
   	});
-
+/*
 	models.Post.findAll({
   		where:{
   			bidingDeadline: {
@@ -317,7 +317,7 @@ module.exports = {
 			    });
 		    });
   		}
-  	});
+  	});*/
   	res.render('live-database');
   },
 };
