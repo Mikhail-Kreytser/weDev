@@ -36,19 +36,45 @@
         </div> --}}
 
         <div class="row control-group">
+          <div class="form-group col s2 floating-label-form-group controls">
+            <label>Bidding Deadline Date</label>
+            <input type="date" class="form-control" id="datefield" name="bidingDeadlineDate"   required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+
+          <div class="form-group col s2 offset-s1 floating-label-form-group controls">
+            <label>Bidding Deadline Time</label>
+            <input type="time" class="form-control" id="datefield" name="bidingDeadlineTime"  required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="row control-group">
+          <div class="form-group col s2 floating-label-form-group controls">
+            <label>Completion Deadline Date</label>
+            <input type="date" class="form-control" id="datefield"name="completionDeadlineDate" required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+          <div class="form-group col s2 offset-s1 floating-label-form-group controls">
+            <label>Completion Deadline Time</label>
+            <input type="time" class="form-control" id="datefield" name="completionDeadlineTime" required data-validation-required-message="Please enter a date and time.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        {{!-- 
+        <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Bidding Deadline</label>
-            <input type="datetime-local" class="form-control" id="datefield" name="bidingDeadline" value="-05:00"  required data-validation-required-message="Please enter a date and time.">
+            <input type="datetime" class="form-control" id="datefield" name="bidingDeadline" value="-05:00"  required data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
         </div>
         <div class="row control-group">
           <div class="form-group col-xs-6 floating-label-form-group controls">
             <label>Completion Deadline</label>
-            <input type="datetime-local" class="form-control" id="datefield"name="completionDeadline" required value="-05:00" data-validation-required-message="Please enter a date and time.">
+            <input type="datetime" class="form-control" id="datefield"name="completionDeadline" required value="-05:00" data-validation-required-message="Please enter a date and time.">
             <p class="help-block text-danger"></p>
           </div>
-        </div>
+        </div> --}}
         <br>
         <div class="row">
           <div class="form-group col-xs-12">
