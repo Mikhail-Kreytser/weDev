@@ -218,13 +218,77 @@ module.exports = {
   },
 
   createPost(req, res) {
+    var completionDeadline = new Date(
+      req.body.completionDeadlineDate.substring(0,4),
+      (parseInt(req.body.completionDeadlineDate.substring(5,7))-1),
+      req.body.completionDeadlineDate.substring(8,10),
+      req.body.completionDeadlineTime.substring(0,2),
+      req.body.completionDeadlineTime.substring(3,5),0
+      );
+    var bidingDeadline = new Date(
+      req.body.bidingDeadlineDate.substring(0,4),
+      (parseInt(req.body.completionDeadlineDate.substring(5,7))-1),
+      req.body.bidingDeadlineDate.substring(5,7),
+      req.body.bidingDeadlineDate.substring(8,10),
+      req.body.bidingDeadlineTime.substring(0,2),
+      req.body.bidingDeadlineTime.substring(3,5),0
+      );
+
+
+
+
+    console.log(req.body.bidingDeadlineDate);
+    console.log(req.body.bidingDeadlineDate.substring(0,4));
+    console.log(req.body.bidingDeadlineDate.substring(5,7));
+    console.log(parseInt(req.body.completionDeadlineDate.substring(5,7))-1);
+    console.log(req.body.bidingDeadlineDate.substring(8,10));
+    console.log(req.body.bidingDeadlineTime);
+    console.log(req.body.bidingDeadlineTime.substring(0,2));
+    console.log(req.body.bidingDeadlineTime.substring(3,5));
+    console.log(bidingDeadline);
+
+    console.log("____________________________");
+
+    console.log(req.body.completionDeadlineDate);
+    console.log(req.body.completionDeadlineDate.substring(0,4));
+    console.log(req.body.completionDeadlineDate.substring(5,7));
+    console.log(parseInt(req.body.completionDeadlineDate.substring(5,7))-1);
+    console.log(req.body.completionDeadlineDate.substring(8,10));
+    console.log(req.body.completionDeadlineTime);
+    console.log(req.body.completionDeadlineTime.substring(0,2));
+    console.log(req.body.completionDeadlineTime.substring(3,5));
+    console.log(completionDeadline);
+
+
+    console.log("____________________________");
+
+    console.log("____________________________");
+
+    var bidingDeadlinetwo = req.body.bidingDeadlineDate.substring(0,4) +"-"+
+                            req.body.bidingDeadlineDate.substring(5,7) +"-"+
+                            req.body.bidingDeadlineDate.substring(8,10) +" "+
+                            req.body.bidingDeadlineTime.substring(0,2) +":"+
+                            req.body.bidingDeadlineTime.substring(3,5) +":00-05";
+
+
+    var completionDeadlinetwo = req.body.completionDeadlineDate.substring(0,4) +"-"+
+                                req.body.completionDeadlineDate.substring(5,7) +"-"+
+                                req.body.completionDeadlineDate.substring(8,10) +" "+
+                                req.body.completionDeadlineTime.substring(0,2) +":"+
+                                req.body.completionDeadlineTime.substring(3,5) +":00-05";
+    console.log(bidingDeadlinetwo);
+
+    console.log("____________________________");
+    console.log(completionDeadlinetwo);
+
+
     req.user.createPost({
       slug: getSlug(req.body.title.toLowerCase()),
       title: req.body.title.toLowerCase(),
       body: req.body.body,
       //HERE
-      completionDeadline: req.body.completionDeadline,
-      bidingDeadline: req.body.bidingDeadline,
+      completionDeadline: completionDeadlinetwo,
+      bidingDeadline: bidingDeadlinetwo,
       //HERE
     }).then((post) => {
       res.redirect(`/posts/${req.user.username}/${post.slug}/`);
@@ -729,19 +793,55 @@ module.exports = {
         },
       }],
     }).then((post) => {
+      var completionDeadlineDate = post.completionDeadline.toISOString().substring(0, 10);
+      var completionDeadlineTime = post.completionDeadline.toISOString().substring(11, 16);
+      var bidingDeadlineDate = post.bidingDeadline.toISOString().substring(0, 10);
+      var bidingDeadlineTime = post.bidingDeadline.toISOString().substring(11, 16);
+
+
+      console.log(completionDeadlineDate);
+      console.log(completionDeadlineTime);
+      console.log(bidingDeadlineDate);
+      console.log(bidingDeadlineTime);
+
+      var badtimeC = parseInt(completionDeadlineTime.substring(0,2));
+      var badtimeB = parseInt(bidingDeadlineTime.substring(0,2));
+      console.log(badtimeC);
+      console.log(badtimeB);
+      badtimeC= badtimeC-5;
+      badtimeB= badtimeC-5;
+
+      completionDeadlineTime = badtimeC + completionDeadlineTime.substring(2,5);
+      bidingDeadlineTime = badtimeB + bidingDeadlineTime.substring(2,5);
+      console.log(completionDeadlineTime);
+      console.log(bidingDeadlineTime);
+
       var completionDeadline = post.completionDeadline.toISOString().substring(0, 16);
       var bidingDeadline = post.bidingDeadline.toISOString().substring(0, 16);
-      (post ? res.render('posts/edit', { post, completionDeadline, bidingDeadline }) : res.redirect('/posts'))
+      (post ? res.render('posts/edit', { post, completionDeadlineDate,completionDeadlineTime, bidingDeadlineDate,bidingDeadlineTime }) : res.redirect('/posts'))
     });
   },
 
   update(req, res) {
+    
+      var bidingDeadlinetwo = req.body.bidingDeadlineDate.substring(0,4) +"-"+
+                            req.body.bidingDeadlineDate.substring(5,7) +"-"+
+                            req.body.bidingDeadlineDate.substring(8,10) +" "+
+                            req.body.bidingDeadlineTime.substring(0,2) +":"+
+                            req.body.bidingDeadlineTime.substring(3,5) +":00-05";
+
+
+      var completionDeadlinetwo = req.body.completionDeadlineDate.substring(0,4) +"-"+
+                                  req.body.completionDeadlineDate.substring(5,7) +"-"+
+                                  req.body.completionDeadlineDate.substring(8,10) +" "+
+                                  req.body.completionDeadlineTime.substring(0,2) +":"+
+                                  req.body.completionDeadlineTime.substring(3,5) +":00-05";
     models.Post.update({
       title: req.body.title.toLowerCase(),
       slug: getSlug(req.body.title.toLowerCase()),
       body: req.body.body,
-      completionDeadline: req.body.completionDeadline,
-      bidingDeadline: req.body.bidingDeadline,
+      completionDeadline: completionDeadlinetwo,
+      bidingDeadline: bidingDeadlinetwo,
     },
     {
       where: {
